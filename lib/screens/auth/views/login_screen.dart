@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
-import 'package:shop/route/route_constants.dart';
+import 'package:shop/route/route_names.dart';
 
 import 'components/login_form.dart';
 
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text("Forgot password"),
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, passwordRecoveryScreenRoute);
+                            context, RouteNames.passwordRecovery);
                       },
                     ),
                   ),
@@ -57,11 +57,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate()) {
                         Navigator.pushNamedAndRemoveUntil(
                             context,
-                            entryPointScreenRoute,
-                            ModalRoute.withName(logInScreenRoute));
+                            RouteNames.entryPoint,
+                            ModalRoute.withName(RouteNames.login));
                       }
                     },
                     child: const Text("Log in"),
@@ -70,9 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("Don't have an account?"),
-                      TextButton(
+                          TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, signUpScreenRoute);
+                          Navigator.pushNamed(context, RouteNames.signup);
                         },
                         child: const Text("Sign up"),
                       )
