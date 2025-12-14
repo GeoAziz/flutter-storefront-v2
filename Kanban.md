@@ -202,3 +202,26 @@ Use this template when creating issues:
 **Last Updated:** 2025-12-14  
 **Maintained By:** @devmahnx  
 **Review Schedule:** Weekly syncs or milestone completions
+
+---
+
+## 🤖 Automation (GitHub Actions)
+
+We run a small, conservative GitHub Action to help keep the Kanban board and PR labels tidy. It is intentionally limited in scope and uses the repository-provided token (no external services).
+
+Behavior summary:
+- On PR opened:
+   - If the PR is a draft: the Action adds the `Draft` label and posts a short comment explaining how to convert the PR to ready-for-review.
+   - If the PR is opened non-draft: the Action adds the `In Review` label and posts a short confirmation comment.
+- On PR -> "Ready for review": the Action removes `Draft`, ensures `In Review` is present, and posts a short note.
+- On PR closed & merged: the Action marks the PR `Done`, attempts to find `Closes #N` (or `Fixes #N`, `Resolves #N`) statements in the PR body and will close those linked issues and comment on them.
+- On PR closed without merge: the Action marks the PR `Abandoned` and notifies in a comment.
+
+Why this exists:
+- Small automation reduces manual label management and makes the project board state more consistent.
+
+How to opt out / notes for maintainers:
+- If you don't want a comment or label on a particular PR, you can remove the label after the Action runs or omit `Closes #N` lines if you don't want the issue closed automatically.
+- The Action uses the labels `Draft`, `In Review`, `Done`, and `Abandoned`. Ensure those labels exist in the repository settings so the Action can add them.
+
+If you'd like the Action to move project cards (GitHub Projects) or perform other advanced behaviors, we'll treat that as a follow-up (requires additional permissions or a GitHub App).

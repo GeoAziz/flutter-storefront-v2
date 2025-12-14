@@ -47,21 +47,21 @@ jobs:
             if (action === 'opened') {
               if (pr.draft) {
                 await safeAdd(['Draft']);
-                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: marked as **Draft**. Convert to "Ready for review" when ready.' });
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: marked as **Draft**. When ready, click "Ready for review" to request reviews. See `Kanban.md` for the board workflow.' });
               } else {
                 await safeAdd(['In Review']);
-                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: marked as **In Review**.' });
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: added **In Review** label.' });
               }
             } else if (action === 'ready_for_review') {
               await safeRemove('Draft');
               await safeAdd(['In Review']);
-              await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: draft → **In Review**.' });
+              await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: Draft → **In Review**. Please request reviewers as needed.' });
             } else if (action === 'closed') {
               if (pr.merged) {
                 await safeRemove('In Review');
                 await safeRemove('Draft');
                 await safeAdd(['Done']);
-                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: `Automated: PR merged. Searching PR body for linked issues to close...` });
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: `Automated: PR merged. Closing linked issues referenced with "Closes #N" in the PR body.` });
 
                 const body = pr.body || '';
                 const regex = /(?:Closes|closes|Fixes|fixes|Resolves|resolves)\s+#(\d+)/g;
@@ -85,7 +85,7 @@ jobs:
               } else {
                 await safeAdd(['Abandoned']);
                 await safeRemove('In Review');
-                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: PR closed without merge — marked **Abandoned**.' });
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: PR closed without merge — marked **Abandoned**. Reopen and update the branch if this was accidental.' });
               }
             } else {
               core.info(`Unhandled action: ${action}`);
