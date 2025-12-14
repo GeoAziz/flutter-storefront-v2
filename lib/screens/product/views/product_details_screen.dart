@@ -7,7 +7,7 @@ import 'package:shop/components/product/product_card.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/screens/product/views/product_returns_screen.dart';
 
-import 'package:shop/route/screen_export.dart';
+import 'package:shop/route/route_names.dart';
 
 import 'components/notify_me_card.dart';
 import 'components/product_images.dart';
@@ -124,7 +124,7 @@ class ProductDetailsScreen extends StatelessWidget {
               title: "Reviews",
               isShowBottomBorder: true,
               press: () {
-                Navigator.pushNamed(context, productReviewsScreenRoute);
+                Navigator.pushNamed(context, RouteNames.productReviews);
               },
             ),
             SliverPadding(
