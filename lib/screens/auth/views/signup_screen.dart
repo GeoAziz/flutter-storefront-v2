@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/screens/auth/views/components/sign_up_form.dart';
-import 'package:shop/route/route_constants.dart';
+import 'package:shop/route/route_names.dart';
 
 import '../../../constants.dart';
 
@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.pushNamed(
-                                        context, termsOfServicesScreenRoute);
+                                        context, RouteNames.termsOfServices);
                                   },
                                 text: " Terms of service ",
                                 style: const TextStyle(
@@ -81,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // There is 2 more screens while user complete their profile
                       // afre sign up, it's available on the pro version get it now
                       // 🔗 https://theflutterway.gumroad.com/l/fluttershop
-                      Navigator.pushNamed(context, entryPointScreenRoute);
+                      Navigator.pushNamed(context, RouteNames.entryPoint);
                     },
                     child: const Text("Continue"),
                   ),
@@ -91,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const Text("Do you have an account?"),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, logInScreenRoute);
+                          Navigator.pushNamed(context, RouteNames.login);
                         },
                         child: const Text("Log in"),
                       )
