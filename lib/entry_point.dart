@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/screen_export.dart';
+import 'package:shop/route/route_names.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
@@ -55,7 +56,7 @@ class _EntryPointState extends State<EntryPoint> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, searchScreenRoute);
+              Navigator.pushNamed(context, RouteNames.search);
             },
             icon: SvgPicture.asset(
               "assets/icons/Search.svg",
@@ -67,7 +68,7 @@ class _EntryPointState extends State<EntryPoint> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, notificationsScreenRoute);
+              Navigator.pushNamed(context, RouteNames.notifications);
             },
             icon: SvgPicture.asset(
               "assets/icons/Notification.svg",
