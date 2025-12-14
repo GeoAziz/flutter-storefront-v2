@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/entry_point.dart';
 
 import 'screen_export.dart';
+import 'route_names.dart';
 
 // Yuo will get 50+ screens and more once you have the full template
 // 🔗 Full template: https://theflutterway.gumroad.com/l/fluttershop
@@ -63,8 +64,14 @@ import 'screen_export.dart';
 // 🔗 Full template: https://theflutterway.gumroad.com/l/fluttershop
 
 Route<dynamic> generateRoute(RouteSettings settings) {
-  switch (settings.name) {
-    case onbordingScreenRoute:
+  // Normalize incoming names to a leading-slash form so callers can use
+  // either 'home' or '/home' and remain compatible.
+  final String routeName = (settings.name != null && settings.name!.startsWith('/'))
+      ? settings.name!
+      : '/${settings.name ?? ''}';
+
+  switch (routeName) {
+    case RouteNames.onboarding:
       return MaterialPageRoute(
         builder: (context) => const OnBordingScreen(),
       );
@@ -72,11 +79,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const PreferredLanguageScreen(),
     //   );
-    case logInScreenRoute:
+    case RouteNames.login:
       return MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       );
-    case signUpScreenRoute:
+    case RouteNames.signup:
       return MaterialPageRoute(
         builder: (context) => const SignUpScreen(),
       );
@@ -84,7 +91,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const ProfileSetupScreen(),
     //   );
-    case passwordRecoveryScreenRoute:
+    case RouteNames.passwordRecovery:
       return MaterialPageRoute(
         builder: (context) => const PasswordRecoveryScreen(),
       );
@@ -128,14 +135,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const SetupFaceIdScreen(),
     //   );
-    case productDetailsScreenRoute:
+    case RouteNames.productDetails:
       return MaterialPageRoute(
         builder: (context) {
           bool isProductAvailable = settings.arguments as bool? ?? true;
           return ProductDetailsScreen(isProductAvailable: isProductAvailable);
         },
       );
-    case productReviewsScreenRoute:
+    case RouteNames.productReviews:
       return MaterialPageRoute(
         builder: (context) => const ProductReviewsScreen(),
       );
@@ -143,7 +150,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const AddReviewScreen(),
     //   );
-    case homeScreenRoute:
+    case RouteNames.home:
       return MaterialPageRoute(
         builder: (context) => const HomeScreen(),
       );
@@ -159,19 +166,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const SubDiscoverScreen(),
     //   );
-    case discoverScreenRoute:
+    case RouteNames.discover:
       return MaterialPageRoute(
         builder: (context) => const DiscoverScreen(),
       );
-    case onSaleScreenRoute:
+    case RouteNames.onSale:
       return MaterialPageRoute(
         builder: (context) => const OnSaleScreen(),
       );
-    case kidsScreenRoute:
+    case RouteNames.kids:
       return MaterialPageRoute(
         builder: (context) => const KidsScreen(),
       );
-    case searchScreenRoute:
+    case RouteNames.search:
       return MaterialPageRoute(
         builder: (context) => const SearchScreen(),
       );
@@ -179,15 +186,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const SearchHistoryScreen(),
     //   );
-    case bookmarkScreenRoute:
+    case RouteNames.bookmark:
       return MaterialPageRoute(
         builder: (context) => const BookmarkScreen(),
       );
-    case entryPointScreenRoute:
+    case RouteNames.entryPoint:
       return MaterialPageRoute(
         builder: (context) => const EntryPoint(),
       );
-    case profileScreenRoute:
+    case RouteNames.profile:
       return MaterialPageRoute(
         builder: (context) => const ProfileScreen(),
       );
@@ -199,7 +206,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const ChatScreen(),
     //   );
-    case userInfoScreenRoute:
+    case RouteNames.userInfo:
       return MaterialPageRoute(
         builder: (context) => const UserInfoScreen(),
       );
@@ -211,19 +218,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const EditUserInfoScreen(),
     //   );
-    case notificationsScreenRoute:
+    case RouteNames.notifications:
       return MaterialPageRoute(
         builder: (context) => const NotificationsScreen(),
       );
-    case noNotificationScreenRoute:
+    case RouteNames.noNotifications:
       return MaterialPageRoute(
         builder: (context) => const NoNotificationScreen(),
       );
-    case enableNotificationScreenRoute:
+    case RouteNames.enableNotifications:
       return MaterialPageRoute(
         builder: (context) => const EnableNotificationScreen(),
       );
-    case notificationOptionsScreenRoute:
+    case RouteNames.notificationOptions:
       return MaterialPageRoute(
         builder: (context) => const NotificationOptionsScreen(),
       );
@@ -235,7 +242,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const NoAddressScreen(),
     //   );
-    case addressesScreenRoute:
+    case RouteNames.addresses:
       return MaterialPageRoute(
         builder: (context) => const AddressesScreen(),
       );
@@ -243,7 +250,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const AddNewAddressScreen(),
     //   );
-    case ordersScreenRoute:
+    case RouteNames.orders:
       return MaterialPageRoute(
         builder: (context) => const OrdersScreen(),
       );
@@ -267,7 +274,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const CancledOrdersScreen(),
     //   );
-    case preferencesScreenRoute:
+    case RouteNames.preferences:
       return MaterialPageRoute(
         builder: (context) => const PreferencesScreen(),
       );
@@ -275,15 +282,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const EmptyPaymentScreen(),
     //   );
-    case emptyWalletScreenRoute:
+    case RouteNames.emptyWallet:
       return MaterialPageRoute(
         builder: (context) => const EmptyWalletScreen(),
       );
-    case walletScreenRoute:
+    case RouteNames.wallet:
       return MaterialPageRoute(
         builder: (context) => const WalletScreen(),
       );
-    case cartScreenRoute:
+    case RouteNames.cart:
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
       );
@@ -301,7 +308,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   );
     default:
       return MaterialPageRoute(
-        // Make a screen for undefine
+        // Make a screen for undefined routes — fall back to onboarding
         builder: (context) => const OnBordingScreen(),
       );
   }
