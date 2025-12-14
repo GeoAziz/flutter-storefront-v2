@@ -14,7 +14,7 @@ import 'package:shop/main.dart';
 void main() {
   testWidgets('App builds and stabilizes', (WidgetTester tester) async {
     // Wrap the app with ProviderScope so providers are available.
-    await tester.pumpWidget(ProviderScope(child: const MyApp()));
+  await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
     // Let animations/frames settle.
     await tester.pumpAndSettle();
