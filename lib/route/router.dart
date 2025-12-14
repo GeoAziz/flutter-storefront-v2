@@ -75,10 +75,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const OnBordingScreen(),
       );
-    // case preferredLanuageScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const PreferredLanguageScreen(),
-    //   );
     case RouteNames.login:
       return MaterialPageRoute(
         builder: (context) => const LoginScreen(),
@@ -87,54 +83,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const SignUpScreen(),
       );
-    // case profileSetupScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const ProfileSetupScreen(),
-    //   );
     case RouteNames.passwordRecovery:
       return MaterialPageRoute(
         builder: (context) => const PasswordRecoveryScreen(),
       );
-    // case verificationMethodScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const VerificationMethodScreen(),
-    //   );
-    // case otpScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const OtpScreen(),
-    //   );
-    // case newPasswordScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SetNewPasswordScreen(),
-    //   );
-    // case doneResetPasswordScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const DoneResetPasswordScreen(),
-    //   );
-    // case termsOfServicesScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const TermsOfServicesScreen(),
-    //   );
-    // case noInternetScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const NoInternetScreen(),
-    //   );
-    // case serverErrorScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const ServerErrorScreen(),
-    //   );
-    // case signUpVerificationScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SignUpVerificationScreen(),
-    //   );
-    // case setupFingerprintScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SetupFingerprintScreen(),
-    //   );
-    // case setupFaceIdScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SetupFaceIdScreen(),
-    //   );
     case RouteNames.productDetails:
       return MaterialPageRoute(
         builder: (context) {
@@ -146,26 +98,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const ProductReviewsScreen(),
       );
-    // case addReviewsScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const AddReviewScreen(),
-    //   );
     case RouteNames.home:
       return MaterialPageRoute(
         builder: (context) => const HomeScreen(),
       );
-    // case brandScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const BrandScreen(),
-    //   );
-    // case discoverWithImageScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const DiscoverWithImageScreen(),
-    //   );
-    // case subDiscoverScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SubDiscoverScreen(),
-    //   );
     case RouteNames.discover:
       return MaterialPageRoute(
         builder: (context) => const DiscoverScreen(),
@@ -182,10 +118,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const SearchScreen(),
       );
-    // case searchHistoryScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SearchHistoryScreen(),
-    //   );
     case RouteNames.bookmark:
       return MaterialPageRoute(
         builder: (context) => const BookmarkScreen(),
@@ -198,26 +130,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const ProfileScreen(),
       );
-    // case getHelpScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const GetHelpScreen(),
-    //   );
-    // case chatScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const ChatScreen(),
-    //   );
     case RouteNames.userInfo:
       return MaterialPageRoute(
         builder: (context) => const UserInfoScreen(),
       );
-    // case currentPasswordScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const CurrentPasswordScreen(),
-    //   );
-    // case editUserInfoScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const EditUserInfoScreen(),
-    //   );
     case RouteNames.notifications:
       return MaterialPageRoute(
         builder: (context) => const NotificationsScreen(),
@@ -234,54 +150,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const NotificationOptionsScreen(),
       );
-    // case selectLanguageScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const SelectLanguageScreen(),
-    //   );
-    // case noAddressScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const NoAddressScreen(),
-    //   );
     case RouteNames.addresses:
       return MaterialPageRoute(
         builder: (context) => const AddressesScreen(),
       );
-    // case addNewAddressesScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const AddNewAddressScreen(),
-    //   );
     case RouteNames.orders:
       return MaterialPageRoute(
         builder: (context) => const OrdersScreen(),
       );
-    // case orderProcessingScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const OrderProcessingScreen(),
-    //   );
-    // case orderDetailsScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const OrderDetailsScreen(),
-    //   );
-    // case cancleOrderScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const CancleOrderScreen(),
-    //   );
-    // case deliveredOrdersScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const DelivereOrdersdScreen(),
-    //   );
-    // case cancledOrdersScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const CancledOrdersScreen(),
-    //   );
     case RouteNames.preferences:
       return MaterialPageRoute(
         builder: (context) => const PreferencesScreen(),
       );
-    // case emptyPaymentScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const EmptyPaymentScreen(),
-    //   );
     case RouteNames.emptyWallet:
       return MaterialPageRoute(
         builder: (context) => const EmptyWalletScreen(),
@@ -294,18 +174,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
       );
-    // case paymentMethodScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const PaymentMethodScreen(),
-    //   );
-    // case addNewCardScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const AddNewCardScreen(),
-    //   );
-    // case thanksForOrderScreenRoute:
-    //   return MaterialPageRoute(
-    //     builder: (context) => const ThanksForOrderScreen(),
-    //   );
+  // (Legacy commented cases removed — router now matches canonical RouteNames.)
     default:
       return MaterialPageRoute(
         // Make a screen for undefined routes — fall back to onboarding
