@@ -12,10 +12,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 'stable'
+      - name: Install Flutter (clone stable)
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y git xz-utils zip unzip curl
+          # Clone Flutter stable channel (shallow)
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1 /opt/flutter
+          echo "/opt/flutter/bin" >> $GITHUB_PATH
+          /opt/flutter/bin/flutter --version
 
       - name: Install dependencies
         run: flutter pub get
