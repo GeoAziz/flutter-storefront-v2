@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop/components/dot_indicators.dart';
 import 'package:shop/constants.dart';
-import 'package:shop/route/route_constants.dart';
+import 'package:shop/route/route_names.dart';
 
 import 'components/onbording_content.dart';
 
@@ -77,7 +77,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, logInScreenRoute);
+                    Navigator.pushNamed(context, RouteNames.login);
                   },
                   child: Text(
                     "Skip",
@@ -125,7 +125,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                           _pageController.nextPage(
                               curve: Curves.ease, duration: defaultDuration);
                         } else {
-                          Navigator.pushNamed(context, logInScreenRoute);
+                          Navigator.pushNamed(context, RouteNames.login);
                         }
                       },
                       style: ElevatedButton.styleFrom(
