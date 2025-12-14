@@ -1,0 +1,32 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  analyze_and_test:
+    name: Analyze and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Flutter (clone stable)
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y git xz-utils zip unzip curl
+          # Clone Flutter stable channel (shallow)
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1 /opt/flutter
+          echo "/opt/flutter/bin" >> $GITHUB_PATH
+          /opt/flutter/bin/flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run analyzer
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+
+      - name: Run tests
+        run: flutter test --no-pub
