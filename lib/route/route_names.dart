@@ -1,0 +1,65 @@
+// Canonical route names (single source of truth)
+// Use leading slashes for consistency with Navigator.pushNamed
+class RouteNames {
+  RouteNames._();
+
+  static const String onboarding = '/onboarding';
+  static const String notificationPermission = '/notification_permission';
+  static const String preferredLanguage = '/preferred_language';
+  static const String login = '/login';
+  static const String signup = '/signup';
+  static const String profileSetup = '/profile_setup';
+  static const String signupVerification = '/signup_verification';
+  static const String passwordRecovery = '/password_recovery';
+  static const String verificationMethod = '/verification_method';
+  static const String otp = '/otp';
+  static const String newPassword = '/new_password';
+  static const String doneResetPassword = '/done_reset_password';
+  static const String termsOfServices = '/terms_of_services';
+  static const String noInternet = '/no_internet';
+  static const String serverError = '/server_error';
+  static const String setupFingerprint = '/setup_fingerprint';
+  static const String setupFaceId = '/setup_faceid';
+  static const String productDetails = '/product_details';
+  static const String productReviews = '/product_reviews';
+  static const String addReviews = '/add_reviews';
+  static const String home = '/home';
+  static const String brand = '/brand';
+  static const String discoverWithImage = '/discover_with_image';
+  static const String subDiscover = '/sub_discover';
+  static const String discover = '/discover';
+  static const String onSale = '/on_sale';
+  static const String kids = '/kids';
+  static const String search = '/search';
+  static const String searchHistory = '/search_history';
+  static const String bookmark = '/bookmark';
+  static const String entryPoint = '/entry_point';
+  static const String profile = '/profile';
+  static const String getHelp = '/get_help';
+  static const String chat = '/chat';
+  static const String userInfo = '/user_info';
+  static const String currentPassword = '/current_password';
+  static const String editUserInfo = '/edit_user_info';
+  static const String notifications = '/notifications';
+  static const String noNotifications = '/no_notifications';
+  static const String enableNotifications = '/enable_notifications';
+  static const String notificationOptions = '/notification_options';
+  static const String selectLanguage = '/select_language';
+  static const String noAddress = '/no_address';
+  static const String addresses = '/addresses';
+  static const String addNewAddresses = '/add_new_addresses';
+  static const String orders = '/orders';
+  static const String orderProcessing = '/order_processing';
+  static const String orderDetails = '/order_details';
+  static const String cancelOrder = '/cancel_order';
+  static const String deliveredOrders = '/delivered_orders';
+  static const String canceledOrders = '/canceled_orders';
+  static const String preferences = '/preferences';
+  static const String emptyPayment = '/empty_payment';
+  static const String emptyWallet = '/empty_wallet';
+  static const String wallet = '/wallet';
+  static const String cart = '/cart';
+  static const String paymentMethod = '/payment_method';
+  static const String addNewCard = '/add_new_card';
+  static const String thanksForOrder = '/thanks_order';
+}

@@ -3,7 +3,7 @@ import 'package:shop/components/product/product_card.dart';
 import 'package:shop/models/product_model.dart';
 
 import '../../../../constants.dart';
-import '../../../../route/route_constants.dart';
+import '../../../../route/route_names.dart';
 
 class BestSellers extends StatelessWidget {
   const BestSellers({
@@ -47,7 +47,7 @@ class BestSellers extends StatelessWidget {
                     demoBestSellersProducts[index].priceAfetDiscount,
                 dicountpercent: demoBestSellersProducts[index].dicountpercent,
                 press: () {
-                  Navigator.pushNamed(context, productDetailsScreenRoute,
+                  Navigator.pushNamed(context, RouteNames.productDetails,
                       arguments: index.isEven);
                 },
               ),

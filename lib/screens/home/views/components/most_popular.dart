@@ -3,7 +3,7 @@ import 'package:shop/components/product/secondary_product_card.dart';
 import 'package:shop/models/product_model.dart';
 
 import '../../../../constants.dart';
-import '../../../../route/route_constants.dart';
+import '../../../../route/route_names.dart';
 
 class MostPopular extends StatelessWidget {
   const MostPopular({
@@ -46,7 +46,7 @@ class MostPopular extends StatelessWidget {
                 priceAfetDiscount: demoPopularProducts[index].priceAfetDiscount,
                 dicountpercent: demoPopularProducts[index].dicountpercent,
                 press: () {
-                  Navigator.pushNamed(context, productDetailsScreenRoute,
+                  Navigator.pushNamed(context, RouteNames.productDetails,
                       arguments: index.isEven);
                 },
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop/components/product/product_card.dart';
 import 'package:shop/models/product_model.dart';
-import 'package:shop/route/route_constants.dart';
+import 'package:shop/route/route_names.dart';
 
 import '../../../constants.dart';
 
@@ -36,7 +36,7 @@ class BookmarkScreen extends StatelessWidget {
                         demoPopularProducts[index].priceAfetDiscount,
                     dicountpercent: demoPopularProducts[index].dicountpercent,
                     press: () {
-                      Navigator.pushNamed(context, productDetailsScreenRoute);
+                      Navigator.pushNamed(context, RouteNames.productDetails);
                     },
                   );
                 },

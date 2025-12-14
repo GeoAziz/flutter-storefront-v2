@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/route/route_constants.dart';
+import 'package:shop/route/route_names.dart';
 
 import '/components/Banner/M/banner_m_with_counter.dart';
 import '../../../../components/product/product_card.dart';
@@ -55,7 +55,7 @@ class FlashSale extends StatelessWidget {
                     demoFlashSaleProducts[index].priceAfetDiscount,
                 dicountpercent: demoFlashSaleProducts[index].dicountpercent,
                 press: () {
-                  Navigator.pushNamed(context, productDetailsScreenRoute,
+                  Navigator.pushNamed(context, RouteNames.productDetails,
                       arguments: index.isEven);
                 },
               ),
