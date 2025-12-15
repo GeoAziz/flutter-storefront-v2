@@ -1,0 +1,92 @@
+name: Kanban automation (labels & issue closing)
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, closed]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  kanban:
+    name: Handle PR for Kanban
+    runs-on: ubuntu-latest
+    steps:
+      - name: Handle PR event (labels, comments, issue closing)
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              core.info('No pull_request in context; skipping');
+              return;
+            }
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = pr.number;
+            const action = context.payload.action;
+
+            async function safeRemove(label) {
+              try {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number: prNumber, name: label });
+              } catch (e) {
+                // ignore if absent
+              }
+            }
+
+            async function safeAdd(labels) {
+              if (!labels || labels.length === 0) return;
+              try {
+                await github.rest.issues.addLabels({ owner, repo, issue_number: prNumber, labels });
+              } catch (e) {
+                core.info(`addLabels failed: ${e}`);
+              }
+            }
+
+            if (action === 'opened') {
+              if (pr.draft) {
+                await safeAdd(['Draft']);
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: marked as **Draft**. When ready, click "Ready for review" to request reviews. See `Kanban.md` for the board workflow.' });
+              } else {
+                await safeAdd(['In Review']);
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: added **In Review** label.' });
+              }
+            } else if (action === 'ready_for_review') {
+              await safeRemove('Draft');
+              await safeAdd(['In Review']);
+              await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: Draft → **In Review**. Please request reviewers as needed.' });
+            } else if (action === 'closed') {
+              if (pr.merged) {
+                await safeRemove('In Review');
+                await safeRemove('Draft');
+                await safeAdd(['Done']);
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: `Automated: PR merged. Closing linked issues referenced with "Closes #N" in the PR body.` });
+
+                const body = pr.body || '';
+                const regex = /(?:Closes|closes|Fixes|fixes|Resolves|resolves)\s+#(\d+)/g;
+                let match;
+                const closed = [];
+                while ((match = regex.exec(body)) !== null) {
+                  const issueNum = Number(match[1]);
+                  try {
+                    await github.rest.issues.update({ owner, repo, issue_number: issueNum, state: 'closed' });
+                    await github.rest.issues.createComment({ owner, repo, issue_number: issueNum, body: `Closed by merged PR #${prNumber}: ${pr.html_url}` });
+                    closed.push(issueNum);
+                  } catch (e) {
+                    core.info(`Failed to close issue #${issueNum}: ${e}`);
+                  }
+                }
+                if (closed.length === 0) {
+                  await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'No linked "Closes #N" issues found in PR body.' });
+                } else {
+                  await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: `Closed issues: ${closed.map(n => `#${n}`).join(', ')}` });
+                }
+              } else {
+                await safeAdd(['Abandoned']);
+                await safeRemove('In Review');
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: 'Automated: PR closed without merge — marked **Abandoned**. Reopen and update the branch if this was accidental.' });
+              }
+            } else {
+              core.info(`Unhandled action: ${action}`);
+            }
