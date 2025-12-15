@@ -21,6 +21,7 @@ dependencies:
   animations: ^2.0.11
   url_launcher: ^6.3.0
   flutter_riverpod: ^2.0.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

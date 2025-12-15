@@ -66,9 +66,10 @@ import 'route_names.dart';
 Route<dynamic> generateRoute(RouteSettings settings) {
   // Normalize incoming names to a leading-slash form so callers can use
   // either 'home' or '/home' and remain compatible.
-  final String routeName = (settings.name != null && settings.name!.startsWith('/'))
-      ? settings.name!
-      : '/${settings.name ?? ''}';
+  final String routeName =
+      (settings.name != null && settings.name!.startsWith('/'))
+          ? settings.name!
+          : '/${settings.name ?? ''}';
 
   switch (routeName) {
     case RouteNames.onboarding:
@@ -174,7 +175,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
       );
-  // (Legacy commented cases removed — router now matches canonical RouteNames.)
+    // (Legacy commented cases removed — router now matches canonical RouteNames.)
     default:
       return MaterialPageRoute(
         // Make a screen for undefined routes — fall back to onboarding
