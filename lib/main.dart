@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  // Use ProviderScope to enable Riverpod providers across the app.
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 // Thanks for using our template. You are using the free version of the template.
