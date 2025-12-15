@@ -29,7 +29,7 @@ Visual tracking board for Flutter Storefront Phase 1 MVP. This Kanban captures t
 |---|-------|------|--------|--------|----------|-----------|
 | 1 | Harden CI & Analyzer | S | `infra` `critical` `tests` | ⛳ In Progress | @GeoAziz | [#9](https://github.com/GeoAziz/flutter-storefront/issues/9) |
 | 2 | Route Name Standardization | S | `infra` `critical` | ✅ Todo | @GeoAziz | [#10](https://github.com/GeoAziz/flutter-storefront/issues/10) |
-| 3 | ProviderScope Wiring & ProductRepository Toggle | S | `backend` `infra` | ✅ Todo | @GeoAziz | [#11](https://github.com/GeoAziz/flutter-storefront/issues/11) |
+| 3 | ProviderScope Wiring & ProductRepository Toggle | S | `backend` `infra` | ✅ Done | @GeoAziz | [#11](https://github.com/GeoAziz/flutter-storefront/issues/11) |
 
 ### In Progress
 
@@ -47,8 +47,8 @@ Visual tracking board for Flutter Storefront Phase 1 MVP. This Kanban captures t
 
 | # | Title | Size | Labels | Status | Blocking | Depends On | Issue Link |
 |---|-------|------|--------|--------|----------|-----------|-----------|
-| 4 | Cart Provider & Local Persistence | M | `backend` `enhancement` | ✅ Todo | Issue #5, #6 | #3 (ProviderScope) | [#12](https://github.com/GeoAziz/flutter-storefront/issues/12) |
-| 5 | Complete Home & Product Screens Provider Wiring | M | `backend` `product` | ✅ Todo | Issue #4, #7 | #3 (ProviderScope) | [#13](https://github.com/GeoAziz/flutter-storefront/issues/13) |
+| 4 | Cart Provider & Local Persistence | M | `backend` `enhancement` | ✅ Done | Issue #5, #6 | #3 (ProviderScope) | [#12](https://github.com/GeoAziz/flutter-storefront/issues/12) |
+| 5 | Complete Home & Product Screens Provider Wiring | M | `backend` `product` | ✅ Done | Issue #4, #7 | #3 (ProviderScope) | [#13](https://github.com/GeoAziz/flutter-storefront/issues/13) |
 | 6 | Checkout Skeleton & Payment Adapter | M | `backend` `enhancement` | ✅ Todo | — | #4 (Cart), #3 | [#14](https://github.com/GeoAziz/flutter-storefront/issues/14) |
 | 7 | Add End-to-End Smoke Tests | M | `tests` `critical` | ✅ Todo | — | #1 (CI) | [#15](https://github.com/GeoAziz/flutter-storefront/issues/15) |
 | 8 | Backend Contract: Products API | S | `backend` `critical` | ✅ Todo | — | #3 (ProviderScope) | [#16](https://github.com/GeoAziz/flutter-storefront/issues/16) |
@@ -149,11 +149,11 @@ Visual tracking board for Flutter Storefront Phase 1 MVP. This Kanban captures t
 ## 📌 Current Status Summary
 
 **Total Issues:** 8  
-**In Todo (Ready):** 8  
-**In Progress:** 0  
-**Done:** 0  
+**In Todo (Ready):** 5  
+**In Progress:** 1  
+**Done:** 3  
 
-**Phase 1 Progress:** 0% (0 / 8 issues complete)
+**Phase 1 Progress:** 37.5% (3 / 8 issues complete)
 
 **Next Action:** Begin Phase 1 work on Issues #9 & #10 (Harden CI & Analyzer, Route Name Standardization). Move issues to In Progress as work begins. Update Kanban.md as issues progress.
 
@@ -199,7 +199,7 @@ Use this template when creating issues:
 
 ---
 
-**Last Updated:** 2025-12-14  
+**Last Updated:** 2025-12-15  
 **Maintained By:** @devmahnx  
 **Review Schedule:** Weekly syncs or milestone completions
 
