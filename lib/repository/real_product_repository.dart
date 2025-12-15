@@ -54,9 +54,13 @@ class RealProductRepository extends ProductRepository {
           final decoded = utf8.decode(base64.decode(request.cursor!));
           final json = jsonDecode(decoded) as Map<String, dynamic>;
           offset = (json['offset'] as int?) ?? 0;
-        } catch (_) {
-          // Invalid/unknown cursor format: fall back to start (offset 0)
-          offset = 0;
+        } catch (e) {
+          // Backend contract: invalid/expired cursors will surface as an
+          // error from the server. Surface this to callers so higher-level
+          // code (providers/UI) can decide whether to retry or restart the
+          // pagination flow. We use FormatException here to indicate a
+          // malformed/invalid cursor token.
+          throw FormatException('Invalid or expired pagination cursor: ${e.toString()}');
         }
       }
 
