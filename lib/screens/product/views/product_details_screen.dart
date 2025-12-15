@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shop/repository/product_repository.dart';
 import 'package:shop/components/buy_full_ui_kit.dart';
 import 'package:shop/components/cart_button.dart';
 import 'package:shop/components/custom_modal_bottom_sheet.dart';
@@ -23,10 +24,18 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Try to accept a Product via route arguments. If provided, use it to
+    // populate the UI; otherwise fall back to hard-coded demo values.
+    final args = ModalRoute.of(context)?.settings.arguments;
+    Product? product;
+    if (args is Product) {
+      product = args;
+    }
+
     return Scaffold(
       bottomNavigationBar: isProductAvailable
           ? CartButton(
-              price: 140,
+              price: product?.price ?? 140,
               press: () {
                 customModalBottomSheet(
                   context,
@@ -56,15 +65,18 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const ProductImages(
-              images: [productDemoImg1, productDemoImg2, productDemoImg3],
+            ProductImages(
+              images: product != null
+                  ? [product.image]
+                  : [productDemoImg1, productDemoImg2, productDemoImg3],
             ),
             ProductInfo(
-              brand: "LIPSY LONDON",
-              title: "Sleeveless Ruffle",
+              brand: product != null ? '' : "LIPSY LONDON",
+              title: product?.title ?? "Sleeveless Ruffle",
               isAvailable: isProductAvailable,
-              description:
-                  "A cool gray cap in soft corduroy. Watch me.' By buying cotton products from Lindex, you’re supporting more responsibly...",
+              description: product != null
+                  ? ''
+                  : "A cool gray cap in soft corduroy. Watch me.' By buying cotton products from Lindex, you’re supporting more responsibly...",
               rating: 4.4,
               numOfReviews: 126,
             ),
