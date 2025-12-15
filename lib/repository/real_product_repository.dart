@@ -66,19 +66,16 @@ class RealProductRepository extends ProductRepository {
       final page = (offset ~/ pageSize) + 1;
       final items = await fetchProducts(page: page, pageSize: pageSize);
       
-      // Determine if there are more items by checking if we got a full page
-      // AND if the next page would return any items.
+      // Standard pagination heuristic: if we received a full page, assume there
+      // might be more (hasMore = true). The backend will signal end-of-list by
+      // returning fewer items than requested or an explicit null nextCursor.
+      final hasMore = items.length >= pageSize;
+
       String? nextCursor;
-      bool hasMore = false;
-      if (items.length >= pageSize) {
-        // We got a full page; check if there's a next page
-        final nextPageItems = await fetchProducts(page: page + 1, pageSize: pageSize);
-        if (nextPageItems.isNotEmpty) {
-          hasMore = true;
-          final nextOffset = offset + items.length;
-          final nextJson = jsonEncode({'offset': nextOffset});
-          nextCursor = base64.encode(utf8.encode(nextJson));
-        }
+      if (hasMore) {
+        final nextOffset = offset + items.length;
+        final nextJson = jsonEncode({'offset': nextOffset});
+        nextCursor = base64.encode(utf8.encode(nextJson));
       }
 
       return PaginationResult(items: items, nextCursor: nextCursor, hasMore: hasMore, page: page, pageSize: pageSize);
