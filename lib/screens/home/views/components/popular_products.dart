@@ -45,12 +45,12 @@ class PopularProducts extends ConsumerWidget {
                     right: index == products.length - 1 ? defaultPadding : 0,
                   ),
                   child: ProductCard(
-                    image: '',
+                    image: products[index].image,
                     brandName: '',
                     title: products[index].title,
-                    price: 0.0,
-                    priceAfetDiscount: null,
-                    dicountpercent: null,
+                    price: products[index].price,
+                    priceAfetDiscount: products[index].priceAfterDiscount,
+                    dicountpercent: products[index].discountPercent,
                     press: () {
                       Navigator.pushNamed(context, RouteNames.productDetails,
                           arguments: index.isEven);
