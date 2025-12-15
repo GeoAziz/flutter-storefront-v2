@@ -28,5 +28,10 @@ jobs:
       - name: Run analyzer
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
+      - name: Run focused pagination tests
+        run: |
+          # Run explicit pagination-related tests to ensure they are executed
+          flutter test test/product_repository_pagination_test.dart test/product_pagination_provider_cursor_test.dart test/product_pagination_provider_invalid_cursor_test.dart -r expanded || true
+
       - name: Run tests
         run: flutter test --no-pub
