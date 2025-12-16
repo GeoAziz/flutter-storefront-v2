@@ -41,16 +41,23 @@ class WishlistNotifier extends StateNotifier<List<WishlistItem>> {
 
   Future<void> add(ProductModel product) async {
     if (!_initialized) await _init();
-    
+
     // Check if already in wishlist
     if (_repo.contains(product.id)) return;
-    
+
     final item = WishlistItem(
       id: product.id,
       product: product,
     );
     await _repo.add(item);
     state = _repo.getAll();
+  }
+
+  /// Explicit helper to sync the local wishlist to Firestore for a given user id.
+  /// This is intentionally a separate call to keep the default UX local-first.
+  Future<void> syncToFirestore(String uid) async {
+    if (!_initialized) await _init();
+    await _repo.syncToFirestore(uid);
   }
 
   Future<void> remove(String productId) async {

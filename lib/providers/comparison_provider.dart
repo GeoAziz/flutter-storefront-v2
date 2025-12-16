@@ -62,6 +62,12 @@ class ComparisonNotifier extends StateNotifier<List<ComparisonItem>> {
     return success;
   }
 
+  /// Explicit helper to sync local comparison list to Firestore for a user id.
+  Future<void> syncToFirestore(String uid) async {
+    if (!_initialized) await _init();
+    await _repo.syncToFirestore(uid);
+  }
+
   Future<void> remove(String productId) async {
     if (!_initialized) await _init();
     await _repo.remove(productId);
