@@ -124,7 +124,7 @@ void main() {
       final suggestions = await repo.getSuggestions('blue');
 
       expect(suggestions, isNotEmpty);
-      expect(suggestions, everyElement((s) => s.toLowerCase().contains('blue')));
+      expect(suggestions.every((s) => s.toLowerCase().contains('blue')), isTrue);
     });
 
     test('getSuggestions returns empty for no matches', () async {
