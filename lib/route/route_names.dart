@@ -62,4 +62,6 @@ class RouteNames {
   static const String paymentMethod = '/payment_method';
   static const String addNewCard = '/add_new_card';
   static const String thanksForOrder = '/thanks_order';
+  static const String wishlist = '/wishlist';
+  static const String comparison = '/comparison';
 }

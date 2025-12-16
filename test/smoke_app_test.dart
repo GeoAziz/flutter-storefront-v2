@@ -12,7 +12,8 @@ class _EmptyProductRepository implements ProductRepository {
   Future<List<Product>> fetchProducts() async => [];
 
   @override
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+  Future<PaginationResult<Product>> fetchProductsPaginated(
+      PaginationRequest request) async {
     // Return empty pagination result for smoke test to satisfy the new interface
     return PaginationResult.empty();
   }
@@ -29,16 +30,17 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-  overrides: [productRepositoryProvider.overrideWithValue(mockRepo)],
-    child: const MaterialApp(
-      home: Scaffold(body: SizedBox(width: 600, child: PopularProducts()))),
+        overrides: [productRepositoryProvider.overrideWithValue(mockRepo)],
+        child: const MaterialApp(
+            home:
+                Scaffold(body: SizedBox(width: 600, child: PopularProducts()))),
       ),
     );
 
     // Allow async frames to complete
     await tester.pumpAndSettle();
 
-  // Verify main content header appears; products list is empty in this smoke test
-  expect(find.text('Popular products'), findsOneWidget);
+    // Verify main content header appears; products list is empty in this smoke test
+    expect(find.text('Popular products'), findsOneWidget);
   });
 }

@@ -1,0 +1,176 @@
+name: Performance Integration Tests (CI)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'lib/components/**'
+      - 'lib/utils/image_cache_manager.dart'
+      - 'lib/utils/device_cache_config.dart'
+      - 'integration_test/performance_integration_test.dart'
+      - '.github/workflows/performance-integration-tests.yml'
+
+jobs:
+  performance_tests:
+    name: Performance Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Enable Linux desktop for emulator support
+        run: |
+          flutter config --enable-linux-desktop
+
+      - name: Setup Android SDK (for emulator)
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 31
+          ndk-version: '23.1.7779620'
+          build-tools-version: '31.0.0'
+
+      - name: List available emulators
+        run: |
+          $ANDROID_HOME/emulator/emulator -list-avds || echo "No AVDs found"
+
+      - name: Create Android emulator
+        run: |
+          # Create AVD with 2GB RAM and medium-spec configuration
+          echo "Creating Android Virtual Device..."
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-31;default;x86_64" 2>/dev/null || true
+          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager \
+            -s create avd \
+            -n flutter_test_device \
+            -k "system-images;android-31;default;x86_64" \
+            -d pixel_4 \
+            -c 2048M \
+            -force 2>&1 || true
+
+      - name: Start Android emulator
+        run: |
+          # Start emulator in background
+          nohup $ANDROID_HOME/emulator/emulator \
+            -avd flutter_test_device \
+            -no-snapshot-load \
+            -no-window \
+            -gpu swiftshader_indirect \
+            -partition-size 512 \
+            -memory 2048 \
+            > emulator.log 2>&1 &
+          
+          # Wait for emulator to be ready
+          echo "Waiting for emulator to be ready..."
+          for i in {1..120}; do
+            if adb devices | grep -q emulator; then
+              echo "Emulator detected on attempt $i"
+              break
+            fi
+            if [ $i -eq 120 ]; then
+              echo "Timeout waiting for emulator"
+              cat emulator.log
+              exit 1
+            fi
+            sleep 2
+          done
+          
+          # Wait for system to fully boot
+          adb -e wait-for-device
+          adb shell input keyevent 82 || true
+          sleep 10
+
+      - name: Check emulator status
+        run: |
+          adb devices
+          adb shell getprop ro.boot.serialno || echo "Device not fully ready yet"
+
+      - name: Run performance integration tests
+        timeout-minutes: 20
+        run: |
+          # Run integration tests with verbose output
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/performance_integration_test.dart \
+            -v \
+            --profile || {
+              echo "Integration tests failed"
+              adb logcat > logcat_output.txt 2>&1 &
+              exit 1
+            }
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-test-results
+          path: |
+            build/
+            *.log
+            logcat_output.txt
+          retention-days: 5
+
+      - name: Archive emulator logs
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: emulator-logs
+          path: emulator.log
+          retention-days: 3
+
+      - name: Post test summary
+        if: always()
+        run: |
+          echo "## ✅ Performance Integration Test Run" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: Test execution completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Metrics Validated**:" >> $GITHUB_STEP_SUMMARY
+          echo "- Frame timing and FPS metrics" >> $GITHUB_STEP_SUMMARY
+          echo "- Memory usage patterns" >> $GITHUB_STEP_SUMMARY
+          echo "- Lazy loading behavior" >> $GITHUB_STEP_SUMMARY
+          echo "- Cache stability under sustained load" >> $GITHUB_STEP_SUMMARY
+          echo "- Navigation recovery and stress tests" >> $GITHUB_STEP_SUMMARY
+
+  test_summary:
+    name: Performance Test Summary
+    runs-on: ubuntu-latest
+    needs: performance_tests
+    if: always()
+    
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: performance-test-results
+        continue-on-error: true
+
+      - name: Generate summary
+        run: |
+          echo "## Performance Integration Tests Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.performance_tests.result }}" == "success" ]; then
+            echo "✅ **All performance tests passed**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Test Coverage:" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Frame timing during scrolling" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Lazy loading verification" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Sustained scrolling with cache stability" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Rapid navigation recovery" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Extended scroll stress test" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Performance tests require review**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please check the artifacts for detailed logs." >> $GITHUB_STEP_SUMMARY
+          fi

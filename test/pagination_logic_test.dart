@@ -131,7 +131,8 @@ void main() {
       expect(products.length, equals(50));
     });
 
-    test('fetchProductsPaginated with PageRequest returns first page', () async {
+    test('fetchProductsPaginated with PageRequest returns first page',
+        () async {
       final repo = SimpleMockRepository();
       final request = PageRequest(page: 1, pageSize: 20);
       final result = await repo.fetchProductsPaginated(request);
