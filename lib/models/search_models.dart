@@ -1,5 +1,5 @@
 /// Search domain models and DTOs for Phase 5 enhancement
-/// 
+///
 /// Provides immutable, well-typed abstractions for search queries,
 /// filters, results, and caching strategy.
 
@@ -147,33 +147,35 @@ class SearchQuery {
       'SearchQuery(text: $text, categories: $categories, priceRange: $priceRange, minRating: $minRating, sortBy: $sortBy)';
 
   Map<String, dynamic> toJson() => {
-    'text': text,
-    'categories': categories == null ? null : categories!.toList(),
-    'priceRange': priceRange?.toJson(),
-    'minRating': minRating,
-    'sortBy': sortBy.toString(),
-    'pageSize': pageSize,
-    'cursor': cursor,
-    };
+        'text': text,
+        'categories': categories == null ? null : categories!.toList(),
+        'priceRange': priceRange?.toJson(),
+        'minRating': minRating,
+        'sortBy': sortBy.toString(),
+        'pageSize': pageSize,
+        'cursor': cursor,
+      };
 
   factory SearchQuery.fromJson(Map<String, dynamic> m) => SearchQuery(
-    text: m['text'] as String?,
-    categories: m['categories'] == null
-      ? null
-      : (List<String>.from(m['categories'] as List)).toSet(),
-    priceRange: m['priceRange'] == null
-      ? null
-      : PriceRange.fromJson(Map<String, dynamic>.from(m['priceRange'] as Map)),
-    minRating: m['minRating'] == null ? null : (m['minRating'] as num).toDouble(),
-    sortBy: m['sortBy'] == null
-      ? SearchSortBy.relevance
-      : SearchSortBy.values.firstWhere(
-        (e) => e.toString() == m['sortBy'],
-        orElse: () => SearchSortBy.relevance,
-        ),
-    pageSize: m['pageSize'] as int? ?? 20,
-    cursor: m['cursor'] as String?,
-    );
+        text: m['text'] as String?,
+        categories: m['categories'] == null
+            ? null
+            : (List<String>.from(m['categories'] as List)).toSet(),
+        priceRange: m['priceRange'] == null
+            ? null
+            : PriceRange.fromJson(
+                Map<String, dynamic>.from(m['priceRange'] as Map)),
+        minRating:
+            m['minRating'] == null ? null : (m['minRating'] as num).toDouble(),
+        sortBy: m['sortBy'] == null
+            ? SearchSortBy.relevance
+            : SearchSortBy.values.firstWhere(
+                (e) => e.toString() == m['sortBy'],
+                orElse: () => SearchSortBy.relevance,
+              ),
+        pageSize: m['pageSize'] as int? ?? 20,
+        cursor: m['cursor'] as String?,
+      );
 }
 
 /// Represents active search filters
@@ -190,9 +192,7 @@ class SearchFilter {
 
   /// True if any filters are active
   bool get hasActiveFilters =>
-      selectedCategories.isNotEmpty ||
-      priceRange != null ||
-      minRating != null;
+      selectedCategories.isNotEmpty || priceRange != null || minRating != null;
 
   /// Create a copy with optional field overrides
   SearchFilter copyWith({
@@ -223,9 +223,7 @@ class SearchFilter {
 
   @override
   int get hashCode =>
-      selectedCategories.hashCode ^
-      priceRange.hashCode ^
-      minRating.hashCode;
+      selectedCategories.hashCode ^ priceRange.hashCode ^ minRating.hashCode;
 
   @override
   String toString() =>
@@ -304,9 +302,11 @@ class AvailableFilters {
 
   factory AvailableFilters.fromJson(Map<String, dynamic> m) => AvailableFilters(
         categories: (m['categories'] as List)
-            .map((e) => CategoryOption.fromJson(Map<String, dynamic>.from(e as Map)))
+            .map((e) =>
+                CategoryOption.fromJson(Map<String, dynamic>.from(e as Map)))
             .toList(),
-        priceRange: PriceRange.fromJson(Map<String, dynamic>.from(m['priceRange'] as Map)),
+        priceRange: PriceRange.fromJson(
+            Map<String, dynamic>.from(m['priceRange'] as Map)),
       );
 }
 
@@ -315,7 +315,8 @@ class SearchResult extends PaginationResult<Product> {
   final SearchQuery query;
   final int totalResults;
   final List<String> suggestedQueries; // ["blue shirt", "blue dress", ...]
-  final Map<String, int> availableCategories; // {"electronics": 45, "clothing": 23}
+  final Map<String, int>
+      availableCategories; // {"electronics": 45, "clothing": 23}
   final PriceRange availablePriceRange; // actual min/max in filtered results
 
   SearchResult({
@@ -330,12 +331,12 @@ class SearchResult extends PaginationResult<Product> {
     int? page,
     int? pageSize,
   }) : super(
-    items: items,
-    nextCursor: nextCursor,
-    hasMore: hasMore,
-    page: page,
-    pageSize: pageSize,
-  );
+          items: items,
+          nextCursor: nextCursor,
+          hasMore: hasMore,
+          page: page,
+          pageSize: pageSize,
+        );
 
   Map<String, dynamic> toJson() => {
         'items': items.map((p) => p.toJson()).toList(),
@@ -354,12 +355,14 @@ class SearchResult extends PaginationResult<Product> {
         items: (m['items'] as List)
             .map((e) => Product.fromJson(Map<String, dynamic>.from(e as Map)))
             .toList(),
-        query: SearchQuery.fromJson(Map<String, dynamic>.from(m['query'] as Map)),
+        query:
+            SearchQuery.fromJson(Map<String, dynamic>.from(m['query'] as Map)),
         totalResults: m['totalResults'] as int,
         suggestedQueries: List<String>.from(m['suggestedQueries'] as List),
-        availableCategories: Map<String, int>.from(m['availableCategories'] as Map),
-        availablePriceRange:
-            PriceRange.fromJson(Map<String, dynamic>.from(m['availablePriceRange'] as Map)),
+        availableCategories:
+            Map<String, int>.from(m['availableCategories'] as Map),
+        availablePriceRange: PriceRange.fromJson(
+            Map<String, dynamic>.from(m['availablePriceRange'] as Map)),
         nextCursor: m['nextCursor'] as String?,
         hasMore: m['hasMore'] as bool? ?? false,
         page: m['page'] as int?,

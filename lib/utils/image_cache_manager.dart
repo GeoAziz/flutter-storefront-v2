@@ -5,10 +5,10 @@ import 'device_cache_config.dart';
 ///
 /// Controls disk cache size and eviction so images do not grow unbounded.
 /// Adapts cache limits based on device capabilities (high-end, mid-range, low-end).
-/// 
+///
 /// Current configuration: Mid-range device (safe default).
 /// For adaptive configuration, use [createAdaptiveCacheManager] during app init.
-final CacheManager appImageCacheManager = CacheManager(
+late CacheManager appImageCacheManager = CacheManager(
   Config(
     'appImageCache',
     stalePeriod: const Duration(days: 30),
@@ -27,12 +27,12 @@ final CacheManager appImageCacheManager = CacheManager(
 /// ```
 Future<CacheManager> createAdaptiveCacheManager() async {
   final config = await DeviceCacheConfig.adaptive();
-  return CacheManager(
+  appImageCacheManager = CacheManager(
     Config(
       'appImageCache',
       stalePeriod: config.diskCacheStalePeriod,
       maxNrOfCacheObjects: config.diskCacheObjectCount,
     ),
   );
+  return appImageCacheManager;
 }
-

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/components/network_image_with_loader.dart';
+import 'package:shop/components/lazy_image_widget.dart';
 
 import '../../../../constants.dart';
 
@@ -19,7 +19,7 @@ class ReviewProductInfoCard extends StatelessWidget {
         SizedBox(
           height: 80,
           width: 80,
-          child: NetworkImageWithLoader(image),
+          child: LazyImageWidget(image),
         ),
         const SizedBox(width: defaultPadding),
         Expanded(

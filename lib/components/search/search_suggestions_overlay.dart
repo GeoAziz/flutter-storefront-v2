@@ -1,5 +1,5 @@
 /// SearchSuggestionsOverlay widget for Phase 5
-/// 
+///
 /// Displays search suggestions in a dropdown overlay below the search input.
 
 import 'package:flutter/material.dart';

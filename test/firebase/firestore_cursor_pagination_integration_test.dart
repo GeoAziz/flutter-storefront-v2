@@ -6,16 +6,19 @@ import 'package:flutter_test/flutter_test.dart';
 // Requires the emulator to be running locally and FIREBASE_EMULATOR=true in environment.
 
 void main() {
-  final runEmulator = (Platform.environment['FIREBASE_EMULATOR'] ?? '').toLowerCase() == 'true';
+  final runEmulator =
+      (Platform.environment['FIREBASE_EMULATOR'] ?? '').toLowerCase() == 'true';
   const host = '127.0.0.1';
   const port = 8080;
   const project = 'demo-no-project';
-  final baseUrl = Uri.parse('http://$host:$port/v1/projects/$project/databases/(default)');
+  final baseUrl =
+      Uri.parse('http://$host:$port/v1/projects/$project/databases/(default)');
 
   group('Firestore cursor pagination integration (REST)', () {
     test('cursor pagination returns multiple pages', () async {
       if (!runEmulator) {
-        print('Skipping emulator integration test. Set FIREBASE_EMULATOR=true to run.');
+        print(
+            'Skipping emulator integration test. Set FIREBASE_EMULATOR=true to run.');
         return;
       }
 
@@ -24,11 +27,13 @@ void main() {
 
       // Helper: create a document (auto-id) in the collection via POST to /documents/{collection}
       Future<void> putDoc(DateTime createdAt, int price, String name) async {
-  final url = baseUrl.resolve('documents/$collection');
+        final url = baseUrl.resolve('documents/$collection');
         final body = json.encode({
           'fields': {
             'name': {'stringValue': name},
-            'createdAt': {'timestampValue': createdAt.toUtc().toIso8601String()},
+            'createdAt': {
+              'timestampValue': createdAt.toUtc().toIso8601String()
+            },
             'price': {'integerValue': price.toString()},
           }
         });
@@ -40,14 +45,16 @@ void main() {
         if (resp.statusCode < 200 || resp.statusCode >= 300) {
           // Debug aid: print URL and response body
           // ignore: avoid_print
-          print('PUT-POST to ${url.toString()} returned ${resp.statusCode}: $respBody');
+          print(
+              'PUT-POST to ${url.toString()} returned ${resp.statusCode}: $respBody');
           throw StateError('Failed to put doc: ${resp.statusCode} $respBody');
         }
       }
 
       // Helper: run structuredQuery via REST runQuery
-      Future<List<Map<String, dynamic>>> runQuery({DateTime? startAfter, int limit = 10}) async {
-  final url = baseUrl.resolve('documents:runQuery');
+      Future<List<Map<String, dynamic>>> runQuery(
+          {DateTime? startAfter, int limit = 10}) async {
+        final url = baseUrl.resolve('documents:runQuery');
         final orderBy = [
           {
             'field': {'fieldPath': 'createdAt'},
@@ -56,7 +63,9 @@ void main() {
         ];
 
         final structuredQuery = {
-          'from': [ {'collectionId': collection} ],
+          'from': [
+            {'collectionId': collection}
+          ],
           'orderBy': orderBy,
           'limit': limit,
         };
@@ -91,7 +100,7 @@ void main() {
 
       // Clean up previous test docs by listing and deleting existing docs in the collection.
       try {
-  final listUrl = baseUrl.resolve('documents/$collection');
+        final listUrl = baseUrl.resolve('documents/$collection');
         final listReq = await client.getUrl(listUrl);
         final listResp = await listReq.close();
         final listBody = await listResp.transform(utf8.decoder).join();
@@ -105,7 +114,8 @@ void main() {
                 // name is full resource path; convert to relative '/documents/...' path
                 try {
                   final uri = Uri.parse(name);
-                  final rel = uri.path.replaceFirst('/v1/projects/$project/databases/(default)', '');
+                  final rel = uri.path.replaceFirst(
+                      '/v1/projects/$project/databases/(default)', '');
                   final delUrl = baseUrl.resolve(rel);
                   final delReq = await client.deleteUrl(delUrl);
                   final delResp = await delReq.close();
@@ -128,12 +138,14 @@ void main() {
       final page1Docs = await runQuery(limit: 10);
       expect(page1Docs.length, 10);
       final last1 = page1Docs.last;
-      final last1Created = DateTime.parse((last1['fields']['createdAt']['timestampValue'] as String));
+      final last1Created = DateTime.parse(
+          (last1['fields']['createdAt']['timestampValue'] as String));
 
       final page2Docs = await runQuery(startAfter: last1Created, limit: 10);
       expect(page2Docs.length, 10);
       final last2 = page2Docs.last;
-      final last2Created = DateTime.parse((last2['fields']['createdAt']['timestampValue'] as String));
+      final last2Created = DateTime.parse(
+          (last2['fields']['createdAt']['timestampValue'] as String));
 
       final page3Docs = await runQuery(startAfter: last2Created, limit: 10);
       expect(page3Docs.length, 5);

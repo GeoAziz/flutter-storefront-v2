@@ -44,11 +44,14 @@ class ProductModel {
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
-      id: map['id'] as String? ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      id: map['id'] as String? ??
+          DateTime.now().millisecondsSinceEpoch.toString(),
       image: map['image'] as String,
       brandName: map['brandName'] as String,
       title: map['title'] as String,
-      price: (map['price'] is int) ? (map['price'] as int).toDouble() : (map['price'] as double),
+      price: (map['price'] is int)
+          ? (map['price'] as int).toDouble()
+          : (map['price'] as double),
       priceAfetDiscount: map['priceAfetDiscount'] != null
           ? (map['priceAfetDiscount'] is int
               ? (map['priceAfetDiscount'] as int).toDouble()
@@ -56,7 +59,9 @@ class ProductModel {
           : null,
       dicountpercent: map['dicountpercent'] as int?,
       rating: map['rating'] != null
-          ? (map['rating'] is int ? (map['rating'] as int).toDouble() : (map['rating'] as double))
+          ? (map['rating'] is int
+              ? (map['rating'] as int).toDouble()
+              : (map['rating'] as double))
           : null,
       reviewCount: map['reviewCount'] as int?,
       description: map['description'] as String?,

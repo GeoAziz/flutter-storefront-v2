@@ -26,11 +26,11 @@ class ComparisonRepository {
   /// Returns true if added successfully, false if limit reached.
   Future<bool> add(ComparisonItem item) async {
     if (!_isInitialized) await init();
-    
+
     if (_box!.length >= maxItems && !_box!.containsKey(item.id)) {
       return false; // At max capacity
     }
-    
+
     await _box!.put(item.id, item.toMap());
     return true;
   }
@@ -41,17 +41,17 @@ class ComparisonRepository {
   }
 
   List<ComparisonItem> getAll() {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
-    return _box!.values
-        .map((e) {
-          final map = Map<String, dynamic>.from(e as Map);
-          return ComparisonItem.fromMap(map);
-        })
-        .toList();
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
+    return _box!.values.map((e) {
+      final map = Map<String, dynamic>.from(e as Map);
+      return ComparisonItem.fromMap(map);
+    }).toList();
   }
 
   bool contains(String id) {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
     return _box!.containsKey(id);
   }
 
@@ -61,12 +61,14 @@ class ComparisonRepository {
   }
 
   int count() {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
     return _box!.length;
   }
 
   bool isFull() {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
     return _box!.length >= maxItems;
   }
 
@@ -75,9 +77,13 @@ class ComparisonRepository {
   Future<void> syncToFirestore(String uid) async {
     try {
       final items = getAll();
-      final docRef = FirebaseFirestore.instance.collection('comparisons').doc(uid);
+      final docRef =
+          FirebaseFirestore.instance.collection('comparisons').doc(uid);
       final productIds = items.map((i) => i.product.id).toList();
-      await docRef.set({'productIds': productIds, 'updatedAt': FieldValue.serverTimestamp()});
+      await docRef.set({
+        'productIds': productIds,
+        'updatedAt': FieldValue.serverTimestamp()
+      });
     } catch (e) {
       // ignore errors for Sprint 1; log in dev mode
       // ignore: avoid_print

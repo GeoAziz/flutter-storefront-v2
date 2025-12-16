@@ -6,7 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 class StorageService {
   final FirebaseStorage _storage;
 
-  StorageService({FirebaseStorage? storage}) : _storage = storage ?? FirebaseStorage.instance;
+  StorageService({FirebaseStorage? storage})
+      : _storage = storage ?? FirebaseStorage.instance;
 
   /// Upload a file to storage at `path` and return the download URL.
   Future<String> uploadFile(File file, String path) async {

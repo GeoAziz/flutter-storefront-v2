@@ -108,7 +108,8 @@ void main() {
         title: 'Product New',
         price: 999.99,
       );
-      final success = await repo.add(ComparisonItem(id: product1.id, product: product1));
+      final success =
+          await repo.add(ComparisonItem(id: product1.id, product: product1));
 
       expect(success, true);
       expect(repo.count(), 4);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants.dart';
-import '../../components/network_image_with_loader.dart';
+import '../../components/lazy_image_widget.dart';
 import '../../providers/wishlist_provider.dart';
 
 class WishlistScreen extends ConsumerWidget {
@@ -53,15 +53,17 @@ class WishlistScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final item = wishlistItems[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: defaultPadding / 2),
                   child: Row(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(defaultBorderRadious),
+                        borderRadius:
+                            BorderRadius.circular(defaultBorderRadious),
                         child: SizedBox(
                           width: 100,
                           height: 100,
-                          child: NetworkImageWithLoader(
+                          child: LazyImageWidget(
                             item.product.image,
                             radius: defaultBorderRadious,
                           ),
@@ -119,7 +121,8 @@ class WishlistScreen extends ConsumerWidget {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('${item.product.title} removed from wishlist'),
+                                content: Text(
+                                    '${item.product.title} removed from wishlist'),
                                 duration: const Duration(milliseconds: 1500),
                               ),
                             );

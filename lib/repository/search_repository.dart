@@ -1,5 +1,5 @@
 /// Search Repository abstraction for Phase 5
-/// 
+///
 /// Defines the interface for search operations, including querying,
 /// suggestions, and available filter metadata.
 
@@ -7,32 +7,32 @@ import 'package:shop/models/search_models.dart';
 import 'package:shop/repository/product_repository.dart';
 
 /// Abstract repository for search operations
-/// 
+///
 /// Implementations can provide mock (in-memory) or real (API-based) search.
 abstract class SearchRepository {
   /// Perform a search with optional filters and sorting
-  /// 
+  ///
   /// Returns a SearchResult with items, metadata, and pagination cursor.
   Future<SearchResult> search(SearchQuery query);
 
   /// Get search suggestions based on partial text input
-  /// 
+  ///
   /// Used for auto-complete in SearchInputField.
   /// Returns list of suggested queries (e.g., ["blue shirt", "blue jeans", ...])
   Future<List<String>> getSuggestions(String partial);
 
   /// Get available categories for filter UI
-  /// 
+  ///
   /// Returns list of CategoryOption with counts.
   Future<List<CategoryOption>> getCategories();
 
   /// Get price range bounds for the current product catalog
-  /// 
+  ///
   /// Used to set min/max limits on PriceRangeSlider.
   Future<PriceRange> getPriceRange();
 
   /// Get available filters (categories + price range combined)
-  /// 
+  ///
   /// Convenience method to fetch both in one call.
   Future<AvailableFilters> getAvailableFilters() async {
     final categories = await getCategories();
@@ -45,7 +45,7 @@ abstract class SearchRepository {
 }
 
 /// Mock implementation of SearchRepository for MVP and testing
-/// 
+///
 /// Performs in-memory search/filtering on a deterministic product list.
 class MockSearchRepository implements SearchRepository {
   List<Product> _allProducts;

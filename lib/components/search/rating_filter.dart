@@ -1,5 +1,5 @@
 /// RatingFilter widget for Phase 5
-/// 
+///
 /// Displays star rating selection buttons for minimum rating filter.
 
 import 'package:flutter/material.dart';

@@ -75,7 +75,9 @@ class FirestoreSearchRepository implements SearchRepository {
         return q.orderBy('createdAt', descending: true);
       case SearchSortBy.popularity:
         // Popularity field may not exist; fall back to createdAt desc
-        return q.orderBy('popularity', descending: true).orderBy('createdAt', descending: true);
+        return q
+            .orderBy('popularity', descending: true)
+            .orderBy('createdAt', descending: true);
       case SearchSortBy.relevance:
       default:
         // Relevance requires full-text search; fallback to createdAt desc.
@@ -169,7 +171,8 @@ class FirestoreSearchRepository implements SearchRepository {
           createdAtMs = DateTime.now().millisecondsSinceEpoch;
         }
 
-        final nextJson = jsonEncode({'createdAt': createdAtMs, 'id': lastDoc.id});
+        final nextJson =
+            jsonEncode({'createdAt': createdAtMs, 'id': lastDoc.id});
         nextCursor = base64.encode(utf8.encode(nextJson));
       }
 
@@ -255,7 +258,8 @@ class FirestoreSearchRepository implements SearchRepository {
 
     if (_cache != null) {
       try {
-        await _cache!.setAvailableFilters(AvailableFilters(categories: list, priceRange: const PriceRange(min: 0, max: 0)));
+        await _cache!.setAvailableFilters(AvailableFilters(
+            categories: list, priceRange: const PriceRange(min: 0, max: 0)));
       } catch (_) {}
     }
 
@@ -285,7 +289,8 @@ class FirestoreSearchRepository implements SearchRepository {
     final pr = PriceRange(min: min ?? 0.0, max: max ?? 0.0);
     if (_cache != null) {
       try {
-        await _cache!.setAvailableFilters(AvailableFilters(categories: const [], priceRange: pr));
+        await _cache!.setAvailableFilters(
+            AvailableFilters(categories: const [], priceRange: pr));
       } catch (_) {}
     }
 
@@ -306,7 +311,8 @@ class FirestoreSearchRepository implements SearchRepository {
     final categories = await categoriesFuture;
     final priceRange = await priceRangeFuture;
 
-    final filters = AvailableFilters(categories: categories, priceRange: priceRange);
+    final filters =
+        AvailableFilters(categories: categories, priceRange: priceRange);
 
     if (_cache != null) {
       try {

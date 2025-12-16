@@ -7,7 +7,8 @@ final wishlistRepositoryProvider = Provider<WishlistRepository>((ref) {
   return WishlistRepository();
 });
 
-final wishlistProvider = StateNotifierProvider<WishlistNotifier, List<WishlistItem>>((ref) {
+final wishlistProvider =
+    StateNotifierProvider<WishlistNotifier, List<WishlistItem>>((ref) {
   final repo = ref.read(wishlistRepositoryProvider);
   return WishlistNotifier(repo);
 });
@@ -19,7 +20,8 @@ final wishlistCountProvider = Provider<int>((ref) {
 });
 
 /// Provider to check if a specific product is in wishlist
-final isProductInWishlistProvider = Provider.family<bool, String>((ref, productId) {
+final isProductInWishlistProvider =
+    Provider.family<bool, String>((ref, productId) {
   final items = ref.watch(wishlistProvider);
   return items.any((item) => item.product.id == productId);
 });

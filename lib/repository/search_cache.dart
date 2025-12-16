@@ -1,5 +1,5 @@
 /// Search-specific cache layer for Phase 5
-/// 
+///
 /// Wraps the existing HiveCache and MemoryCache to provide search result caching
 /// with automatic key generation, TTL management, and cache statistics.
 
@@ -10,7 +10,7 @@ import 'package:shop/services/cache/hive_cache.dart';
 /// Cache key generator for search results
 class _SearchCacheKeyGenerator {
   /// Generate a cache key from a search query
-  /// 
+  ///
   /// Format: search:text:categories:priceRange:minRating:sortBy
   static String forQuery(SearchQuery query) {
     final key = 'search:'
@@ -74,7 +74,7 @@ class SearchCache {
   DateTime _lastEviction = DateTime.now();
 
   /// Create a new search cache with the given HiveCache and TTL
-  /// 
+  ///
   /// [hiveCache]: The underlying persistent cache (Hive)
   /// [ttl]: Time-to-live for cached search results (default: 1 hour)
   SearchCache(
@@ -83,7 +83,7 @@ class SearchCache {
   }) : _ttl = ttl;
 
   /// Cache a search result
-  /// 
+  ///
   /// Stores in both memory (for immediate access) and Hive (for persistence).
   Future<void> setSearchResult(
     SearchQuery query,
@@ -95,7 +95,7 @@ class SearchCache {
   }
 
   /// Retrieve a cached search result
-  /// 
+  ///
   /// Returns null if not cached or if cache has expired (TTL exceeded).
   Future<SearchResult?> getSearchResult(SearchQuery query) async {
     final key = _SearchCacheKeyGenerator.forQuery(query);

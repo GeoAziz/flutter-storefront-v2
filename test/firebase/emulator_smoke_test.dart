@@ -21,14 +21,16 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     // Point to emulator
-    FirebaseFirestore.instance.settings = const Settings(host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true);
+    FirebaseFirestore.instance.settings = const Settings(
+        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true);
   });
 
   test('emulator can read/write a document', () async {
     final col = FirebaseFirestore.instance.collection('test_emulator');
     final docRef = col.doc('smoke_test');
 
-    await docRef.set({'hello': 'world', 'createdAt': FieldValue.serverTimestamp()});
+    await docRef
+        .set({'hello': 'world', 'createdAt': FieldValue.serverTimestamp()});
     final snapshot = await docRef.get();
     expect(snapshot.exists, isTrue);
     expect(snapshot.data()?['hello'], 'world');

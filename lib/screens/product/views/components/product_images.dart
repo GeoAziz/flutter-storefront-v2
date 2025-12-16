@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/components/network_image_with_loader.dart';
+import '/components/lazy_image_widget.dart';
 
 import '../../../../constants.dart';
 
@@ -54,7 +54,7 @@ class _ProductImagesState extends State<ProductImages> {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(defaultBorderRadious * 2),
                   ),
-                  child: NetworkImageWithLoader(widget.images[index]),
+                  child: LazyImageWidget(widget.images[index]),
                 ),
               ),
             ),

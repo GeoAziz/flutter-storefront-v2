@@ -32,17 +32,17 @@ class WishlistRepository {
   }
 
   List<WishlistItem> getAll() {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
-    return _box!.values
-        .map((e) {
-          final map = Map<String, dynamic>.from(e as Map);
-          return WishlistItem.fromMap(map);
-        })
-        .toList();
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
+    return _box!.values.map((e) {
+      final map = Map<String, dynamic>.from(e as Map);
+      return WishlistItem.fromMap(map);
+    }).toList();
   }
 
   bool contains(String id) {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
     return _box!.containsKey(id);
   }
 
@@ -52,7 +52,8 @@ class WishlistRepository {
   }
 
   int count() {
-    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
+    if (!_isInitialized)
+      throw StateError('Repository not initialized. Call init() first.');
     return _box!.length;
   }
 
@@ -62,7 +63,10 @@ class WishlistRepository {
     try {
       final items = getAll();
       final batch = FirebaseFirestore.instance.batch();
-      final base = FirebaseFirestore.instance.collection('wishlists').doc(uid).collection('items');
+      final base = FirebaseFirestore.instance
+          .collection('wishlists')
+          .doc(uid)
+          .collection('items');
       for (final item in items) {
         final docRef = base.doc(item.id);
         batch.set(docRef, item.toMap());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants.dart';
-import '../../components/network_image_with_loader.dart';
+import '../../components/lazy_image_widget.dart';
 import '../../providers/comparison_provider.dart';
 
 class ComparisonScreen extends ConsumerWidget {
@@ -102,16 +102,17 @@ class ComparisonScreen extends ConsumerWidget {
                           ),
                           ...comparisonItems.map((item) {
                             return Padding(
-                              padding: const EdgeInsets.only(right: defaultPadding),
+                              padding:
+                                  const EdgeInsets.only(right: defaultPadding),
                               child: Column(
                                 children: [
                                   ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(defaultBorderRadious),
+                                    borderRadius: BorderRadius.circular(
+                                        defaultBorderRadious),
                                     child: SizedBox(
                                       width: 120,
                                       height: 120,
-                                      child: NetworkImageWithLoader(
+                                      child: LazyImageWidget(
                                         item.product.image,
                                         radius: defaultBorderRadious,
                                       ),
@@ -124,7 +125,9 @@ class ComparisonScreen extends ConsumerWidget {
                                       item.product.title,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.labelSmall,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -155,8 +158,7 @@ class ComparisonScreen extends ConsumerWidget {
                       _ComparisonRow(
                         label: 'Rating',
                         items: comparisonItems
-                            .map((item) =>
-                                '${item.product.rating ?? 'N/A'} ⭐')
+                            .map((item) => '${item.product.rating ?? 'N/A'} ⭐')
                             .toList(),
                       ),
                       // Review count row

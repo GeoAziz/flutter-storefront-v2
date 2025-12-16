@@ -1,5 +1,5 @@
 /// PriceRangeSlider widget for Phase 5
-/// 
+///
 /// Provides dual-thumb slider for selecting min/max price range.
 
 import 'package:flutter/material.dart';
@@ -83,9 +83,9 @@ class _PriceRangeSliderState extends ConsumerState<PriceRangeSlider> {
             values: RangeValues(currentMin, currentMax),
             min: widget.availableRange.min,
             max: widget.availableRange.max,
-            divisions: ((widget.availableRange.max - widget.availableRange.min) *
-                    2)
-                .toInt(), // 0.50 increments
+            divisions:
+                ((widget.availableRange.max - widget.availableRange.min) * 2)
+                    .toInt(), // 0.50 increments
             activeColor: theme.primaryColor,
             inactiveColor: Colors.grey[300],
             labels: RangeLabels(

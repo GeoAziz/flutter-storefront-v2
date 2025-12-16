@@ -11,19 +11,24 @@ void main() {
     addTearDown(container.dispose);
 
     // create a provider container and manually access the notifier
-    final syncStatusNotifier = container.read(syncStatusProvider.notifier) as SyncStatusNotifier;
+    final syncStatusNotifier =
+        container.read(syncStatusProvider.notifier) as SyncStatusNotifier;
 
-  // Simulate: directly call notifier methods as SyncManager would
-  syncStatusNotifier.setSyncing('wishlist');
-  expect(container.read(syncStatusProvider)['wishlist']?.status, SyncStatus.syncing);
+    // Simulate: directly call notifier methods as SyncManager would
+    syncStatusNotifier.setSyncing('wishlist');
+    expect(container.read(syncStatusProvider)['wishlist']?.status,
+        SyncStatus.syncing);
 
-  syncStatusNotifier.setSuccess('wishlist');
-  expect(container.read(syncStatusProvider)['wishlist']?.status, SyncStatus.success);
+    syncStatusNotifier.setSuccess('wishlist');
+    expect(container.read(syncStatusProvider)['wishlist']?.status,
+        SyncStatus.success);
 
-  syncStatusNotifier.setSyncing('comparison');
-  expect(container.read(syncStatusProvider)['comparison']?.status, SyncStatus.syncing);
+    syncStatusNotifier.setSyncing('comparison');
+    expect(container.read(syncStatusProvider)['comparison']?.status,
+        SyncStatus.syncing);
 
-  syncStatusNotifier.setFailed('comparison', 'error');
-  expect(container.read(syncStatusProvider)['comparison']?.status, SyncStatus.failed);
+    syncStatusNotifier.setFailed('comparison', 'error');
+    expect(container.read(syncStatusProvider)['comparison']?.status,
+        SyncStatus.failed);
   });
 }

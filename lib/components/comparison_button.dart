@@ -58,8 +58,8 @@ class ComparisonButton extends ConsumerWidget {
       child: Icon(
         isInComparison ? Icons.check_circle : Icons.radio_button_unchecked,
         size: size,
-        color: isInComparison 
-            ? (activeColor ?? Colors.green) 
+        color: isInComparison
+            ? (activeColor ?? Colors.green)
             : (inactiveColor ?? Colors.grey),
       ),
     );

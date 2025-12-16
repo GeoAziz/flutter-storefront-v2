@@ -10,7 +10,8 @@ import 'package:shop/services/cache/hive_cache.dart';
 import 'package:shop/services/service_locator.dart' show cacheProvider;
 
 // Toggle: set at compile time using --dart-define=USE_MOCK_SEARCH=true/false
-const bool _useMockSearch = bool.fromEnvironment('USE_MOCK_SEARCH', defaultValue: true);
+const bool _useMockSearch =
+    bool.fromEnvironment('USE_MOCK_SEARCH', defaultValue: true);
 
 /// Provides the SearchCache singleton
 final searchCacheProvider = Provider<SearchCache>((ref) {

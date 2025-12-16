@@ -25,7 +25,8 @@ class FirebaseService {
     } else {
       // Enable offline persistence for Firestore in production/dev by default
       try {
-        FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
+        FirebaseFirestore.instance.settings =
+            const Settings(persistenceEnabled: true);
       } catch (_) {
         // ignore: avoid_print
         if (bool.fromEnvironment('dart.vm.product') == false) {

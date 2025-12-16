@@ -1,5 +1,5 @@
 /// SortDropdown widget for Phase 5
-/// 
+///
 /// Provides dropdown for selecting search result sort order.
 
 import 'package:flutter/material.dart';

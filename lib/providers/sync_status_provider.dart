@@ -12,8 +12,10 @@ class SyncState {
 
   factory SyncState.idle() => const SyncState(SyncStatus.idle);
   factory SyncState.syncing() => SyncState(SyncStatus.syncing);
-  factory SyncState.success([DateTime? at]) => SyncState(SyncStatus.success, lastSyncedAt: at);
-  factory SyncState.failed(String? error) => SyncState(SyncStatus.failed, error: error);
+  factory SyncState.success([DateTime? at]) =>
+      SyncState(SyncStatus.success, lastSyncedAt: at);
+  factory SyncState.failed(String? error) =>
+      SyncState(SyncStatus.failed, error: error);
 }
 
 /// Map keys are feature names like 'wishlist' or 'comparison'.
@@ -24,14 +26,16 @@ class SyncStatusNotifier extends StateNotifier<Map<String, SyncState>> {
 
   void setSyncing(String key) => state = {...state, key: SyncState.syncing()};
 
-  void setSuccess(String key) => state = {...state, key: SyncState.success(DateTime.now())};
+  void setSuccess(String key) =>
+      state = {...state, key: SyncState.success(DateTime.now())};
 
-  void setFailed(String key, String? error) => state = {...state, key: SyncState.failed(error)};
+  void setFailed(String key, String? error) =>
+      state = {...state, key: SyncState.failed(error)};
 
   SyncState getState(String key) => state[key] ?? SyncState.idle();
 }
 
-final syncStatusProvider = StateNotifierProvider<SyncStatusNotifier, Map<String, SyncState>>((ref) {
+final syncStatusProvider =
+    StateNotifierProvider<SyncStatusNotifier, Map<String, SyncState>>((ref) {
   return SyncStatusNotifier();
 });
-

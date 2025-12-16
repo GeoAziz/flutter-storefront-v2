@@ -1,5 +1,5 @@
 /// Riverpod providers for Phase 5 search functionality
-/// 
+///
 /// Manages search state including debounced input, filters, sorting,
 /// results pagination, and suggestions overlay.
 
@@ -20,8 +20,7 @@ final selectedCategoriesProvider =
     StateProvider<Set<String>>((ref) => const {});
 
 /// Selected price range filter
-final selectedPriceRangeProvider =
-    StateProvider<PriceRange?>((ref) => null);
+final selectedPriceRangeProvider = StateProvider<PriceRange?>((ref) => null);
 
 /// Selected minimum rating filter
 final selectedMinRatingProvider = StateProvider<double?>((ref) => null);
@@ -42,7 +41,7 @@ final searchPageSizeProvider = StateProvider<int>((ref) => 20);
 // ============================================================================
 
 /// Debounced search query (computed from filters and text)
-/// 
+///
 /// Debounces text input by 300ms to avoid excessive API calls
 final searchQueryProvider = FutureProvider<SearchQuery>((ref) async {
   final text = ref.watch(searchTextProvider);
@@ -239,7 +238,7 @@ final setSearchTextProvider = Provider<void Function(String)>((ref) {
   return (String text) {
     ref.read(searchTextProvider.notifier).state = text;
     ref.read(hasSearchedProvider.notifier).state = text.isNotEmpty;
-    
+
     // Show suggestions if text is not empty
     if (text.isNotEmpty) {
       ref.read(showSuggestionsProvider.notifier).state = true;

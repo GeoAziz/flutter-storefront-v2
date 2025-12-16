@@ -74,9 +74,9 @@ void main() {
       });
 
       test('returns true when category selected', () {
-        container
-            .read(selectedCategoriesProvider.notifier)
-            .state = {'category1'};
+        container.read(selectedCategoriesProvider.notifier).state = {
+          'category1'
+        };
         final hasFilters = container.read(hasActiveFiltersProvider);
         expect(hasFilters, true);
       });
@@ -113,7 +113,7 @@ void main() {
 
       test('removes category when already selected', () {
         final toggle = container.read(toggleCategoryProvider);
-        
+
         // Add category
         toggle('cat1');
         expect(
@@ -146,9 +146,10 @@ void main() {
       test('clears all filter state', () {
         // Set up various filters
         container.read(searchTextProvider.notifier).state = 'test';
-        container
-            .read(selectedCategoriesProvider.notifier)
-            .state = {'cat1', 'cat2'};
+        container.read(selectedCategoriesProvider.notifier).state = {
+          'cat1',
+          'cat2'
+        };
         container.read(selectedPriceRangeProvider.notifier).state =
             const PriceRange(min: 10, max: 50);
         container.read(selectedMinRatingProvider.notifier).state = 4.0;
@@ -158,8 +159,8 @@ void main() {
         container.read(showFilterPanelProvider.notifier).state = true;
         container.read(hasSearchedProvider.notifier).state = true;
 
-  // Reset all filters
-  container.read(resetSearchProvider)();
+        // Reset all filters
+        container.read(resetSearchProvider)();
 
         // Verify all filters are cleared
         expect(container.read(searchTextProvider), '');

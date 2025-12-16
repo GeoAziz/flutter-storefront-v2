@@ -1,5 +1,5 @@
 /// FilterPanel widget for Phase 5
-/// 
+///
 /// Combines all search filters into a collapsible panel.
 
 import 'package:flutter/material.dart';

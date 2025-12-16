@@ -33,8 +33,8 @@ class WishlistButton extends ConsumerWidget {
       child: Icon(
         isInWishlist ? Icons.favorite : Icons.favorite_border,
         size: size,
-        color: isInWishlist 
-            ? (activeColor ?? Colors.red) 
+        color: isInWishlist
+            ? (activeColor ?? Colors.red)
             : (inactiveColor ?? Colors.grey),
       ),
     );

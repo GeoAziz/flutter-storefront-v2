@@ -22,7 +22,8 @@ class WishlistItem {
   factory WishlistItem.fromMap(Map<String, dynamic> map) {
     return WishlistItem(
       id: map['id'] as String,
-      product: ProductModel.fromMap(Map<String, dynamic>.from(map['product'] as Map)),
+      product: ProductModel.fromMap(
+          Map<String, dynamic>.from(map['product'] as Map)),
       addedAt: DateTime.parse(map['addedAt'] as String),
     );
   }

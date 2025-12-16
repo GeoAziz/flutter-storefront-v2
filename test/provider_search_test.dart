@@ -7,7 +7,8 @@ import 'package:shop/services/cache/hive_cache.dart';
 import 'package:shop/repository/search_cache.dart';
 
 void main() {
-  test('searchResultsProvider returns results when repository seeded', () async {
+  test('searchResultsProvider returns results when repository seeded',
+      () async {
     final seededRepo = MockSearchRepository.seeded(500);
 
     // Prepare a HiveCache instance for the SearchCache used by providers

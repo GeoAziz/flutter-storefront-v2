@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import '../../models/product_model.dart';
-import '../network_image_with_loader.dart';
+import '../lazy_image_widget.dart';
 import '../wishlist_button.dart';
 import '../comparison_button.dart';
 
@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
             aspectRatio: 1.15,
             child: Stack(
               children: [
-                NetworkImageWithLoader(imageSource, radius: defaultBorderRadious),
+                LazyImageWidget(imageSource, radius: defaultBorderRadious),
                 if (dicountpercent != null)
                   Positioned(
                     right: defaultPadding / 2,

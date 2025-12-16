@@ -41,9 +41,21 @@ void main() {
 
     test('search returns products within price range', () async {
       final products = [
-        Product(id: 'p1', title: 'Cheap Item', image: 'assets/test.png', price: 5.0),
-        Product(id: 'p2', title: 'Medium Item', image: 'assets/test.png', price: 50.0),
-        Product(id: 'p3', title: 'Expensive Item', image: 'assets/test.png', price: 200.0),
+        Product(
+            id: 'p1',
+            title: 'Cheap Item',
+            image: 'assets/test.png',
+            price: 5.0),
+        Product(
+            id: 'p2',
+            title: 'Medium Item',
+            image: 'assets/test.png',
+            price: 50.0),
+        Product(
+            id: 'p3',
+            title: 'Expensive Item',
+            image: 'assets/test.png',
+            price: 200.0),
       ];
 
       final repo = MockSearchRepository(products: products);
@@ -81,13 +93,20 @@ void main() {
   group('MockSearchRepository - Sorting', () {
     test('applies price ascending sort', () async {
       final products = [
-        Product(id: 'p1', title: 'Expensive', image: 'assets/test.png', price: 100.0),
-        Product(id: 'p2', title: 'Cheap', image: 'assets/test.png', price: 10.0),
-        Product(id: 'p3', title: 'Medium', image: 'assets/test.png', price: 50.0),
+        Product(
+            id: 'p1',
+            title: 'Expensive',
+            image: 'assets/test.png',
+            price: 100.0),
+        Product(
+            id: 'p2', title: 'Cheap', image: 'assets/test.png', price: 10.0),
+        Product(
+            id: 'p3', title: 'Medium', image: 'assets/test.png', price: 50.0),
       ];
 
       final repo = MockSearchRepository(products: products);
-      final query = const SearchQuery(pageSize: 20, sortBy: SearchSortBy.priceAsc);
+      final query =
+          const SearchQuery(pageSize: 20, sortBy: SearchSortBy.priceAsc);
       final result = await repo.search(query);
 
       expect(result.items[0].price, equals(10.0));
@@ -97,13 +116,20 @@ void main() {
 
     test('applies price descending sort', () async {
       final products = [
-        Product(id: 'p1', title: 'Cheap', image: 'assets/test.png', price: 10.0),
-        Product(id: 'p2', title: 'Medium', image: 'assets/test.png', price: 50.0),
-        Product(id: 'p3', title: 'Expensive', image: 'assets/test.png', price: 100.0),
+        Product(
+            id: 'p1', title: 'Cheap', image: 'assets/test.png', price: 10.0),
+        Product(
+            id: 'p2', title: 'Medium', image: 'assets/test.png', price: 50.0),
+        Product(
+            id: 'p3',
+            title: 'Expensive',
+            image: 'assets/test.png',
+            price: 100.0),
       ];
 
       final repo = MockSearchRepository(products: products);
-      final query = const SearchQuery(pageSize: 20, sortBy: SearchSortBy.priceDesc);
+      final query =
+          const SearchQuery(pageSize: 20, sortBy: SearchSortBy.priceDesc);
       final result = await repo.search(query);
 
       expect(result.items[0].price, equals(100.0));
@@ -115,16 +141,29 @@ void main() {
   group('MockSearchRepository - Suggestions', () {
     test('getSuggestions returns matching titles', () async {
       final products = [
-        Product(id: 'p1', title: 'Blue Cotton Shirt', image: 'assets/test.png', price: 29.99),
-        Product(id: 'p2', title: 'Blue Denim Jeans', image: 'assets/test.png', price: 49.99),
-        Product(id: 'p3', title: 'Red Shirt', image: 'assets/test.png', price: 34.99),
+        Product(
+            id: 'p1',
+            title: 'Blue Cotton Shirt',
+            image: 'assets/test.png',
+            price: 29.99),
+        Product(
+            id: 'p2',
+            title: 'Blue Denim Jeans',
+            image: 'assets/test.png',
+            price: 49.99),
+        Product(
+            id: 'p3',
+            title: 'Red Shirt',
+            image: 'assets/test.png',
+            price: 34.99),
       ];
 
       final repo = MockSearchRepository(products: products);
       final suggestions = await repo.getSuggestions('blue');
 
       expect(suggestions, isNotEmpty);
-      expect(suggestions.every((s) => s.toLowerCase().contains('blue')), isTrue);
+      expect(
+          suggestions.every((s) => s.toLowerCase().contains('blue')), isTrue);
     });
 
     test('getSuggestions returns empty for no matches', () async {

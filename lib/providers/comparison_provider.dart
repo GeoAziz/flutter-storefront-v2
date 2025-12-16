@@ -7,7 +7,8 @@ final comparisonRepositoryProvider = Provider<ComparisonRepository>((ref) {
   return ComparisonRepository();
 });
 
-final comparisonProvider = StateNotifierProvider<ComparisonNotifier, List<ComparisonItem>>((ref) {
+final comparisonProvider =
+    StateNotifierProvider<ComparisonNotifier, List<ComparisonItem>>((ref) {
   final repo = ref.read(comparisonRepositoryProvider);
   return ComparisonNotifier(repo);
 });
@@ -25,7 +26,8 @@ final isComparisonFullProvider = Provider<bool>((ref) {
 });
 
 /// Provider to check if a specific product is in comparison
-final isProductInComparisonProvider = Provider.family<bool, String>((ref, productId) {
+final isProductInComparisonProvider =
+    Provider.family<bool, String>((ref, productId) {
   final items = ref.watch(comparisonProvider);
   return items.any((item) => item.product.id == productId);
 });
@@ -47,10 +49,10 @@ class ComparisonNotifier extends StateNotifier<List<ComparisonItem>> {
 
   Future<bool> add(ProductModel product) async {
     if (!_initialized) await _init();
-    
+
     // Check if already in comparison
     if (_repo.contains(product.id)) return true;
-    
+
     final item = ComparisonItem(
       id: product.id,
       product: product,

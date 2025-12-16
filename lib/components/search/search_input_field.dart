@@ -1,5 +1,5 @@
 /// SearchInputField widget for Phase 5
-/// 
+///
 /// Provides a debounced text input for search with real-time suggestions overlay.
 
 import 'package:flutter/material.dart';

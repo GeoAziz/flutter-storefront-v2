@@ -1,5 +1,5 @@
 /// CategoryFilter widget for Phase 5
-/// 
+///
 /// Displays selectable category filter chips with item counts.
 
 import 'package:flutter/material.dart';

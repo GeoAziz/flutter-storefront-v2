@@ -10,7 +10,7 @@ import '../utils/image_cache_manager.dart';
 ///
 /// Uses VisibilityDetector to delay network requests for off-screen images,
 /// reducing memory pressure during fast scrolling. Images fade in as they load.
-/// 
+///
 /// Best used in scrollable lists (ListView, GridView) for optimal performance.
 class LazyImageWidget extends StatefulWidget {
   final String imageUrl;

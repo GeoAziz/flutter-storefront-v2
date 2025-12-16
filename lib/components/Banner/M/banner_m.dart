@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../network_image_with_loader.dart';
+import '../../lazy_image_widget.dart';
 
 class BannerM extends StatelessWidget {
   const BannerM(
@@ -21,7 +21,7 @@ class BannerM extends StatelessWidget {
         onTap: press,
         child: Stack(
           children: [
-            NetworkImageWithLoader(image, radius: 0),
+            LazyImageWidget(image, radius: 0),
             Container(color: Colors.black45),
             ...children,
           ],

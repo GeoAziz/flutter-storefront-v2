@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../network_image_with_loader.dart';
+import '../lazy_image_widget.dart';
 
 class SecondaryProductCard extends StatelessWidget {
   const SecondaryProductCard({
@@ -38,7 +38,7 @@ class SecondaryProductCard extends StatelessWidget {
             aspectRatio: 1.15,
             child: Stack(
               children: [
-                NetworkImageWithLoader(image, radius: defaultBorderRadious),
+                LazyImageWidget(image, radius: defaultBorderRadious),
                 if (dicountpercent != null)
                   Positioned(
                     right: defaultPadding / 2,

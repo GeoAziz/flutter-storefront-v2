@@ -257,9 +257,12 @@ class FirestoreProductRepository implements ProductRepository {
   final FirebaseFirestore _firestore;
   final String collectionPath;
 
-  FirestoreProductRepository({FirebaseFirestore? firestore, this.collectionPath = 'products'}) : _firestore = firestore ?? FirebaseFirestore.instance;
+  FirestoreProductRepository(
+      {FirebaseFirestore? firestore, this.collectionPath = 'products'})
+      : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<List<Product>> _docsToProducts(List<QueryDocumentSnapshot> docs) async {
+  Future<List<Product>> _docsToProducts(
+      List<QueryDocumentSnapshot> docs) async {
     return docs.map((d) {
       final m = d.data() as Map<String, dynamic>;
       return Product(
@@ -267,7 +270,9 @@ class FirestoreProductRepository implements ProductRepository {
         title: m['title'] as String? ?? '',
         image: m['image'] as String? ?? '',
         price: (m['price'] as num?)?.toDouble() ?? 0.0,
-        priceAfterDiscount: m['priceAfterDiscount'] == null ? null : (m['priceAfterDiscount'] as num).toDouble(),
+        priceAfterDiscount: m['priceAfterDiscount'] == null
+            ? null
+            : (m['priceAfterDiscount'] as num).toDouble(),
         discountPercent: m['discountPercent'] as int?,
       );
     }).toList();
@@ -275,7 +280,10 @@ class FirestoreProductRepository implements ProductRepository {
 
   /// Helper to fetch up to [limit] documents ordered by createdAt desc.
   Future<List<QueryDocumentSnapshot>> _fetchUpTo(int limit) async {
-    final q = _firestore.collection(collectionPath).orderBy('createdAt', descending: true).limit(limit);
+    final q = _firestore
+        .collection(collectionPath)
+        .orderBy('createdAt', descending: true)
+        .limit(limit);
     final snap = await q.get();
     return snap.docs;
   }
@@ -287,7 +295,8 @@ class FirestoreProductRepository implements ProductRepository {
   }
 
   @override
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+  Future<PaginationResult<Product>> fetchProductsPaginated(
+      PaginationRequest request) async {
     if (request is PageRequest) {
       final page = request.page;
       final pageSize = request.pageSize;
@@ -307,7 +316,12 @@ class FirestoreProductRepository implements ProductRepository {
         final nextJson = jsonEncode({'offset': nextOffset});
         nextCursor = base64.encode(utf8.encode(nextJson));
       }
-      return PaginationResult(items: items, nextCursor: nextCursor, hasMore: hasMore, page: page, pageSize: pageSize);
+      return PaginationResult(
+          items: items,
+          nextCursor: nextCursor,
+          hasMore: hasMore,
+          page: page,
+          pageSize: pageSize);
     }
 
     if (request is CursorRequest) {
@@ -315,7 +329,8 @@ class FirestoreProductRepository implements ProductRepository {
 
       // Build base query: order by createdAt desc and documentId desc to
       // produce a deterministic ordering that we can resume using startAfter.
-      Query q = _firestore.collection(collectionPath)
+      Query q = _firestore
+          .collection(collectionPath)
           .orderBy('createdAt', descending: true)
           .orderBy(FieldPath.documentId, descending: true)
           .limit(limit);
@@ -334,7 +349,8 @@ class FirestoreProductRepository implements ProductRepository {
             q = q.startAfter([ts, lastId]);
           }
         } catch (e) {
-          throw FormatException('Invalid or expired pagination cursor: ${e.toString()}');
+          throw FormatException(
+              'Invalid or expired pagination cursor: ${e.toString()}');
         }
       }
 
@@ -371,11 +387,13 @@ class FirestoreProductRepository implements ProductRepository {
           createdAtMs = DateTime.now().millisecondsSinceEpoch;
         }
 
-        final nextJson = jsonEncode({'createdAt': createdAtMs, 'id': lastDoc.id});
+        final nextJson =
+            jsonEncode({'createdAt': createdAtMs, 'id': lastDoc.id});
         nextCursor = base64.encode(utf8.encode(nextJson));
       }
 
-      return PaginationResult(items: items, nextCursor: nextCursor, hasMore: hasMore);
+      return PaginationResult(
+          items: items, nextCursor: nextCursor, hasMore: hasMore);
     }
 
     return PaginationResult.empty();

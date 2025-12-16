@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop/components/list_tile/divider_list_tile.dart';
-import 'package:shop/components/network_image_with_loader.dart';
+import 'package:shop/components/lazy_image_widget.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/route_names.dart';
 
@@ -33,8 +33,7 @@ class ProfileScreen extends StatelessWidget {
               onTap: () {},
               child: const AspectRatio(
                 aspectRatio: 1.8,
-                child:
-                    NetworkImageWithLoader("https://i.imgur.com/dz0BBom.png"),
+                child: LazyImageWidget("https://i.imgur.com/dz0BBom.png"),
               ),
             ),
           ),

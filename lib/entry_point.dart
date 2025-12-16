@@ -97,17 +97,20 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                      constraints:
+                          const BoxConstraints(minWidth: 16, minHeight: 16),
                       child: Center(
                         child: Text(
                           '${ref.watch(comparisonCountProvider)}',
-                          style: const TextStyle(color: Colors.white, fontSize: 10),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 10),
                         ),
                       ),
                     ),
                   ),
                   // sync indicator
-                  if ((ref.watch(syncStatusProvider)['comparison']?.status) == SyncStatus.syncing)
+                  if ((ref.watch(syncStatusProvider)['comparison']?.status) ==
+                      SyncStatus.syncing)
                     const Positioned(
                       right: 10,
                       top: 0,
@@ -147,17 +150,20 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                      constraints:
+                          const BoxConstraints(minWidth: 16, minHeight: 16),
                       child: Center(
                         child: Text(
                           '${ref.watch(wishlistCountProvider)}',
-                          style: const TextStyle(color: Colors.white, fontSize: 10),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 10),
                         ),
                       ),
                     ),
                   ),
                   // sync indicator for wishlist
-                  if ((ref.watch(syncStatusProvider)['wishlist']?.status) == SyncStatus.syncing)
+                  if ((ref.watch(syncStatusProvider)['wishlist']?.status) ==
+                      SyncStatus.syncing)
                     const Positioned(
                       right: 10,
                       top: 0,
