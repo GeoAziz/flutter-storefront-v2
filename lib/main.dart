@@ -7,6 +7,7 @@ import 'services/service_locator.dart';
 import 'repositories/wishlist_repository.dart';
 import 'repositories/comparison_repository.dart';
 import 'services/firebase_service.dart';
+import 'utils/device_cache_config.dart';
 
 // Initialize services (cache + telemetry) before running the app. This is done
 // behind feature flags set in `lib/constants.dart`.
@@ -16,11 +17,16 @@ Future<void> main() async {
   // Initialize Firebase (local emulator or real project can be configured later)
   await FirebaseService.initialize();
 
-  // Limit in-memory image cache to help control peak memory usage.
-  // `maximumSize` is number of cached images; `maximumSizeBytes` is an approximate
-  // byte limit for the in-memory image cache. Tune these to meet your memory budget.
-  PaintingBinding.instance.imageCache.maximumSize = 100; // number of images
-  PaintingBinding.instance.imageCache.maximumSizeBytes = 20 * 1024 * 1024; // ~20 MB
+  // Detect device capabilities and set adaptive cache limits.
+  final cacheConfig = await DeviceCacheConfig.adaptive();
+  // ignore: avoid_print
+  print('Cache Config: $cacheConfig');
+  
+  // Apply in-memory image cache limits based on device class.
+  PaintingBinding.instance.imageCache.maximumSize =
+      cacheConfig.inMemoryCacheCount;
+  PaintingBinding.instance.imageCache.maximumSizeBytes =
+      cacheConfig.inMemoryCacheBytes;
 
   // Initialize repositories for Wishlist and Comparison features
   final wishlistRepo = WishlistRepository();
