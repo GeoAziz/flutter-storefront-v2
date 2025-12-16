@@ -5,10 +5,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop/screens/home/views/components/popular_products.dart';
 import 'package:shop/providers/repository_providers.dart';
 import 'package:shop/repository/product_repository.dart';
+import 'package:shop/repository/pagination.dart';
 
 class _EmptyProductRepository implements ProductRepository {
   @override
   Future<List<Product>> fetchProducts() async => [];
+
+  @override
+  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+    // Return empty pagination result for smoke test to satisfy the new interface
+    return PaginationResult.empty();
+  }
 }
 
 void main() {
