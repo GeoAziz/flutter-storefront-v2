@@ -175,6 +175,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
       );
+    case RouteNames.wishlist:
+      return MaterialPageRoute(
+        builder: (context) => const WishlistScreen(),
+      );
+    case RouteNames.comparison:
+      return MaterialPageRoute(
+        builder: (context) => const ComparisonScreen(),
+      );
     // (Legacy commented cases removed — router now matches canonical RouteNames.)
     default:
       return MaterialPageRoute(

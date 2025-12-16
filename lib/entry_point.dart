@@ -1,18 +1,21 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/screen_export.dart';
 import 'package:shop/route/route_names.dart';
+import 'package:shop/providers/wishlist_provider.dart';
+import 'package:shop/providers/comparison_provider.dart';
 
-class EntryPoint extends StatefulWidget {
+class EntryPoint extends ConsumerStatefulWidget {
   const EntryPoint({super.key});
 
   @override
-  State<EntryPoint> createState() => _EntryPointState();
+  ConsumerState<EntryPoint> createState() => _EntryPointState();
 }
 
-class _EntryPointState extends State<EntryPoint> {
+class _EntryPointState extends ConsumerState<EntryPoint> {
   final List _pages = const [
     HomeScreen(),
     DiscoverScreen(),
@@ -64,6 +67,85 @@ class _EntryPointState extends State<EntryPoint> {
               colorFilter: ColorFilter.mode(
                   Theme.of(context).textTheme.bodyLarge!.color!,
                   BlendMode.srcIn),
+            ),
+          ),
+          // Comparison button with badge
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, RouteNames.comparison);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/Compare.svg",
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).textTheme.bodyLarge!.color!,
+                        BlendMode.srcIn),
+                  ),
+                  // badge
+                  Positioned(
+                    right: 0,
+                    top: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                      child: Center(
+                        child: Text(
+                          '${ref.watch(comparisonCountProvider)}',
+                          style: const TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Wishlist button with badge
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, RouteNames.wishlist);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/Wishlist.svg",
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).textTheme.bodyLarge!.color!,
+                        BlendMode.srcIn),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                      child: Center(
+                        child: Text(
+                          '${ref.watch(wishlistCountProvider)}',
+                          style: const TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           IconButton(
