@@ -166,11 +166,6 @@ import 'package:shop/providers/repository_providers.dart';
 
 class MockPaginationRepository extends ProductRepository {
   final List<Product> _allProducts;
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> cdaf03d (feat(phase-3): Complete UI integration for pagination with infinite scroll)
   MockPaginationRepository({List<Product>? products})
       : _allProducts = products ?? _generateMockProducts();
 
