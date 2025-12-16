@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
+          Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: defaultPadding / 2, vertical: defaultPadding / 2),
