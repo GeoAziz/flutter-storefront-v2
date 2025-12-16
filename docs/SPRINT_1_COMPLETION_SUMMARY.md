@@ -386,6 +386,26 @@ PR: https://github.com/GeoAziz/flutter-storefront-v2/pull/39
 
 Please review the PR for code, tests, and docs. After merge, the features will be available from the main app UI.
 
+### Firebase Integration (Sprint 1 progress)
+
+What was implemented in Sprint 1:
+
+- Added Firebase dependencies (`firebase_core`, `cloud_firestore`, `firebase_storage`, `firebase_auth`, `firebase_analytics`) and updated `pubspec.yaml`.
+- Created `FirebaseService` helper to initialize Firebase and optionally wire the local emulator.
+- Added `StorageService` for basic upload/getDownloadURL operations.
+- Added `ProductRepository` skeleton for cursor-based pagination and a Riverpod provider.
+- Added optional `syncToFirestore` helpers to the existing `WishlistRepository` and `ComparisonRepository` to allow non-blocking sync to Firestore (best-effort in Sprint 1).
+- Created emulator setup guide and CI guidance docs, plus an emulator smoke test demonstrating how to run integration tests against the emulator.
+
+Remaining items (Phase 7 / next sprint tasks):
+
+- Full Firestore seeding scripts and secure rules review.
+- Authentication flow integration (linking wishlists/comparisons to user accounts).
+- Production-grade sync conflict resolution strategies beyond last-write-wins.
+- Automated CI job that starts/stops emulator and runs integration tests.
+
+Status: Core Firebase wiring and developer guides are in place. Full cross-device sync and auth binding will be completed in Phase 7.
+
 ---
 
 ## Success Metrics
