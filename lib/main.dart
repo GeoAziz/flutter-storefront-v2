@@ -16,6 +16,12 @@ Future<void> main() async {
   // Initialize Firebase (local emulator or real project can be configured later)
   await FirebaseService.initialize();
 
+  // Limit in-memory image cache to help control peak memory usage.
+  // `maximumSize` is number of cached images; `maximumSizeBytes` is an approximate
+  // byte limit for the in-memory image cache. Tune these to meet your memory budget.
+  PaintingBinding.instance.imageCache.maximumSize = 100; // number of images
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 20 * 1024 * 1024; // ~20 MB
+
   // Initialize repositories for Wishlist and Comparison features
   final wishlistRepo = WishlistRepository();
   await wishlistRepo.init();
