@@ -48,55 +48,50 @@ abstract class SearchRepository {
 /// 
 /// Performs in-memory search/filtering on a deterministic product list.
 class MockSearchRepository implements SearchRepository {
-  final List<Product> _allProducts;
+  List<Product> _allProducts;
 
   MockSearchRepository({List<Product>? products})
-      : _allProducts = products ?? _generateMockProducts();
+      : _allProducts = products ?? _generateMockProducts(5);
 
-  static List<Product> _generateMockProducts() {
-    // Generate a diverse set of mock products with categories and ratings
-    return [
-      Product(
-        id: 'p1',
-        title: 'Blue Cotton T-Shirt',
-        image: 'assets/images/product1.png',
-        price: 29.99,
-        priceAfterDiscount: 24.99,
-        discountPercent: 17,
-      ),
-      Product(
-        id: 'p2',
-        title: 'Black Denim Jeans',
-        image: 'assets/images/product2.png',
-        price: 79.99,
-        priceAfterDiscount: null,
-        discountPercent: null,
-      ),
-      Product(
-        id: 'p3',
-        title: 'Running Shoes Sneaker',
-        image: 'assets/images/product3.png',
-        price: 99.99,
-        priceAfterDiscount: 79.99,
-        discountPercent: 20,
-      ),
-      Product(
-        id: 'p4',
-        title: 'Winter Wool Jacket',
-        image: 'assets/images/product4.png',
-        price: 149.99,
-        priceAfterDiscount: 119.99,
-        discountPercent: 20,
-      ),
-      Product(
-        id: 'p5',
-        title: 'Blue Denim Jacket',
-        image: 'assets/images/product5.png',
-        price: 89.99,
-        priceAfterDiscount: 69.99,
-        discountPercent: 22,
-      ),
-    ];
+  /// Create a seeded mock repository with [count] generated products.
+  factory MockSearchRepository.seeded(int count) {
+    return MockSearchRepository(products: _generateMockProducts(count));
+  }
+
+  /// Replace internal products with [count] generated products.
+  void seedProducts(int count) {
+    _allProducts = _generateMockProducts(count);
+  }
+
+  static List<Product> _generateMockProducts(int count) {
+    // Generate [count] mock products with varied titles and prices.
+    final List<Product> list = [];
+    for (var i = 0; i < count; i++) {
+      final id = 'p${i + 1}';
+      final title = (i % 5 == 0)
+          ? 'Blue Cotton T-Shirt $i'
+          : (i % 5 == 1)
+              ? 'Black Denim Jeans $i'
+              : (i % 5 == 2)
+                  ? 'Running Shoes Sneaker $i'
+                  : (i % 5 == 3)
+                      ? 'Winter Wool Jacket $i'
+                      : 'Blue Denim Jacket $i';
+      final image = 'assets/images/product${(i % 8) + 1}.png';
+      final price = 10.0 + (i % 100) * 1.25;
+      final hasDiscount = i % 4 == 0;
+      list.add(Product(
+        id: id,
+        title: title,
+        image: image,
+        price: double.parse(price.toStringAsFixed(2)),
+        priceAfterDiscount: hasDiscount
+            ? double.parse((price * 0.85).toStringAsFixed(2))
+            : null,
+        discountPercent: hasDiscount ? 15 : null,
+      ));
+    }
+    return list;
   }
 
   @override

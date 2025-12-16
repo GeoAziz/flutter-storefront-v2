@@ -44,6 +44,16 @@ class PriceRange {
 
   @override
   String toString() => 'PriceRange(min: $min, max: $max)';
+
+  Map<String, dynamic> toJson() => {
+        'min': min,
+        'max': max,
+      };
+
+  factory PriceRange.fromJson(Map<String, dynamic> m) => PriceRange(
+        min: (m['min'] as num).toDouble(),
+        max: (m['max'] as num).toDouble(),
+      );
 }
 
 /// Represents a search query with optional filters and sorting
@@ -135,6 +145,35 @@ class SearchQuery {
   @override
   String toString() =>
       'SearchQuery(text: $text, categories: $categories, priceRange: $priceRange, minRating: $minRating, sortBy: $sortBy)';
+
+  Map<String, dynamic> toJson() => {
+    'text': text,
+    'categories': categories == null ? null : categories!.toList(),
+    'priceRange': priceRange?.toJson(),
+    'minRating': minRating,
+    'sortBy': sortBy.toString(),
+    'pageSize': pageSize,
+    'cursor': cursor,
+    };
+
+  factory SearchQuery.fromJson(Map<String, dynamic> m) => SearchQuery(
+    text: m['text'] as String?,
+    categories: m['categories'] == null
+      ? null
+      : (List<String>.from(m['categories'] as List)).toSet(),
+    priceRange: m['priceRange'] == null
+      ? null
+      : PriceRange.fromJson(Map<String, dynamic>.from(m['priceRange'] as Map)),
+    minRating: m['minRating'] == null ? null : (m['minRating'] as num).toDouble(),
+    sortBy: m['sortBy'] == null
+      ? SearchSortBy.relevance
+      : SearchSortBy.values.firstWhere(
+        (e) => e.toString() == m['sortBy'],
+        orElse: () => SearchSortBy.relevance,
+        ),
+    pageSize: m['pageSize'] as int? ?? 20,
+    cursor: m['cursor'] as String?,
+    );
 }
 
 /// Represents active search filters
@@ -219,6 +258,18 @@ class CategoryOption {
 
   @override
   String toString() => 'CategoryOption(id: $id, name: $name, count: $count)';
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'count': count,
+      };
+
+  factory CategoryOption.fromJson(Map<String, dynamic> m) => CategoryOption(
+        id: m['id'] as String,
+        name: m['name'] as String,
+        count: m['count'] as int,
+      );
 }
 
 /// Available filter options for UI population
@@ -245,6 +296,18 @@ class AvailableFilters {
   @override
   String toString() =>
       'AvailableFilters(categories: ${categories.length}, priceRange: $priceRange)';
+
+  Map<String, dynamic> toJson() => {
+        'categories': categories.map((c) => c.toJson()).toList(),
+        'priceRange': priceRange.toJson(),
+      };
+
+  factory AvailableFilters.fromJson(Map<String, dynamic> m) => AvailableFilters(
+        categories: (m['categories'] as List)
+            .map((e) => CategoryOption.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList(),
+        priceRange: PriceRange.fromJson(Map<String, dynamic>.from(m['priceRange'] as Map)),
+      );
 }
 
 /// Extended search results with metadata
@@ -273,6 +336,35 @@ class SearchResult extends PaginationResult<Product> {
     page: page,
     pageSize: pageSize,
   );
+
+  Map<String, dynamic> toJson() => {
+        'items': items.map((p) => p.toJson()).toList(),
+        'query': query.toJson(),
+        'totalResults': totalResults,
+        'suggestedQueries': suggestedQueries,
+        'availableCategories': availableCategories,
+        'availablePriceRange': availablePriceRange.toJson(),
+        'nextCursor': nextCursor,
+        'hasMore': hasMore,
+        'page': page,
+        'pageSize': pageSize,
+      };
+
+  factory SearchResult.fromJson(Map<String, dynamic> m) => SearchResult(
+        items: (m['items'] as List)
+            .map((e) => Product.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList(),
+        query: SearchQuery.fromJson(Map<String, dynamic>.from(m['query'] as Map)),
+        totalResults: m['totalResults'] as int,
+        suggestedQueries: List<String>.from(m['suggestedQueries'] as List),
+        availableCategories: Map<String, int>.from(m['availableCategories'] as Map),
+        availablePriceRange:
+            PriceRange.fromJson(Map<String, dynamic>.from(m['availablePriceRange'] as Map)),
+        nextCursor: m['nextCursor'] as String?,
+        hasMore: m['hasMore'] as bool? ?? false,
+        page: m['page'] as int?,
+        pageSize: m['pageSize'] as int?,
+      );
 
   /// Create an empty search result
   factory SearchResult.empty({

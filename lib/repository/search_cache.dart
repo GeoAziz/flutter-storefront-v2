@@ -90,9 +90,8 @@ class SearchCache {
     SearchResult result,
   ) async {
     final key = _SearchCacheKeyGenerator.forQuery(query);
-
-    // Store with TTL
-    await _hiveCache.set(key, result, ttl: _ttl);
+    // Store serialized JSON with TTL
+    await _hiveCache.set(key, result.toJson(), ttl: _ttl);
   }
 
   /// Retrieve a cached search result
@@ -100,7 +99,14 @@ class SearchCache {
   /// Returns null if not cached or if cache has expired (TTL exceeded).
   Future<SearchResult?> getSearchResult(SearchQuery query) async {
     final key = _SearchCacheKeyGenerator.forQuery(query);
-    return await _hiveCache.get<SearchResult>(key);
+    final data = await _hiveCache.get(key);
+    if (data == null) {
+      _misses++;
+      return null;
+    }
+
+    _hits++;
+    return SearchResult.fromJson(Map<String, dynamic>.from(data as Map));
   }
 
   /// Cache search suggestions
@@ -112,19 +118,33 @@ class SearchCache {
   /// Retrieve cached suggestions
   Future<List<String>?> getSuggestions(String partial) async {
     final key = _SearchCacheKeyGenerator.forSuggestions(partial);
-    return await _hiveCache.get<List<String>>(key);
+    final data = await _hiveCache.get(key);
+    if (data == null) {
+      _misses++;
+      return null;
+    }
+
+    _hits++;
+    return List<String>.from(data as List);
   }
 
   /// Cache available filters
   Future<void> setAvailableFilters(AvailableFilters filters) async {
     const key = _SearchCacheKeyGenerator.forAvailableFilters;
-    await _hiveCache.set(key, filters, ttl: const Duration(hours: 2));
+    await _hiveCache.set(key, filters.toJson(), ttl: const Duration(hours: 2));
   }
 
   /// Retrieve cached available filters
   Future<AvailableFilters?> getAvailableFilters() async {
     const key = _SearchCacheKeyGenerator.forAvailableFilters;
-    return await _hiveCache.get<AvailableFilters>(key);
+    final data = await _hiveCache.get(key);
+    if (data == null) {
+      _misses++;
+      return null;
+    }
+
+    _hits++;
+    return AvailableFilters.fromJson(Map<String, dynamic>.from(data as Map));
   }
 
   /// Clear all search-related cache entries

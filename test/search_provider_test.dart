@@ -158,8 +158,8 @@ void main() {
         container.read(showFilterPanelProvider.notifier).state = true;
         container.read(hasSearchedProvider.notifier).state = true;
 
-        // Reset all filters
-        container.read(resetSearchProvider);
+  // Reset all filters
+  container.read(resetSearchProvider)();
 
         // Verify all filters are cleared
         expect(container.read(searchTextProvider), '');

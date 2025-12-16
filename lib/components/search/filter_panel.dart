@@ -123,7 +123,8 @@ class _FilterPanelState extends ConsumerState<FilterPanel>
                   if (hasActiveFilters)
                     TextButton(
                       onPressed: () {
-                        ref.read(resetSearchProvider);
+                        // Call the reset action returned by the provider
+                        ref.read(resetSearchProvider)();
                       },
                       child: const Text('Reset'),
                     ),

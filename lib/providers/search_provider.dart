@@ -200,17 +200,19 @@ final hasActiveFiltersProvider = Provider<bool>((ref) {
       minRating != null;
 });
 
-/// Reset all search filters
-final resetSearchProvider = Provider<void>((ref) {
-  ref.read(searchTextProvider.notifier).state = '';
-  ref.read(selectedCategoriesProvider.notifier).state = const {};
-  ref.read(selectedPriceRangeProvider.notifier).state = null;
-  ref.read(selectedMinRatingProvider.notifier).state = null;
-  ref.read(searchSortByProvider.notifier).state = SearchSortBy.relevance;
-  ref.read(searchCursorProvider.notifier).state = null;
-  ref.read(showSuggestionsProvider.notifier).state = false;
-  ref.read(showFilterPanelProvider.notifier).state = false;
-  ref.read(hasSearchedProvider.notifier).state = false;
+/// Reset all search filters (action provider)
+final resetSearchProvider = Provider<void Function()>((ref) {
+  return () {
+    ref.read(searchTextProvider.notifier).state = '';
+    ref.read(selectedCategoriesProvider.notifier).state = const {};
+    ref.read(selectedPriceRangeProvider.notifier).state = null;
+    ref.read(selectedMinRatingProvider.notifier).state = null;
+    ref.read(searchSortByProvider.notifier).state = SearchSortBy.relevance;
+    ref.read(searchCursorProvider.notifier).state = null;
+    ref.read(showSuggestionsProvider.notifier).state = false;
+    ref.read(showFilterPanelProvider.notifier).state = false;
+    ref.read(hasSearchedProvider.notifier).state = false;
+  };
 });
 
 /// Toggle a category filter
