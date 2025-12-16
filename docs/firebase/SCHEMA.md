@@ -88,3 +88,17 @@ service cloud.firestore {
 Notes
 - For Sprint 1 we will seed the emulator with product documents and thumbnails. Thumbnails help save memory and bandwidth in the app.
 - In Phase 7 we will add admin tools for uploading products and resizing images (Cloud Functions or CDN).
+
+Sync examples
+----------------
+For Sprint 1 repositories there are helper methods that perform best-effort syncs to Firestore:
+
+```dart
+// sync wishlist for current user
+await wishlistRepository.syncToFirestore(uid);
+
+// sync comparison list
+await comparisonRepository.syncToFirestore(uid);
+```
+
+These methods are non-blocking (they catch and log errors) to avoid impacting local UX. They are intended to be used when the app detects connectivity and an authenticated user.
