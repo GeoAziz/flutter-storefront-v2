@@ -30,6 +30,53 @@
 
 This shop app template comes with 100+ screens. Some of these pages are Splash, Login, Signup, Home, Product, Search, Cart, Profile, Payment, Wallet, Order Tracking, and Order History. Additionally, all pages support both light and dark themes.You just need to connect the UI to your preferred backend, such as Firebase, WordPress, or your custom API. You can do anything you want with it.
 
+## Phase 5: Search & Filtering System
+
+The search and filtering system (Phase 5) provides a production-ready implementation with:
+- **Real-time search** with debounced query processing
+- **Multi-factor filtering** (category, price range, text search)
+- **Caching layer** for optimized performance
+- **Riverpod state management** for reactive updates
+- **Performance profiling** tools for validation
+
+### Quick Start
+
+#### Running the App with Search
+```bash
+# Development mode
+flutter run
+
+# Profile mode (lightweight - optimized for profiling)
+flutter run --profile -t lib/main_perf.dart
+```
+
+#### Automated Performance Profiling
+
+To validate search performance with 500 products:
+
+```bash
+# Run automated profiling script
+dart run tools/profile_automation.dart
+```
+
+This captures:
+- Real-time memory and CPU metrics
+- Frame drop statistics
+- Detailed logs in `profile_logs.txt`
+- Structured report in `profile_report.json`
+
+**Performance Targets:**
+- Peak Memory: < 50 MB
+- Average CPU: < 25%
+- Smooth scrolling: < 1% dropped frames
+
+### Documentation
+
+- **[Phase 5 Completion Summary](docs/PHASE_5_COMPLETION_SUMMARY.md)** — Full architecture, implementation details, and test results
+- **[Performance Profiling Guide](docs/PERF_PROFILING_GUIDE.md)** — Manual profiling with Flutter DevTools
+- **[Automated Profiling Automation](tools/PROFILING_AUTOMATION.md)** — How to run and interpret automated profiling results
+- **[Quick Reference](docs/PHASE_5_QUICK_REF.md)** — Commands, testing checklist, and troubleshooting
+
 <!-- Gif preview -->
 </br >
 </br >
