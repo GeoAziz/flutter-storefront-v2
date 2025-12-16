@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
+// Feature flags (toggle for rollout)
+// These should be overridden by app flavors or environment in production/staging.
+const bool enablePersistentCache = false;
+const bool enableTelemetry = false;
+
 // Just for demo
 const productDemoImg1 = "https://i.imgur.com/CGCyp1d.png";
 const productDemoImg2 = "https://i.imgur.com/AkzWQuJ.png";

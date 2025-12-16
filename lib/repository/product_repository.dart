@@ -1,5 +1,7 @@
 // Minimal ProductRepository abstraction and two simple implementations
 import 'package:shop/repository/pagination.dart';
+import 'package:shop/services/service_locator.dart';
+// telemetry_service type import intentionally omitted; use telemetryService getter.
 
 class Product {
   final String id;
@@ -25,27 +27,57 @@ abstract class ProductRepository {
   /// Fetches products using the specified pagination request (page or cursor based).
   /// Default implementation delegates to fetchProducts() for backward compatibility.
   Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
-    if (request is PageRequest) {
-      final products = await fetchProducts();
-      final pageSize = request.pageSize;
-      final page = request.page;
-      final startIndex = (page - 1) * pageSize;
-      final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
-      
-      final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
-      final hasMore = endIndex < products.length;
-      
-      return PaginationResult(
-        items: items,
-        nextCursor: hasMore ? 'page_${page + 1}' : null,
-        hasMore: hasMore,
-        page: page,
-        pageSize: pageSize,
-      );
+    final telemetry = telemetryService;
+    Object? span;
+    try {
+      span = await telemetry.startSpan('pagination');
+      telemetry.logEvent('pagination_start', {
+        'requestType': request.runtimeType.toString(),
+        if (request is PageRequest) 'page': request.page,
+        if (request is PageRequest) 'pageSize': request.pageSize,
+        if (request is CursorRequest) 'cursor': request.cursor,
+      });
+
+      if (request is PageRequest) {
+        final products = await fetchProducts();
+        final pageSize = request.pageSize;
+        final page = request.page;
+        final startIndex = (page - 1) * pageSize;
+        final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+
+        final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+        final hasMore = endIndex < products.length;
+
+        telemetry.logEvent('pagination_success', {
+          'items': items.length,
+          'hasMore': hasMore,
+          'page': page,
+          'pageSize': pageSize,
+        });
+
+        return PaginationResult(
+          items: items,
+          nextCursor: hasMore ? 'page_${page + 1}' : null,
+          hasMore: hasMore,
+          page: page,
+          pageSize: pageSize,
+        );
+      }
+
+      // Default implementation returns empty for cursor-based requests
+      telemetry.logEvent('pagination_success', {'items': 0, 'hasMore': false});
+      return PaginationResult.empty();
+    } catch (e, st) {
+      try {
+        telemetry.captureException(e, st, context: {'request': request.runtimeType.toString()});
+        telemetry.logEvent('pagination_error', {'error': e.toString()});
+      } catch (_) {}
+      rethrow;
+    } finally {
+      try {
+        await telemetry.finishSpan(span);
+      } catch (_) {}
     }
-    
-    // Default implementation returns empty for cursor-based requests
-    return PaginationResult.empty();
   }
 }
 
@@ -75,26 +107,46 @@ class MockProductRepository implements ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
-    if (request is PageRequest) {
-      final products = await fetchProducts();
-      final pageSize = request.pageSize;
-      final page = request.page;
-      final startIndex = (page - 1) * pageSize;
-      final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
-      
-      final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
-      final hasMore = endIndex < products.length;
-      
-      return PaginationResult(
-        items: items,
-        nextCursor: hasMore ? 'page_${page + 1}' : null,
-        hasMore: hasMore,
-        page: page,
-        pageSize: pageSize,
-      );
+    final telemetry = telemetryService;
+    Object? span;
+    try {
+      span = await telemetry.startSpan('pagination');
+      telemetry.logEvent('pagination_start', {'requestType': request.runtimeType.toString(), if (request is PageRequest) 'page': request.page});
+
+      if (request is PageRequest) {
+        final products = await fetchProducts();
+        final pageSize = request.pageSize;
+        final page = request.page;
+        final startIndex = (page - 1) * pageSize;
+        final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+
+        final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+        final hasMore = endIndex < products.length;
+
+        telemetry.logEvent('pagination_success', {'items': items.length, 'hasMore': hasMore, 'page': page});
+
+        return PaginationResult(
+          items: items,
+          nextCursor: hasMore ? 'page_${page + 1}' : null,
+          hasMore: hasMore,
+          page: page,
+          pageSize: pageSize,
+        );
+      }
+
+      telemetry.logEvent('pagination_success', {'items': 0, 'hasMore': false});
+      return PaginationResult.empty();
+    } catch (e, st) {
+      try {
+        telemetry.captureException(e, st, context: {'request': request.runtimeType.toString()});
+        telemetry.logEvent('pagination_error', {'error': e.toString()});
+      } catch (_) {}
+      rethrow;
+    } finally {
+      try {
+        await telemetry.finishSpan(span);
+      } catch (_) {}
     }
-    
-    return PaginationResult.empty();
   }
 }
 
@@ -107,25 +159,45 @@ class RealProductRepository implements ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
-    if (request is PageRequest) {
-      final products = await fetchProducts();
-      final pageSize = request.pageSize;
-      final page = request.page;
-      final startIndex = (page - 1) * pageSize;
-      final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
-      
-      final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
-      final hasMore = endIndex < products.length;
-      
-      return PaginationResult(
-        items: items,
-        nextCursor: hasMore ? 'page_${page + 1}' : null,
-        hasMore: hasMore,
-        page: page,
-        pageSize: pageSize,
-      );
+    final telemetry = telemetryService;
+    Object? span;
+    try {
+      span = await telemetry.startSpan('pagination');
+      telemetry.logEvent('pagination_start', {'requestType': request.runtimeType.toString(), if (request is PageRequest) 'page': request.page});
+
+      if (request is PageRequest) {
+        final products = await fetchProducts();
+        final pageSize = request.pageSize;
+        final page = request.page;
+        final startIndex = (page - 1) * pageSize;
+        final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+
+        final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+        final hasMore = endIndex < products.length;
+
+        telemetry.logEvent('pagination_success', {'items': items.length, 'hasMore': hasMore, 'page': page});
+
+        return PaginationResult(
+          items: items,
+          nextCursor: hasMore ? 'page_${page + 1}' : null,
+          hasMore: hasMore,
+          page: page,
+          pageSize: pageSize,
+        );
+      }
+
+      telemetry.logEvent('pagination_success', {'items': 0, 'hasMore': false});
+      return PaginationResult.empty();
+    } catch (e, st) {
+      try {
+        telemetry.captureException(e, st, context: {'request': request.runtimeType.toString()});
+        telemetry.logEvent('pagination_error', {'error': e.toString()});
+      } catch (_) {}
+      rethrow;
+    } finally {
+      try {
+        await telemetry.finishSpan(span);
+      } catch (_) {}
     }
-    
-    return PaginationResult.empty();
   }
 }

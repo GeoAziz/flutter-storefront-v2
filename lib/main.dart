@@ -3,11 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
+import 'services/service_locator.dart';
 
-void main() {
+// Initialize services (cache + telemetry) before running the app. This is done
+// behind feature flags set in `lib/constants.dart`.
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initServices();
   // Use ProviderScope to enable Riverpod providers across the app.
   runApp(const ProviderScope(child: MyApp()));
 }
+
 
 // Thanks for using our template. You are using the free version of the template.
 // 🔗 Full template: https://theflutterway.gumroad.com/l/fluttershop
