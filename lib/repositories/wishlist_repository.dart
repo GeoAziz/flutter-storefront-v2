@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/wishlist_item.dart';
 
 class WishlistRepository {
@@ -53,5 +54,24 @@ class WishlistRepository {
   int count() {
     if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
     return _box!.length;
+  }
+
+  /// Optional: Sync local wishlist to Firestore for the given user id.
+  /// This is best-effort and will not throw on failure in Sprint 1.
+  Future<void> syncToFirestore(String uid) async {
+    try {
+      final items = getAll();
+      final batch = FirebaseFirestore.instance.batch();
+      final base = FirebaseFirestore.instance.collection('wishlists').doc(uid).collection('items');
+      for (final item in items) {
+        final docRef = base.doc(item.id);
+        batch.set(docRef, item.toMap());
+      }
+      await batch.commit();
+    } catch (e) {
+      // ignore errors for Sprint 1; log in dev mode
+      // ignore: avoid_print
+      print('[WishlistRepository] syncToFirestore failed: $e');
+    }
   }
 }

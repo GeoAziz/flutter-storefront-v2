@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/comparison_item.dart';
 
 class ComparisonRepository {
@@ -67,5 +68,20 @@ class ComparisonRepository {
   bool isFull() {
     if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
     return _box!.length >= maxItems;
+  }
+
+  /// Optional: Sync local comparison list to Firestore for the given user id.
+  /// Best-effort in Sprint 1; failures are logged but not thrown.
+  Future<void> syncToFirestore(String uid) async {
+    try {
+      final items = getAll();
+      final docRef = FirebaseFirestore.instance.collection('comparisons').doc(uid);
+      final productIds = items.map((i) => i.product.id).toList();
+      await docRef.set({'productIds': productIds, 'updatedAt': FieldValue.serverTimestamp()});
+    } catch (e) {
+      // ignore errors for Sprint 1; log in dev mode
+      // ignore: avoid_print
+      print('[ComparisonRepository] syncToFirestore failed: $e');
+    }
   }
 }
