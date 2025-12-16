@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+import '../../models/product_model.dart';
 import '../network_image_with_loader.dart';
+import '../wishlist_button.dart';
+import '../comparison_button.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -13,6 +16,7 @@ class ProductCard extends StatelessWidget {
     this.priceAfetDiscount,
     this.dicountpercent,
     required this.press,
+    this.product,
   }) : super(key: key);
 
   final String image, brandName, title;
@@ -20,6 +24,7 @@ class ProductCard extends StatelessWidget {
   final double? priceAfetDiscount;
   final int? dicountpercent;
   final VoidCallback press;
+  final ProductModel? product;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +66,20 @@ class ProductCard extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+                    ),
+                  ),
+                // Wishlist and Comparison buttons in bottom-right corner
+                if (product != null)
+                  Positioned(
+                    right: defaultPadding / 2,
+                    bottom: defaultPadding / 2,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        WishlistButton(product: product!, size: 20),
+                        const SizedBox(width: 4),
+                        ComparisonButton(product: product!, size: 20),
+                      ],
                     ),
                   ),
               ],

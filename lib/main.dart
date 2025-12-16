@@ -4,11 +4,21 @@ import 'package:shop/route/route_names.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
 import 'services/service_locator.dart';
+import 'repositories/wishlist_repository.dart';
+import 'repositories/comparison_repository.dart';
 
 // Initialize services (cache + telemetry) before running the app. This is done
 // behind feature flags set in `lib/constants.dart`.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize repositories for Wishlist and Comparison features
+  final wishlistRepo = WishlistRepository();
+  await wishlistRepo.init();
+  
+  final comparisonRepo = ComparisonRepository();
+  await comparisonRepo.init();
+  
   await initServices();
   // Use ProviderScope to enable Riverpod providers across the app.
   runApp(const ProviderScope(child: MyApp()));

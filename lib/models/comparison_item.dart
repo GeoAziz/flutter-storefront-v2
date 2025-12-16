@@ -1,11 +1,11 @@
 import 'product_model.dart';
 
-class WishlistItem {
+class ComparisonItem {
   final String id;
   final ProductModel product;
   final DateTime addedAt;
 
-  WishlistItem({
+  ComparisonItem({
     required this.id,
     required this.product,
     DateTime? addedAt,
@@ -19,8 +19,8 @@ class WishlistItem {
     };
   }
 
-  factory WishlistItem.fromMap(Map<String, dynamic> map) {
-    return WishlistItem(
+  factory ComparisonItem.fromMap(Map<String, dynamic> map) {
+    return ComparisonItem(
       id: map['id'] as String,
       product: ProductModel.fromMap(Map<String, dynamic>.from(map['product'] as Map)),
       addedAt: DateTime.parse(map['addedAt'] as String),
@@ -28,5 +28,5 @@ class WishlistItem {
   }
 
   @override
-  String toString() => 'WishlistItem(id: $id, product: ${product.title})';
+  String toString() => 'ComparisonItem(id: $id, product: ${product.title})';
 }

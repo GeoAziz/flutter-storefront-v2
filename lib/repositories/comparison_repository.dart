@@ -1,8 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import '../models/wishlist_item.dart';
+import '../models/comparison_item.dart';
 
-class WishlistRepository {
-  static const String boxName = 'wishlist_box';
+class ComparisonRepository {
+  static const String boxName = 'comparison_box';
+  static const int maxItems = 4;
 
   Box? _box;
   bool _isInitialized = false;
@@ -20,9 +21,17 @@ class WishlistRepository {
     _isInitialized = true;
   }
 
-  Future<void> add(WishlistItem item) async {
+  /// Add item to comparison, respecting the max 4-item limit.
+  /// Returns true if added successfully, false if limit reached.
+  Future<bool> add(ComparisonItem item) async {
     if (!_isInitialized) await init();
+    
+    if (_box!.length >= maxItems && !_box!.containsKey(item.id)) {
+      return false; // At max capacity
+    }
+    
     await _box!.put(item.id, item.toMap());
+    return true;
   }
 
   Future<void> remove(String id) async {
@@ -30,12 +39,12 @@ class WishlistRepository {
     await _box!.delete(id);
   }
 
-  List<WishlistItem> getAll() {
+  List<ComparisonItem> getAll() {
     if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
     return _box!.values
         .map((e) {
           final map = Map<String, dynamic>.from(e as Map);
-          return WishlistItem.fromMap(map);
+          return ComparisonItem.fromMap(map);
         })
         .toList();
   }
@@ -53,5 +62,10 @@ class WishlistRepository {
   int count() {
     if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
     return _box!.length;
+  }
+
+  bool isFull() {
+    if (!_isInitialized) throw StateError('Repository not initialized. Call init() first.');
+    return _box!.length >= maxItems;
   }
 }
