@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/repository/search_repository.dart';
+import 'package:shop/providers/search_repository_provider.dart';
 import 'package:shop/providers/search_provider.dart';
 import 'package:shop/services/cache/hive_cache.dart';
 import 'package:shop/repository/search_cache.dart';

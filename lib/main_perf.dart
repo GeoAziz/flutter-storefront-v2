@@ -4,7 +4,7 @@ import 'package:shop/constants.dart';
 import 'package:shop/services/service_locator.dart';
 import 'package:shop/theme/theme_data.dart';
 import 'package:shop/repository/search_repository.dart';
-import 'package:shop/providers/search_provider.dart';
+import 'package:shop/providers/search_repository_provider.dart';
 import 'package:shop/screens/search/views/search_screen.dart';
 
 /// Minimal profiling app that directly launches SearchScreen with seeded 500-product repo.

@@ -5,26 +5,8 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/models/search_models.dart';
-import 'package:shop/repository/search_cache.dart';
-import 'package:shop/repository/search_repository.dart';
-import 'package:shop/services/cache/hive_cache.dart';
-import 'package:shop/services/service_locator.dart' show cacheProvider;
-
-// ============================================================================
-// Repositories & Services
-// ============================================================================
-
-/// Provides the SearchRepository singleton
-final searchRepositoryProvider = Provider<SearchRepository>((ref) {
-  // Use MockSearchRepository for MVP - will be replaced with API version
-  return MockSearchRepository();
-});
-
-/// Provides the SearchCache singleton
-final searchCacheProvider = Provider<SearchCache>((ref) {
-  final cache = cacheProvider as HiveCache;
-  return SearchCache(cache);
-});
+import 'package:shop/providers/search_repository_provider.dart'
+    show searchRepositoryProvider, searchCacheProvider;
 
 // ============================================================================
 // Filter State Providers
