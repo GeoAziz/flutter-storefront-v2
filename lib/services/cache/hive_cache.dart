@@ -66,7 +66,8 @@ class HiveCache implements CacheProvider {
   @override
   Future<void> set<T>(String key, T value, {Duration? ttl}) async {
     await _ensureInit();
-    final expiry = ttl == null ? null : DateTime.now().add(ttl).millisecondsSinceEpoch;
+    final expiry =
+        ttl == null ? null : DateTime.now().add(ttl).millisecondsSinceEpoch;
     final payload = jsonEncode({'value': value, 'expiry': expiry});
     await _box!.put(key, payload);
   }
@@ -105,5 +106,3 @@ class HiveCache implements CacheProvider {
     }
   }
 }
-
-

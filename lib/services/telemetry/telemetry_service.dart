@@ -9,7 +9,8 @@ abstract class TelemetryService {
   Future<void> logEvent(String name, Map<String, dynamic>? properties);
 
   /// Capture a handled/unhandled exception.
-  Future<void> captureException(Object error, StackTrace? stackTrace, {Map<String, dynamic>? context});
+  Future<void> captureException(Object error, StackTrace? stackTrace,
+      {Map<String, dynamic>? context});
 
   /// Start a performance/span trace and return a token that can be used to finish it.
   /// The token is implementation-defined (Sentry returns a span object, others may use an id).

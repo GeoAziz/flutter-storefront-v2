@@ -5,7 +5,6 @@ import 'telemetry_service.dart';
 /// Development telemetry implementation that writes to console via debugPrint.
 /// Safe to enable in dev and tests. Minimal, no external dependencies.
 class DevTelemetry implements TelemetryService {
-
   @override
   Future<void> init({Map<String, dynamic>? options}) async {
     debugPrint('[DevTelemetry] initialized with options: $options');
@@ -17,7 +16,8 @@ class DevTelemetry implements TelemetryService {
   }
 
   @override
-  Future<void> captureException(Object error, StackTrace? stackTrace, {Map<String, dynamic>? context}) async {
+  Future<void> captureException(Object error, StackTrace? stackTrace,
+      {Map<String, dynamic>? context}) async {
     debugPrint('[DevTelemetry] exception: $error');
     if (stackTrace != null) debugPrint(stackTrace.toString());
     if (context != null) debugPrint('context: $context');

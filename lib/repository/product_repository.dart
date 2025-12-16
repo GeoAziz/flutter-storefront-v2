@@ -23,10 +23,11 @@ class Product {
 
 abstract class ProductRepository {
   Future<List<Product>> fetchProducts();
-  
+
   /// Fetches products using the specified pagination request (page or cursor based).
   /// Default implementation delegates to fetchProducts() for backward compatibility.
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+  Future<PaginationResult<Product>> fetchProductsPaginated(
+      PaginationRequest request) async {
     final telemetry = telemetryService;
     Object? span;
     try {
@@ -43,9 +44,12 @@ abstract class ProductRepository {
         final pageSize = request.pageSize;
         final page = request.page;
         final startIndex = (page - 1) * pageSize;
-        final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+        final endIndex =
+            ((startIndex + pageSize).clamp(0, products.length) as int);
 
-        final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+        final items = startIndex >= products.length
+            ? <Product>[]
+            : products.sublist(startIndex, endIndex);
         final hasMore = endIndex < products.length;
 
         telemetry.logEvent('pagination_success', {
@@ -69,7 +73,8 @@ abstract class ProductRepository {
       return PaginationResult.empty();
     } catch (e, st) {
       try {
-        telemetry.captureException(e, st, context: {'request': request.runtimeType.toString()});
+        telemetry.captureException(e, st,
+            context: {'request': request.runtimeType.toString()});
         telemetry.logEvent('pagination_error', {'error': e.toString()});
       } catch (_) {}
       rethrow;
@@ -106,24 +111,32 @@ class MockProductRepository implements ProductRepository {
   }
 
   @override
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+  Future<PaginationResult<Product>> fetchProductsPaginated(
+      PaginationRequest request) async {
     final telemetry = telemetryService;
     Object? span;
     try {
       span = await telemetry.startSpan('pagination');
-      telemetry.logEvent('pagination_start', {'requestType': request.runtimeType.toString(), if (request is PageRequest) 'page': request.page});
+      telemetry.logEvent('pagination_start', {
+        'requestType': request.runtimeType.toString(),
+        if (request is PageRequest) 'page': request.page
+      });
 
       if (request is PageRequest) {
         final products = await fetchProducts();
         final pageSize = request.pageSize;
         final page = request.page;
         final startIndex = (page - 1) * pageSize;
-        final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+        final endIndex =
+            ((startIndex + pageSize).clamp(0, products.length) as int);
 
-        final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+        final items = startIndex >= products.length
+            ? <Product>[]
+            : products.sublist(startIndex, endIndex);
         final hasMore = endIndex < products.length;
 
-        telemetry.logEvent('pagination_success', {'items': items.length, 'hasMore': hasMore, 'page': page});
+        telemetry.logEvent('pagination_success',
+            {'items': items.length, 'hasMore': hasMore, 'page': page});
 
         return PaginationResult(
           items: items,
@@ -138,7 +151,8 @@ class MockProductRepository implements ProductRepository {
       return PaginationResult.empty();
     } catch (e, st) {
       try {
-        telemetry.captureException(e, st, context: {'request': request.runtimeType.toString()});
+        telemetry.captureException(e, st,
+            context: {'request': request.runtimeType.toString()});
         telemetry.logEvent('pagination_error', {'error': e.toString()});
       } catch (_) {}
       rethrow;
@@ -158,24 +172,32 @@ class RealProductRepository implements ProductRepository {
   }
 
   @override
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+  Future<PaginationResult<Product>> fetchProductsPaginated(
+      PaginationRequest request) async {
     final telemetry = telemetryService;
     Object? span;
     try {
       span = await telemetry.startSpan('pagination');
-      telemetry.logEvent('pagination_start', {'requestType': request.runtimeType.toString(), if (request is PageRequest) 'page': request.page});
+      telemetry.logEvent('pagination_start', {
+        'requestType': request.runtimeType.toString(),
+        if (request is PageRequest) 'page': request.page
+      });
 
       if (request is PageRequest) {
         final products = await fetchProducts();
         final pageSize = request.pageSize;
         final page = request.page;
         final startIndex = (page - 1) * pageSize;
-        final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+        final endIndex =
+            ((startIndex + pageSize).clamp(0, products.length) as int);
 
-        final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+        final items = startIndex >= products.length
+            ? <Product>[]
+            : products.sublist(startIndex, endIndex);
         final hasMore = endIndex < products.length;
 
-        telemetry.logEvent('pagination_success', {'items': items.length, 'hasMore': hasMore, 'page': page});
+        telemetry.logEvent('pagination_success',
+            {'items': items.length, 'hasMore': hasMore, 'page': page});
 
         return PaginationResult(
           items: items,
@@ -190,7 +212,8 @@ class RealProductRepository implements ProductRepository {
       return PaginationResult.empty();
     } catch (e, st) {
       try {
-        telemetry.captureException(e, st, context: {'request': request.runtimeType.toString()});
+        telemetry.captureException(e, st,
+            context: {'request': request.runtimeType.toString()});
         telemetry.logEvent('pagination_error', {'error': e.toString()});
       } catch (_) {}
       rethrow;

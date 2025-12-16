@@ -66,45 +66,6 @@ class ProductCard extends StatelessWidget {
               ],
             ),
           ),
-<<<<<<< HEAD
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding / 2,
-                vertical: defaultPadding / 2,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    brandName.toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 10),
-                  ),
-                  const SizedBox(height: defaultPadding / 2),
-                  Text(
-                    title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 12),
-                  ),
-                  const Spacer(),
-                  priceAfetDiscount != null
-                      ? Row(
-                          children: [
-                            Text(
-                              "\$$priceAfetDiscount",
-                              style: const TextStyle(
-                                color: Color(0xFF31B0D8),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-=======
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding / 2, vertical: defaultPadding / 2),
@@ -139,17 +100,14 @@ class ProductCard extends StatelessWidget {
                               color: Color(0xFF31B0D8),
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
->>>>>>> 9947ccd (fix(ci): disable UI integration tests (ProductCard layout), keep core pagination logic tests; fix ProductCard Flexible layout)
                             ),
                           ),
                           const SizedBox(width: defaultPadding / 4),
                           Text(
                             "\$$price",
                             style: TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium!.color,
                               fontSize: 10,
                               decoration: TextDecoration.lineThrough,
                             ),

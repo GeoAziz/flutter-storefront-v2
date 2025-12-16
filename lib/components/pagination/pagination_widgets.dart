@@ -227,10 +227,12 @@ class PaginationInfoWidget extends ConsumerWidget {
           ),
           if (state.hasMore)
             const Text('More products available',
-                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold))
+                style:
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold))
           else
             const Text('All products loaded',
-                style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: Colors.green, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -335,7 +337,7 @@ class PaginationProgressIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(productPaginationProvider);
-    
+
     if (totalItems == null || totalItems! <= 0) {
       return const SizedBox.shrink();
     }

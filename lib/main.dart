@@ -14,7 +14,6 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-
 // Thanks for using our template. You are using the free version of the template.
 // 🔗 Full template: https://theflutterway.gumroad.com/l/fluttershop
 

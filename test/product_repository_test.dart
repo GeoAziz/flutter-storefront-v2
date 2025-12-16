@@ -4,7 +4,9 @@ import 'package:shop/providers/repository_providers.dart';
 import 'package:shop/repository/product_repository.dart';
 
 void main() {
-  test('productRepository provider returns a ProductRepository and can fetch mock products when overridden', () async {
+  test(
+      'productRepository provider returns a ProductRepository and can fetch mock products when overridden',
+      () async {
     final container = ProviderContainer(overrides: [
       productRepositoryProvider.overrideWithValue(MockProductRepository()),
     ]);

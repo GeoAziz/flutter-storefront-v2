@@ -13,7 +13,9 @@ class SentryTelemetry implements TelemetryService {
     await SentryFlutter.init((options) {
       options.dsn = dsn;
       if (enableTracing) {
-        options.tracesSampleRate = (options.tracesSampleRate ?? 0.0) > 0 ? options.tracesSampleRate : 0.1;
+        options.tracesSampleRate = (options.tracesSampleRate ?? 0.0) > 0
+            ? options.tracesSampleRate
+            : 0.1;
       }
     });
   }
@@ -26,8 +28,10 @@ class SentryTelemetry implements TelemetryService {
   }
 
   @override
-  Future<void> captureException(Object error, StackTrace? stackTrace, {Map<String, dynamic>? context}) async {
-    await Sentry.captureException(error, stackTrace: stackTrace, hint: context != null ? Hint() : null);
+  Future<void> captureException(Object error, StackTrace? stackTrace,
+      {Map<String, dynamic>? context}) async {
+    await Sentry.captureException(error,
+        stackTrace: stackTrace, hint: context != null ? Hint() : null);
   }
 
   @override
