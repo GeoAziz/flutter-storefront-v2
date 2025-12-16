@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:shop/components/buy_full_ui_kit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/components/pagination/paginated_product_list.dart';
+import 'package:shop/components/pagination/pagination_widgets.dart';
+import 'package:shop/route/route_names.dart';
 
-class OnSaleScreen extends StatelessWidget {
+class OnSaleScreen extends ConsumerWidget {
   const OnSaleScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const BuyFullKit(
-      images: ["assets/screens/On sales.png"],
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('On Sale'),
+        elevation: 0,
+      ),
+      body: PaginatedProductList(
+        onProductTap: (product) {
+          Navigator.pushNamed(
+            context,
+            RouteNames.productDetails,
+            arguments: product,
+          );
+        },
+        useGridLayout: true,
+        gridColumns: 2,
+        customLoadingWidget: const PaginationLoadingIndicator(
+          message: 'Loading sale items...',
+        ),
+        customEmptyWidget: PaginationEmptyWidget(
+          title: 'No sale items',
+          subtitle: 'Check back later for great deals',
+        ),
+      ),
     );
   }
 }

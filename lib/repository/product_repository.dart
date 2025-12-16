@@ -1,4 +1,6 @@
 // Minimal ProductRepository abstraction and two simple implementations
+import 'package:shop/repository/pagination.dart';
+
 class Product {
   final String id;
   final String title;
@@ -19,6 +21,32 @@ class Product {
 
 abstract class ProductRepository {
   Future<List<Product>> fetchProducts();
+  
+  /// Fetches products using the specified pagination request (page or cursor based).
+  /// Default implementation delegates to fetchProducts() for backward compatibility.
+  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+    if (request is PageRequest) {
+      final products = await fetchProducts();
+      final pageSize = request.pageSize;
+      final page = request.page;
+      final startIndex = (page - 1) * pageSize;
+      final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+      
+      final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+      final hasMore = endIndex < products.length;
+      
+      return PaginationResult(
+        items: items,
+        nextCursor: hasMore ? 'page_${page + 1}' : null,
+        hasMore: hasMore,
+        page: page,
+        pageSize: pageSize,
+      );
+    }
+    
+    // Default implementation returns empty for cursor-based requests
+    return PaginationResult.empty();
+  }
 }
 
 class MockProductRepository implements ProductRepository {
@@ -44,6 +72,30 @@ class MockProductRepository implements ProductRepository {
       ),
     ];
   }
+
+  @override
+  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+    if (request is PageRequest) {
+      final products = await fetchProducts();
+      final pageSize = request.pageSize;
+      final page = request.page;
+      final startIndex = (page - 1) * pageSize;
+      final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+      
+      final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+      final hasMore = endIndex < products.length;
+      
+      return PaginationResult(
+        items: items,
+        nextCursor: hasMore ? 'page_${page + 1}' : null,
+        hasMore: hasMore,
+        page: page,
+        pageSize: pageSize,
+      );
+    }
+    
+    return PaginationResult.empty();
+  }
 }
 
 class RealProductRepository implements ProductRepository {
@@ -51,5 +103,29 @@ class RealProductRepository implements ProductRepository {
   Future<List<Product>> fetchProducts() async {
     // Placeholder for real network implementation. For now return empty list.
     return [];
+  }
+
+  @override
+  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+    if (request is PageRequest) {
+      final products = await fetchProducts();
+      final pageSize = request.pageSize;
+      final page = request.page;
+      final startIndex = (page - 1) * pageSize;
+      final endIndex = ((startIndex + pageSize).clamp(0, products.length) as int);
+      
+      final items = startIndex >= products.length ? <Product>[] : products.sublist(startIndex, endIndex);
+      final hasMore = endIndex < products.length;
+      
+      return PaginationResult(
+        items: items,
+        nextCursor: hasMore ? 'page_${page + 1}' : null,
+        hasMore: hasMore,
+        page: page,
+        pageSize: pageSize,
+      );
+    }
+    
+    return PaginationResult.empty();
   }
 }
