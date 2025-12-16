@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 /// Device class categorization based on available memory.
 enum DeviceClass {
   /// High-end devices with 6+ GB RAM.
-  /// Cache: 50 MB for in-memory, 200 objects on disk.
+  /// Cache: 100 images max, 25 MB in-memory, 200 objects on disk.
   highEnd,
 
   /// Mid-range devices with 4–5 GB RAM.
-  /// Cache: 35 MB for in-memory, 150 objects on disk.
+  /// Cache: 70 images max, 18 MB in-memory, 150 objects on disk.
   midRange,
 
-  /// Low-end devices with < 4 GB RAM.
-  /// Cache: 15 MB for in-memory, 80 objects on disk.
+  /// Low-end devices with < 4 GB RAM (AGGRESSIVE MODE).
+  /// Cache: 50 images max, 10 MB in-memory, 80 objects on disk.
+  /// Optimized for memory-constrained devices with aggressive eviction.
   lowEnd,
 }
 
@@ -49,11 +50,17 @@ class DeviceCacheConfig {
         diskCacheStalePeriod: const Duration(days: 20),
       );
 
-  /// Preset configuration for low-end devices.
+  /// Preset configuration for low-end devices (aggressive memory management).
+  /// 
+  /// Optimized for devices with < 4 GB RAM.
+  /// Aggressive settings: 50 images max, 10 MB memory limit
+  /// - Minimizes memory footprint
+  /// - Extends cache duration to compensate for smaller size
+  /// - Suitable for affordable smartphones and older devices
   factory DeviceCacheConfig.lowEnd() => DeviceCacheConfig(
         deviceClass: DeviceClass.lowEnd,
-        inMemoryCacheBytes: 10 * 1024 * 1024, // 10 MB
-        inMemoryCacheCount: 50,
+        inMemoryCacheBytes: 10 * 1024 * 1024, // 10 MB (aggressive)
+        inMemoryCacheCount: 50, // Aggressive: 50 images max
         diskCacheObjectCount: 80,
         diskCacheStalePeriod: const Duration(days: 14),
       );

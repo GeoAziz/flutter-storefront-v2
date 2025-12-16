@@ -11,12 +11,18 @@ import '../utils/image_cache_manager.dart';
 /// Uses VisibilityDetector to delay network requests for off-screen images,
 /// reducing memory pressure during fast scrolling. Images fade in as they load.
 ///
+/// The visibility threshold (5% by default) determines when an image starts loading:
+/// - 5% (aggressive): Image loads as soon as it enters viewport
+/// - 10% (balanced): Better memory efficiency with slight delay
+/// - 25% (conservative): Maximum memory savings, images load deeper into viewport
+///
 /// Best used in scrollable lists (ListView, GridView) for optimal performance.
 class LazyImageWidget extends StatefulWidget {
   final String imageUrl;
   final BoxFit fit;
   final double radius;
   final Duration fadeInDuration;
+  final double visibilityThreshold;
 
   const LazyImageWidget(
     this.imageUrl, {
@@ -24,6 +30,7 @@ class LazyImageWidget extends StatefulWidget {
     this.fit = BoxFit.cover,
     this.radius = defaultPadding,
     this.fadeInDuration = const Duration(milliseconds: 300),
+    this.visibilityThreshold = 0.05, // 5% visible threshold (aggressive loading)
   });
 
   @override
@@ -48,7 +55,8 @@ class _LazyImageWidgetState extends State<LazyImageWidget> {
       onVisibilityChanged: (info) {
         // Only set visible once; don't unload when scrolled off
         // to avoid flickering and re-downloading
-        if (!_isVisible && info.visibleFraction > 0.1) {
+        // Use the configured visibility threshold (default 5% for aggressive loading)
+        if (!_isVisible && info.visibleFraction > widget.visibilityThreshold) {
           setState(() {
             _isVisible = true;
           });
