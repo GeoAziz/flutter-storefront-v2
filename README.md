@@ -378,4 +378,3 @@ As mentioned, this kit contains 100+ nicely crafted minimal screens that cover e
 - No Address found
 - Empty payment
 - Empty wallet
-
