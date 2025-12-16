@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,8 +7,16 @@ import 'package:flutter_test/flutter_test.dart';
 // This test is intended to run against the Firebase Emulator Suite.
 // Start the emulator before running this test:
 // firebase emulators:start --only firestore,auth,storage
+// To run in CI or locally, set environment variable FIREBASE_EMULATOR=true
 
 void main() {
+  final bool runEmulator = Platform.environment['FIREBASE_EMULATOR'] == 'true';
+  if (!runEmulator) {
+    // Skip the emulator-dependent test by exiting main early.
+    print('Skipping emulator smoke test (set FIREBASE_EMULATOR=true to run)');
+    return;
+  }
+
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();

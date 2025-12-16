@@ -4,6 +4,7 @@ import 'package:shop/constants.dart';
 class ProductModel {
   final String id; // Unique identifier for wishlist and comparison
   final String image, brandName, title;
+  final String? thumbnail;
   final double price;
   final double? priceAfetDiscount;
   final int? dicountpercent;
@@ -22,12 +23,14 @@ class ProductModel {
     this.rating,
     this.reviewCount,
     this.description,
+    this.thumbnail,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'image': image,
+      'thumbnail': thumbnail,
       'brandName': brandName,
       'title': title,
       'price': price,
@@ -57,6 +60,7 @@ class ProductModel {
           : null,
       reviewCount: map['reviewCount'] as int?,
       description: map['description'] as String?,
+      thumbnail: map['thumbnail'] as String?,
     );
   }
 }
