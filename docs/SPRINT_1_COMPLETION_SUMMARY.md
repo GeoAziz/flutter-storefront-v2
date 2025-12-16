@@ -373,6 +373,21 @@ Same pattern for Comparison with `comparisonProvider`.
 
 ---
 
+## Route & Navigation Integration (This commit)
+
+The Wishlist and Comparison screens have been wired into the app router and are accessible from the global app bar as action buttons with badges. Use the following route names:
+
+- Wishlist: `RouteNames.wishlist` → `/wishlist`
+- Comparison: `RouteNames.comparison` → `/comparison`
+
+A pull request was created for these integration changes:
+
+PR: https://github.com/GeoAziz/flutter-storefront-v2/pull/39
+
+Please review the PR for code, tests, and docs. After merge, the features will be available from the main app UI.
+
+---
+
 ## Success Metrics
 
 ✅ **Completed and Delivered:**

@@ -198,6 +198,12 @@ Phase 6 transforms the app into a production-grade e-commerce platform with adva
 ### Next Steps
 
 1. **Read:** Start with `SPRINT_1_QUICK_START.md` (30 minutes)
+2. **Routes & Navigation (Sprint 1):** Wishlist and Comparison screens are now registered in the router and accessible from the global app bar. Route names:
+
+- `RouteNames.wishlist` → `/wishlist`
+- `RouteNames.comparison` → `/comparison`
+
+Pull Request with integration changes: https://github.com/GeoAziz/flutter-storefront-v2/pull/39
 2. **Prepare:** Follow pre-kickoff checklist in the same document
 3. **Execute:** Begin Sprint 1 on January 13, 2026 @ 9 AM
 4. **Track:** Use `SPRINT_1_DAILY_LOG.md` for Firebase usage monitoring
