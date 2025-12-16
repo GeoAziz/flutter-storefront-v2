@@ -7,6 +7,7 @@ import 'package:shop/route/screen_export.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/providers/wishlist_provider.dart';
 import 'package:shop/providers/comparison_provider.dart';
+import 'package:shop/providers/sync_status_provider.dart';
 
 class EntryPoint extends ConsumerStatefulWidget {
   const EntryPoint({super.key});
@@ -105,6 +106,17 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
                       ),
                     ),
                   ),
+                  // sync indicator
+                  if ((ref.watch(syncStatusProvider)['comparison']?.status) == SyncStatus.syncing)
+                    const Positioned(
+                      right: 10,
+                      top: 0,
+                      child: SizedBox(
+                        width: 12,
+                        height: 12,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -144,6 +156,17 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
                       ),
                     ),
                   ),
+                  // sync indicator for wishlist
+                  if ((ref.watch(syncStatusProvider)['wishlist']?.status) == SyncStatus.syncing)
+                    const Positioned(
+                      right: 10,
+                      top: 0,
+                      child: SizedBox(
+                        width: 12,
+                        height: 12,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
                 ],
               ),
             ),

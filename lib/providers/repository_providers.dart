@@ -8,5 +8,8 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
   if (_useMock) {
     return MockProductRepository();
   }
-  return RealProductRepository();
+  // Use Firestore-backed repository in non-mock mode. This provides
+  // cursor/page pagination backed by Firestore (interim offset-based
+  // implementation for Sprint 1).
+  return FirestoreProductRepository();
 });

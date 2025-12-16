@@ -6,12 +6,16 @@ import 'package:shop/theme/app_theme.dart';
 import 'services/service_locator.dart';
 import 'repositories/wishlist_repository.dart';
 import 'repositories/comparison_repository.dart';
+import 'services/firebase_service.dart';
 
 // Initialize services (cache + telemetry) before running the app. This is done
 // behind feature flags set in `lib/constants.dart`.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
+  // Initialize Firebase (local emulator or real project can be configured later)
+  await FirebaseService.initialize();
+
   // Initialize repositories for Wishlist and Comparison features
   final wishlistRepo = WishlistRepository();
   await wishlistRepo.init();
