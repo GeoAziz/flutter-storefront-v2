@@ -33,7 +33,7 @@ jobs:
       - name: Start Firebase emulators (background)
         working-directory: functions
         run: |
-          nohup npx firebase emulators:start --only firestore,functions --project demo-project > emulators.log 2>&1 &
+          nohup npx firebase emulators:start --only firestore,functions --project demo-no-project > emulators.log 2>&1 &
           # wait for the emulators to be ready (10s timeout)
           for i in {1..20}; do
             if grep -q "All emulators ready" emulators.log; then
