@@ -56,6 +56,12 @@ Next steps
 - Merge the feature branch that contains the Phase 6 fixes and CI workflow.
 - Optionally upgrade `firebase-functions` to >=5.1.0 in `functions/package.json` and run the suite locally to verify compatibility.
 
+Firebase-functions upgrade status
+- ✅ Upgraded to `^5.1.0` and validated locally.
+- ✅ Phase 5 runner passes with no breaking changes.
+- ✅ Phase 6 runner passes with no breaking changes.
+- ✅ Commit pushed to feature branch.
+
 Contact
 - If anything flaps on CI, the simplest immediate mitigation is to increase the polling timeouts in the runner and re-run until the emulator cold-start window is stable for your runner image.
 
