@@ -17,6 +17,26 @@ class Product {
     this.priceAfterDiscount,
     this.discountPercent,
   });
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'image': image,
+        'price': price,
+        'priceAfterDiscount': priceAfterDiscount,
+        'discountPercent': discountPercent,
+      };
+
+  factory Product.fromJson(Map<String, dynamic> m) => Product(
+        id: m['id'] as String,
+        title: m['title'] as String,
+        image: m['image'] as String,
+        price: (m['price'] as num).toDouble(),
+        priceAfterDiscount: m['priceAfterDiscount'] == null
+            ? null
+            : (m['priceAfterDiscount'] as num).toDouble(),
+        discountPercent: m['discountPercent'] as int?,
+      );
 }
 
 abstract class ProductRepository {

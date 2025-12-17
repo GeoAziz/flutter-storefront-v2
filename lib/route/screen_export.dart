@@ -29,3 +29,6 @@ export '/screens/wallet/views/empty_wallet_screen.dart';
 export '/screens/wallet/views/wallet_screen.dart';
 export '/screens/profile/views/profile_screen.dart';
 export '/screens/user_info/views/user_info_screen.dart';
+
+export '/screens/wishlist/wishlist_screen.dart';
+export '/screens/comparison/comparison_screen.dart';

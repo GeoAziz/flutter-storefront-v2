@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/providers/auth_provider.dart';
 import 'package:shop/components/list_tile/divider_list_tile.dart';
-import 'package:shop/components/network_image_with_loader.dart';
+import 'package:shop/components/lazy_image_widget.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/route_names.dart';
 
@@ -84,8 +84,7 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () {},
               child: const AspectRatio(
                 aspectRatio: 1.8,
-                child:
-                    NetworkImageWithLoader("https://i.imgur.com/dz0BBom.png"),
+                child: LazyImageWidget("https://i.imgur.com/dz0BBom.png"),
               ),
             ),
           ),

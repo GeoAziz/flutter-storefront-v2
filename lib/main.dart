@@ -7,6 +7,12 @@ import 'package:shop/config/emulator_config.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
+import 'services/service_locator.dart';
+import 'repositories/wishlist_repository.dart';
+import 'repositories/comparison_repository.dart';
+import 'services/firebase_service.dart';
+import 'utils/device_cache_config.dart';
+import 'utils/image_cache_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

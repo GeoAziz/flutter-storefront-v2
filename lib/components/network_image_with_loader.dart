@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import 'skleton/skelton.dart';
+import '../utils/image_cache_manager.dart';
 
 class NetworkImageWithLoader extends StatelessWidget {
   final BoxFit fit;
@@ -22,6 +23,7 @@ class NetworkImageWithLoader extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(radius)),
       child: CachedNetworkImage(
+        cacheManager: appImageCacheManager,
         fit: fit,
         imageUrl: src,
         imageBuilder: (context, imageProvider) => Container(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop/components/network_image_with_loader.dart';
+import 'package:shop/components/lazy_image_widget.dart';
 
 import '../../../../constants.dart';
 
@@ -28,7 +28,7 @@ class ProfileCard extends StatelessWidget {
       onTap: press,
       leading: CircleAvatar(
         radius: 28,
-        child: NetworkImageWithLoader(
+        child: LazyImageWidget(
           imageSrc,
           radius: 100,
         ),

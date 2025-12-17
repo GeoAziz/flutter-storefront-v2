@@ -47,6 +47,7 @@ class WalletScreen extends StatelessWidget {
                       amount: 129,
                       products: [
                         ProductModel(
+                          id: 'wallet_1',
                           image: productDemoImg1,
                           title: "Mountain Warehouse for Women",
                           brandName: "Lipsy london",
@@ -55,6 +56,7 @@ class WalletScreen extends StatelessWidget {
                           dicountpercent: 20,
                         ),
                         ProductModel(
+                          id: 'wallet_2',
                           image: productDemoImg4,
                           title: "Mountain Beta Warehouse",
                           brandName: "Lipsy london",
