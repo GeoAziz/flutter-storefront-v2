@@ -1,0 +1,59 @@
+name: Phase 6 (emulator) CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  phase6-emulator-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install JRE (for Firestore emulator)
+        run: sudo apt-get update && sudo apt-get install -y default-jre
+
+      - name: Install firebase-tools
+        run: npm install -g firebase-tools@latest
+
+      - name: Install functions deps
+        working-directory: functions
+        run: npm ci
+
+      - name: Start Firebase emulators (background)
+        working-directory: functions
+        run: |
+          nohup npx firebase emulators:start --only firestore,functions --project demo-project > emulators.log 2>&1 &
+          # wait for the emulators to be ready (10s timeout)
+          for i in {1..20}; do
+            if grep -q "All emulators ready" emulators.log; then
+              echo "Emulators ready" && break
+            fi
+            sleep 1
+          done
+          if ! grep -q "All emulators ready" emulators.log; then
+            echo "Emulators did not become ready:" && tail -n +1 emulators.log && exit 2
+          fi
+
+      - name: Run Phase 6 runner
+        working-directory: functions
+        env:
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+          FUNCTIONS_EMULATOR_HOST: 127.0.0.1:5001
+        run: npm run test:phase6:all
+
+      - name: Tear down emulators
+        if: always()
+        run: |
+          pkill -f "firebase emulators:start" || true
+          sleep 1 || true
