@@ -52,7 +52,7 @@ jobs:
           FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
         run: |
           # we're already in the functions working-directory; run the runner directly
-          firebase emulators:exec --only firestore --project=demo "node test/phase5_runner.js"
+          firebase emulators:exec --only firestore --project=demo-project "node test/phase5_runner.js"
 
   phase7-ci:
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
       - name: Start Firebase emulators
         run: |
           cd ${{ github.workspace }}
-          firebase emulators:start --only functions,firestore --project=demo &
+          firebase emulators:start --only functions,firestore --project=demo-no-project &
           EMULATOR_PID=$!
           echo "EMULATOR_PID=$EMULATOR_PID" >> $GITHUB_ENV
           
