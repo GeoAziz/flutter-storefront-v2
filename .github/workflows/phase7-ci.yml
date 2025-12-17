@@ -29,6 +29,14 @@ jobs:
           cache: 'npm'
           cache-dependency-path: functions/package-lock.json
       
+      - name: Cache Firestore Emulator
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/firebase/emulators
+          key: firestore-emulator-${{ runner.os }}
+          restore-keys: |
+            firestore-emulator-${{ runner.os }}
+      
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
       
