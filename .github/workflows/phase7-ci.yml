@@ -45,7 +45,8 @@ jobs:
         env:
           FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
         run: |
-          firebase emulators:exec --only firestore --project=demo "cd functions && node test/phase5_runner.js"
+          # we're already in the functions working-directory; run the runner directly
+          firebase emulators:exec --only firestore --project=demo "node test/phase5_runner.js"
 
   phase7-ci:
     runs-on: ubuntu-latest
