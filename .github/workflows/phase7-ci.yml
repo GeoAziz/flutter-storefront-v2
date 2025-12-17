@@ -29,6 +29,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: functions/package-lock.json
       
+      - name: Setup Java 21 (required for Firebase emulators)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
       
