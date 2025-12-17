@@ -1,19 +1,45 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/screens/auth/views/components/sign_up_form.dart';
 import 'package:shop/route/route_names.dart';
+import 'package:shop/providers/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../constants.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _emailCtrl = TextEditingController();
+  final _passCtrl = TextEditingController();
+  bool _agree = false;
+
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    super.dispose();
+  }
+
+  String _mapSignUpError(FirebaseAuthException err) {
+    switch (err.code) {
+      case 'email-already-in-use':
+        return 'An account already exists for that email.';
+      case 'weak-password':
+        return 'The password is too weak. Use 6+ characters.';
+      case 'invalid-email':
+        return 'The email address is invalid.';
+      default:
+        return 'Sign up error: ${err.message}';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +67,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     "Please enter your valid data in order to create an account.",
                   ),
                   const SizedBox(height: defaultPadding),
-                  SignUpForm(formKey: _formKey),
+                  SignUpForm(
+                      formKey: _formKey,
+                      emailController: _emailCtrl,
+                      passwordController: _passCtrl),
                   const SizedBox(height: defaultPadding),
                   Row(
                     children: [
                       Checkbox(
-                        onChanged: (value) {},
-                        value: false,
+                        onChanged: (value) {
+                          setState(() {
+                            _agree = value ?? false;
+                          });
+                        },
+                        value: _agree,
                       ),
                       Expanded(
                         child: Text.rich(
@@ -77,12 +110,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: defaultPadding * 2),
                   ElevatedButton(
-                    onPressed: () {
-                      // There is 2 more screens while user complete their profile
-                      // afre sign up, it's available on the pro version get it now
-                      // 🔗 https://theflutterway.gumroad.com/l/fluttershop
-                      Navigator.pushNamed(context, RouteNames.entryPoint);
-                    },
+                    onPressed: !_agree
+                        ? null
+                        : () async {
+                            if (!_formKey.currentState!.validate()) return;
+                            try {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Creating account...')));
+                              await ref.read(authControllerProvider).signUp(
+                                  email: _emailCtrl.text.trim(),
+                                  password: _passCtrl.text);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Account created')));
+                              Navigator.pushReplacementNamed(
+                                  context, RouteNames.entryPoint);
+                            } on FirebaseAuthException catch (err) {
+                              final msg = _mapSignUpError(err);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(content: Text(msg)));
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Sign up failed: $e')));
+                            }
+                          },
                     child: const Text("Continue"),
                   ),
                   Row(

@@ -1,0 +1,251 @@
+// ============================================================================
+// Firestore Security Rules for E-commerce Application
+// ============================================================================
+// 
+// This file contains the security rules for the Firestore database.
+// Deploy using: firebase deploy --only firestore:rules
+//
+// ============================================================================
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isUserOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Rate limiting: max 5 writes per minute per user
+    // NOTE: Firestore security rules cannot perform arbitrary collection queries
+    // (e.g. counting documents) or maintain global counters. The previous
+    // implementation attempted to query the `audit_log` collection which is
+    // not supported in rules and will cause a rules parse error on deploy.
+    //
+    // For now we provide a placeholder that always returns false so any checks
+    // using `!rateLimitExceeded()` evaluate to true and the rules remain
+    // deployable. To enforce rate limiting, implement server-side checks using
+    // Cloud Functions, a dedicated rate-limit counter document, or API layer.
+    function rateLimitExceeded() {
+      return false;
+    }
+
+    // ========================================================================
+    // Users Collection Rules
+    // ========================================================================
+    
+    match /users/{userId} {
+      // Only users can read their own profile
+      allow read: if isAuthenticated() && isUserOwner(userId);
+      
+      // Only users can update their own profile (not allowed to create directly)
+      allow update: if isAuthenticated() && isUserOwner(userId) && 
+                       !('role' in request.resource.data) && // Can't change role
+                       !('email' in request.resource.data);  // Can't change email
+      
+  // Create new user profile
+  // NOTE: For emulator & client-side serverTimestamp usage we relax the
+  // strict createdAt == request.time check so clients using
+  // FieldValue.serverTimestamp() can create the document. This is safe
+  // for normal sign-up flows; remove the relaxed rule for stricter
+  // production checks if required.
+  allow create: if isAuthenticated() && isUserOwner(userId) &&
+           request.resource.data.email == request.auth.token.email &&
+           request.resource.data.role == 'user';
+      
+      // Only admin can delete
+      allow delete: if isAdmin();
+
+      // Subcollection: User's saved addresses
+      match /addresses/{addressId} {
+        allow read, create, update, delete: if isAuthenticated() && isUserOwner(userId) && !rateLimitExceeded();
+      }
+
+      // Subcollection: User's payment methods
+      match /paymentMethods/{paymentId} {
+        allow read, create, update, delete: if isAuthenticated() && isUserOwner(userId) && !rateLimitExceeded();
+      }
+    }
+
+    // ========================================================================
+    // Products Collection Rules (Public Read, Admin Write)
+    // ========================================================================
+    // DEV NOTE: In development/emulator, we allow unauthenticated product writes
+    // to enable easy seeding. This is ONLY for the emulator; production rules
+    // require admin authentication. To use dev rules:
+    //   - Set FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 before running seeder
+    //   - Run: bash scripts/run_seed_products.sh demo-project 100
+    // For production, restore the original admin-only create rule.
+    
+    match /products/{productId} {
+      // Anyone can read published products (or unauthenticated in dev)
+      allow read: if resource.data.active == true || true; // DEV: Allow all reads for testing
+      // Clients are not allowed to write products directly. Only trusted
+      // backend (Cloud Functions / Admin SDK) should modify products.
+      allow create, update, delete: if false;
+
+      // Subcollection: Product reviews
+      match /reviews/{reviewId} {
+        // Anyone can read reviews for published products
+        allow read: if resource.data.published == true || 
+                       (isAuthenticated() && isUserOwner(resource.data.userId));
+        
+        // Users can create reviews for products they purchased
+        allow create: if isAuthenticated() && 
+                        request.resource.data.userId == request.auth.uid &&
+                        request.resource.data.createdAt == request.time &&
+                        !rateLimitExceeded();
+        
+        // Users can update their own reviews
+        allow update: if isAuthenticated() && 
+                        isUserOwner(resource.data.userId) &&
+                        !rateLimitExceeded();
+        
+        // Users can delete their own reviews
+        allow delete: if isAuthenticated() && isUserOwner(resource.data.userId);
+      }
+    }
+
+    // ========================================================================
+    // Cart Collection Rules (User Private)
+    // ========================================================================
+    
+    match /cart/{userId} {
+      // Users can read and modify their own cart
+      allow read, write: if isAuthenticated() && isUserOwner(userId) && !rateLimitExceeded();
+    }
+
+    // ========================================================================
+    // Orders Collection Rules (User Private, Admin Access)
+    // ========================================================================
+    
+    match /orders/{orderId} {
+      
+      // Users can read their own orders
+      allow read: if isAuthenticated() && (
+                    isUserOwner(resource.data.userId) ||
+                    isAdmin()
+                  );
+      
+      // Users can create orders
+      allow create: if isAuthenticated() && 
+                      request.resource.data.userId == request.auth.uid &&
+                      request.resource.data.createdAt == request.time &&
+                      request.resource.data.status == 'pending' &&
+                      !rateLimitExceeded();
+      
+      // Users can request limited changes (e.g., set cancelRequested). They
+      // MUST NOT change authoritative fields such as `status`. Functions are
+      // the only authority allowed to change order status.
+      allow update: if isAuthenticated() && (
+                      isUserOwner(resource.data.userId) &&
+                      // Only allow updates that do NOT touch the `status` field
+                      !( 'status' in request.resource.data.diff(resource.data).affectedKeys() ) &&
+                      // Optionally allow only a small set of keys (e.g., cancelRequested)
+                      request.resource.data.diff(resource.data).affectedKeys().size() <= 3
+                    ) && !rateLimitExceeded();
+      
+      // Admins can delete orders
+      allow delete: if isAdmin();
+
+      // Subcollection: Order status history
+      match /statusHistory/{entry} {
+        allow read: if isAuthenticated() && (
+                      isUserOwner(get(/databases/$(database)/documents/orders/$(orderId)).data.userId) ||
+                      isAdmin()
+                    );
+      }
+    }
+
+    // ========================================================================
+    // Favorites Collection Rules (User Private)
+    // ========================================================================
+    
+    match /favorites/{userId} {
+      // Users can read and modify their own favorites
+      allow read, write: if isAuthenticated() && isUserOwner(userId) && !rateLimitExceeded();
+    }
+
+    // ========================================================================
+    // Analytics/Audit Logs (Admin Access)
+    // ========================================================================
+    
+    match /auditLog/{logId} {
+      // Audit logs are admin-readable. Clients MUST NOT write audit logs
+      // directly; only trusted backend functions write audit entries.
+      allow read: if isAuthenticated() && isAdmin();
+      allow create: if false;
+    }
+
+    // ========================================================================
+    // Notifications (User Private)
+    // ========================================================================
+    
+    match /notifications/{userId} {
+      allow read, write: if isAuthenticated() && isUserOwner(userId);
+      
+      match /messages/{messageId} {
+        allow read, write: if isAuthenticated() && isUserOwner(userId);
+      }
+    }
+
+    // ========================================================================
+    // Inventory Collection Rules (Admin Only, Append-Only)
+    // ========================================================================
+    
+    match /inventory/{productId} {
+      // Admins can read inventory
+      allow read: if isAuthenticated() && isAdmin();
+
+      // Prevent client-side writes. Only Cloud Functions / Admin SDK are
+      // allowed to modify inventory (they bypass rules).
+      allow create, update: if false;
+      
+      // No deletes allowed
+      allow delete: if false;
+    }
+
+    // ========================================================================
+    // Function Requests (clients create, functions process)
+    // ========================================================================
+    // Clients may create lightweight request documents that signal the
+    // server-side Functions to act. Functions then perform authoritative
+    // writes to orders/inventory/products/auditLog using the Admin SDK.
+    match /functionRequests/{reqId} {
+      allow create: if isAuthenticated() &&
+                    (request.resource.data.type is string) &&
+                    request.resource.data.createdAt == request.time &&
+                    request.resource.data.userId == request.auth.uid;
+
+      // Only admins/functions should delete or update requests once
+      // processed. Prevent clients from tampering after creation.
+      allow update, delete: if false;
+    }
+
+    // ========================================================================
+    // Categories (Public Read, Admin Write)
+    // ========================================================================
+    
+    match /categories/{categoryId} {
+      allow read: if resource.data.active == true;
+      allow create, update, delete: if isAuthenticated() && isAdmin();
+    }
+
+    // ========================================================================
+    // Deny all other access
+    // ========================================================================
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

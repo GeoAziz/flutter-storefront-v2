@@ -1,34 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/product_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/models/product.dart';
+import 'package:shop/providers/auth_provider.dart';
 
-/// Minimal ProductRepository that uses Firestore cursor-based pagination.
-/// This is a lightweight skeleton to be extended during Sprint 1.
+final productRepositoryProvider = Provider<ProductRepository>((ref) {
+  final firestore = ref.read(firebaseFirestoreProvider);
+  return ProductRepository(firestore);
+});
+
 class ProductRepository {
   final FirebaseFirestore _firestore;
-  final String collectionPath;
+  ProductRepository(this._firestore);
 
-  ProductRepository(
-      {FirebaseFirestore? firestore, this.collectionPath = 'products'})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+  CollectionReference get _col => _firestore.collection('products');
 
-  /// Page size for pagination
-  static const int pageSize = 20;
+  Future<void> addProduct(Product p) async {
+    await _col.add(p.toMap());
+  }
 
-  /// Fetch a page of products. If [startAfter] is provided, this will fetch
-  /// the next page after that document snapshot.
-  Future<List<ProductModel>> fetchPage({DocumentSnapshot? startAfter}) async {
-    Query query = _firestore
-        .collection(collectionPath)
-        .orderBy('createdAt', descending: true)
-        .limit(pageSize);
-    if (startAfter != null) {
-      query = query.startAfterDocument(startAfter);
-    }
+  Future<void> setProduct(String id, Product p) async {
+    await _col.doc(id).set(p.toMap(), SetOptions(merge: true));
+  }
 
-    final snapshot = await query.get();
-    final docs = snapshot.docs;
-    return docs
-        .map((d) => ProductModel.fromMap(d.data() as Map<String, dynamic>))
-        .toList();
+  Stream<List<Product>> streamProducts({String? category}) {
+    Query q = _col.where('active', isEqualTo: true);
+    if (category != null && category.isNotEmpty)
+      q = q.where('category', isEqualTo: category);
+    return q.orderBy('createdAt', descending: true).snapshots().map((s) => s
+        .docs
+        .map((d) => Product.fromMap(d.id, d.data() as Map<String, dynamic>))
+        .toList());
+  }
+
+  Future<Product?> getById(String id) async {
+    final doc = await _col.doc(id).get();
+    if (!doc.exists) return null;
+    return Product.fromMap(doc.id, doc.data() as Map<String, dynamic>);
   }
 }

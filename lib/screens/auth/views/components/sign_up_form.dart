@@ -3,12 +3,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../constants.dart';
 
+/// Modified SignUpForm that accepts controllers so parent can handle submission.
 class SignUpForm extends StatelessWidget {
   const SignUpForm({
     super.key,
+    required this.emailController,
+    required this.passwordController,
     required this.formKey,
   });
 
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
   final GlobalKey<FormState> formKey;
 
   @override
@@ -18,9 +23,7 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
-            onSaved: (emal) {
-              // Email
-            },
+            controller: emailController,
             validator: emaildValidator.call,
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
@@ -47,9 +50,7 @@ class SignUpForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding),
           TextFormField(
-            onSaved: (pass) {
-              // Password
-            },
+            controller: passwordController,
             validator: passwordValidator.call,
             obscureText: true,
             decoration: InputDecoration(

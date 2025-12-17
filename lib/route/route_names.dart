@@ -21,6 +21,8 @@ class RouteNames {
   static const String setupFingerprint = '/setup_fingerprint';
   static const String setupFaceId = '/setup_faceid';
   static const String productDetails = '/product_details';
+  static const String productDetail = '/product_detail';
+  static const String allProducts = '/all_products';
   static const String productReviews = '/product_reviews';
   static const String addReviews = '/add_reviews';
   static const String home = '/home';
@@ -62,6 +64,5 @@ class RouteNames {
   static const String paymentMethod = '/payment_method';
   static const String addNewCard = '/add_new_card';
   static const String thanksForOrder = '/thanks_order';
-  static const String wishlist = '/wishlist';
-  static const String comparison = '/comparison';
+  static const String adminDashboard = '/admin';
 }

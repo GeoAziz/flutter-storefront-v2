@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/config/firebase_options.dart';
+import 'package:shop/config/emulator_config.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
@@ -10,36 +14,16 @@ import 'services/firebase_service.dart';
 import 'utils/device_cache_config.dart';
 import 'utils/image_cache_manager.dart';
 
-// Initialize services (cache + telemetry) before running the app. This is done
-// behind feature flags set in `lib/constants.dart`.
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase (local emulator or real project can be configured later)
-  await FirebaseService.initialize();
+  // Enable emulators for local development/testing (debug mode only)
+  if (kDebugMode) {
+    await setupEmulators();
+  }
 
-  // Detect device capabilities and set adaptive cache limits.
-  final cacheConfig = await DeviceCacheConfig.adaptive();
-  // ignore: avoid_print
-  print('Cache Config: $cacheConfig');
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Apply in-memory image cache limits based on device class.
-  PaintingBinding.instance.imageCache.maximumSize =
-      cacheConfig.inMemoryCacheCount;
-  PaintingBinding.instance.imageCache.maximumSizeBytes =
-      cacheConfig.inMemoryCacheBytes;
-
-  // Create and apply adaptive disk cache manager for images.
-  await createAdaptiveCacheManager();
-
-  // Initialize repositories for Wishlist and Comparison features
-  final wishlistRepo = WishlistRepository();
-  await wishlistRepo.init();
-
-  final comparisonRepo = ComparisonRepository();
-  await comparisonRepo.init();
-
-  await initServices();
   // Use ProviderScope to enable Riverpod providers across the app.
   runApp(const ProviderScope(child: MyApp()));
 }

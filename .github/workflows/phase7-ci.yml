@@ -1,0 +1,80 @@
+name: Phase 7 CI - Idempotent Webhooks
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/**
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  phase7-ci:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: functions/package-lock.json
+      
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+      
+      - name: Install functions dependencies
+        working-directory: functions
+        run: npm ci
+      
+      - name: Start Firebase emulators
+        run: |
+          cd ${{ github.workspace }}
+          firebase emulators:start --only functions,firestore --project=demo &
+          EMULATOR_PID=$!
+          echo "EMULATOR_PID=$EMULATOR_PID" >> $GITHUB_ENV
+          
+          # Wait for emulators to be ready
+          for i in {1..30}; do
+            if curl -s http://127.0.0.1:4000 > /dev/null 2>&1; then
+              echo "✓ Emulators ready after $((i)) seconds"
+              break
+            fi
+            sleep 1
+          done
+      
+      - name: Run Phase 7 test (Idempotent Webhooks)
+        working-directory: functions
+        env:
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+          FUNCTIONS_EMULATOR_HOST: 127.0.0.1:5001
+        run: node test/phase7_runner.js
+      
+      - name: Run Phase 6 test (Baseline - Payment Webhooks)
+        working-directory: functions
+        env:
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+          FUNCTIONS_EMULATOR_HOST: 127.0.0.1:5001
+        run: node test/phase6_runner.js
+      
+      - name: Run Phase 5 test (Audit Log)
+        working-directory: functions
+        env:
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+        run: node test/phase5_runner.js
+      
+      - name: Cleanup emulators
+        if: always()
+        run: |
+          pkill -f "firebase emulators" || true
+          sleep 2
+

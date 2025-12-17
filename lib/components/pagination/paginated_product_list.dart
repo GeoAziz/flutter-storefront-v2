@@ -63,8 +63,7 @@ class PaginatedProductList extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<PaginatedProductList> createState() =>
-      _PaginatedProductListState();
+  ConsumerState<PaginatedProductList> createState() => _PaginatedProductListState();
 }
 
 class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
@@ -126,7 +125,8 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
     // Show loading indicator on first load
     if (state.isLoading && state.items.isEmpty) {
       return Center(
-        child: widget.customLoadingWidget ?? const CircularProgressIndicator(),
+        child: widget.customLoadingWidget ??
+            const CircularProgressIndicator(),
       );
     }
 
@@ -137,15 +137,13 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.shopping_bag_outlined,
-                    size: 64, color: Colors.grey),
+                const Icon(Icons.shopping_bag_outlined, size: 64, color: Colors.grey),
                 const SizedBox(height: defaultPadding),
                 const Text('No products found'),
                 const SizedBox(height: defaultPadding),
                 ElevatedButton(
                   onPressed: () {
-                    final notifier =
-                        ref.read(productPaginationProvider.notifier);
+                    final notifier = ref.read(productPaginationProvider.notifier);
                     notifier.refresh();
                   },
                   child: const Text('Retry'),
@@ -158,8 +156,7 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
     // Show error message if one occurred
     if (state.error != null && state.items.isEmpty) {
       return Center(
-        child: widget.customErrorWidget
-                ?.call(state.error!, _retryFetchNextPage) ??
+        child: widget.customErrorWidget?.call(state.error!, _retryFetchNextPage) ??
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

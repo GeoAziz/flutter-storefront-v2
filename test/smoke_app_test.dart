@@ -14,8 +14,8 @@ class _EmptyProductRepository implements ProductRepository {
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(
       PaginationRequest request) async {
-    // Return empty pagination result for smoke test to satisfy the new interface
-    return PaginationResult.empty();
+    // Return an empty pagination result to keep tests stable.
+    return PaginationResult<Product>.empty();
   }
 }
 
