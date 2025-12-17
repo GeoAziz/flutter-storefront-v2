@@ -4,7 +4,7 @@ process.env.FIRESTORE_EMULATOR_HOST = process.env.FIRESTORE_EMULATOR_HOST || '12
 const admin = require('firebase-admin');
 const fetch = require('node-fetch');
 
-try { admin.initializeApp({ projectId: 'demo-no-project' }); } catch (e) {}
+try { admin.initializeApp({ projectId: 'demo' }); } catch (e) {}
 const db = admin.firestore();
 const log = (s, ...r) => console.log('[phase6]', s, ...r);
 
@@ -42,7 +42,7 @@ async function run() {
     // Simulate payment via payment adapter: in emulator we don't hit Stripe.
     // Instead, we simulate a Stripe webhook by POSTing to the functions emulator.
     const functionsHost = process.env.FUNCTIONS_EMULATOR_HOST || '127.0.0.1:5001';
-    const url = `http://${functionsHost}/demo-no-project/us-central1/stripeWebhook`;
+    const url = `http://${functionsHost}/demo/us-central1/stripeWebhook`;
     const payload = { type: 'payment_intent.succeeded', data: { object: { metadata: { orderId } } } };
     log('Posting simulated Stripe webhook to', url);
     const res = await fetch(url, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } });

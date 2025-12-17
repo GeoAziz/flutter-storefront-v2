@@ -5,7 +5,7 @@ process.env.FIRESTORE_EMULATOR_HOST = process.env.FIRESTORE_EMULATOR_HOST || '12
 const admin = require('firebase-admin');
 const fetch = require('node-fetch');
 
-try { admin.initializeApp({ projectId: 'demo-no-project' }); } catch (e) {}
+try { admin.initializeApp({ projectId: 'demo' }); } catch (e) {}
 const db = admin.firestore();
 const log = (s, ...r) => console.log('[phase7]', s, ...r);
 
@@ -103,7 +103,7 @@ async function run() {
     log('Order reserved');
 
     // Simulate payment webhook twice (duplicate delivery)
-    const url = `http://${functionsHost}/demo-no-project/us-central1/stripeWebhook`;
+    const url = `http://${functionsHost}/demo/us-central1/stripeWebhook`;
     const eventId = `phase7-${runId}-evt`;
     const payload = { id: eventId, type: 'payment_intent.succeeded', data: { object: { metadata: { orderId } } } };
 
