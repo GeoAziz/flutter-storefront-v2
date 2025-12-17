@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.5'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Install firebase-tools
+        run: |
+          curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          sudo npm install -g firebase-tools
+
+      - name: Start Firebase emulators (Auth + Firestore)
+        run: |
+          # start emulators in background; logs go to emulator.log
+          firebase emulators:start --only auth,firestore --project demo-project > emulator.log 2>&1 &
+          # wait for emulators to be ready
+          grep -m 1 "All emulators ready" -m 1 -q <(stdbuf -oL tail -n +1 -f emulator.log) || true
+        timeout-minutes: 3
+
+      - name: Run headless harness
+        run: bash scripts/run_auth_harness.sh
+
+      - name: Run mocked flutter tests (Option B)
+        run: |
+          echo "Running mocked auth tests (no device/emulator required)..."
+          flutter test test/unit/auth_controller_mock_test.dart test/widget/login_screen_mock_test.dart -v
+
+  nightly_integration:
+    if: github.event_name == 'schedule' || false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.5'
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Run integration tests (device/emulator)
+        run: |
+          echo "Run integration_test on a device/emulator as needed. Configure this job to launch an Android emulator or use a device matrix."

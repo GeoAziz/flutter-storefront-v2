@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/entry_point.dart';
+import 'package:shop/screens/admin/admin_dashboard.dart';
 
 import 'screen_export.dart';
 import 'route_names.dart';
@@ -95,6 +96,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           return ProductDetailsScreen(isProductAvailable: isProductAvailable);
         },
       );
+    case RouteNames.productDetail:
+      return MaterialPageRoute(
+        builder: (context) => const ProductDetailScreen(),
+        settings: settings,
+      );
+    case RouteNames.allProducts:
+      return MaterialPageRoute(
+        builder: (context) => const AllProductsScreen(),
+      );
     case RouteNames.productReviews:
       return MaterialPageRoute(
         builder: (context) => const ProductReviewsScreen(),
@@ -126,6 +136,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteNames.entryPoint:
       return MaterialPageRoute(
         builder: (context) => const EntryPoint(),
+      );
+    case RouteNames.adminDashboard:
+      return MaterialPageRoute(
+        builder: (context) => const AdminDashboardScreen(),
       );
     case RouteNames.profile:
       return MaterialPageRoute(
@@ -174,6 +188,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteNames.cart:
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
+      );
+    case RouteNames.paymentMethod:
+      return MaterialPageRoute(
+        builder: (context) => const PaymentMethodScreen(),
       );
     // (Legacy commented cases removed — router now matches canonical RouteNames.)
     default:

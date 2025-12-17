@@ -1,10 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/config/firebase_options.dart';
+import 'package:shop/config/emulator_config.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Enable emulators for local development/testing (debug mode only)
+  if (kDebugMode) {
+    await setupEmulators();
+  }
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   // Use ProviderScope to enable Riverpod providers across the app.
   runApp(const ProviderScope(child: MyApp()));
 }

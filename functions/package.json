@@ -14,7 +14,7 @@
     "test:reserve:callable": "node test/reservation_callable_test.js",
     "test:reserve:debug": "node test/reservation_debug_test.js",
     "test:reserve": "npm run test:reserve:debug",
-  "test:reserve:concurrency": "node test/emulator_concurrency_test.js",
+    "test:reserve:concurrency": "node test/emulator_concurrency_test.js",
     "test:inventory:flow": "node test/inventory_flow_script.js",
     "test:payments:sim": "node test/payments_simulator.js",
     "test:notifications:sim": "node test/notifications_simulator.js",
@@ -22,10 +22,10 @@
     "test:auth:matrix": "node test/auth_matrix_script.js",
     "test:admin:mutations": "node test/admin_mutations_script.js",
     "test:audit:log": "node test/audit_log_validation_script.js",
-    "test:phase4:all": "node test/phase4_runner.js"
-    ,
-  "test:phase5:all": "node test/phase5_runner.js",
-  "test:phase6:all": "node test/phase6_runner.js"
+    "test:phase4:all": "node test/phase4_runner.js",
+    "test:phase5:all": "node test/phase5_runner.js",
+    "test:phase6:all": "node test/phase6_runner.js",
+    "test:phase7:all": "node test/phase7_runner.js"
   },
   "dependencies": {
     "firebase-admin": "^11.0.0",

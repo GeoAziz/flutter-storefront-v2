@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # UI & Styling
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.10+1
   form_field_validator: ^1.1.0
@@ -20,14 +21,61 @@ dependencies:
   flutter_widget_from_html_core: ^0.15.1
   animations: ^2.0.11
   url_launcher: ^6.3.0
+
+  # State Management
   flutter_riverpod: ^2.0.0
+
+  # Firebase
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.14.0
+  cloud_firestore: ^4.13.0
+  firebase_storage: ^11.5.0
+  firebase_messaging: ^14.7.0
+  firebase_analytics: ^10.7.0
+
+  # Local Storage & Caching
   shared_preferences: ^2.0.15
+  sqflite: ^2.3.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Networking & HTTP
+  http: ^1.1.0
+  dio: ^5.3.0
+
+  # Error Handling & Monitoring
+  sentry_flutter: ^7.14.0
+
+  # Utilities
+  intl: ^0.19.0
+  uuid: ^4.0.0
+  package_info_plus: ^5.0.0
+  connectivity_plus: ^5.0.0
+  path_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+  
+  # Integration test tooling for device/emulator tests
+  integration_test:
+    sdk: flutter
+
+  # Testing
+  mockito: ^5.4.0
+  
+  # Fast test doubles for Firebase auth used by Option B (mocked flutter_test harness).
+  # Firestore writes & rules are validated by the headless harness, so we don't need
+  # a Firestore fake package that conflicts with cloud_firestore ^4.x.
+  firebase_auth_mocks: ^0.13.0
+  # In-memory Firestore for fast CI-friendly tests
+  fake_cloud_firestore: ^2.3.0
+  
+  # Build Tools
+  build_runner: ^2.4.0
+  hive_generator: ^2.0.0
 
 flutter:
   uses-material-design: true

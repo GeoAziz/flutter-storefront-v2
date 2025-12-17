@@ -6,7 +6,7 @@ const admin = require('firebase-admin');
 try {
   // Explicitly set projectId to ensure correct DB context in emulator and production
   admin.initializeApp({
-    projectId: 'demo-project'
+    projectId: process.env.GCLOUD_PROJECT || 'demo-project'
   });
 } catch (e) {
   // ignore if already initialized
@@ -225,6 +225,14 @@ async function performInventoryFinalize(orderId) {
   }
 
   const order = snap.data() || {};
+  // Idempotency guard: if already finalized, treat as success.
+  if (order.status === 'finalized') {
+    return { success: true, message: 'already_finalized' };
+  }
+  if (order.status === 'failed') {
+    // If previously failed due to payment or other issues, surface as failed
+    return { success: false, message: 'order_already_failed' };
+  }
   const items = Array.isArray(order.items) ? order.items : [];
 
   if (items.length === 0) {
@@ -350,25 +358,61 @@ exports.processFunctionRequest = functions.firestore.document('functionRequests/
  */
 exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
   try {
-    console.log('🔍 [Webhook] Received request, method:', req.method, 'body:', JSON.stringify(req.body));
+    console.log('🔍 [Webhook] Received request, method:', req.method);
     const evt = req.body || {};
     const type = String(evt.type || '');
     const obj = (evt.data && evt.data.object) ? evt.data.object : {};
     const orderId = (obj.metadata && obj.metadata.orderId) ? String(obj.metadata.orderId) : (req.query.orderId || null);
+    const eventId = String(evt.id || evt.eventId || `${type}:${orderId}`);
 
-    console.log('🔍 [Webhook] Parsed type:', type, 'orderId:', orderId);
+    console.log('🔍 [Webhook] Parsed type:', type, 'orderId:', orderId, 'eventId:', eventId);
     if (!orderId) {
       res.status(400).send('missing orderId');
       return;
     }
 
+    // Idempotency: use transaction to atomically create or detect duplicate
+    const webhookRef = firestore.collection('webhookEvents').doc(eventId);
+    try {
+      const isDuplicate = await firestore.runTransaction(async (tx) => {
+        const snap = await tx.get(webhookRef);
+        if (snap.exists) {
+          console.log('🔁 [Webhook] Duplicate event detected:', eventId);
+          return true; // is duplicate
+        }
+        // First-time: create the webhook event record
+        const ts = admin.firestore && admin.firestore.FieldValue ? admin.firestore.FieldValue.serverTimestamp() : new Date();
+        tx.create(webhookRef, { receivedAt: ts, eventType: type, orderId });
+        console.log('✅ [Webhook] First-time event recorded:', eventId);
+        return false; // is first-seen
+      });
+
+      if (isDuplicate) {
+        res.status(200).send('ok');
+        return;
+      }
+    } catch (e) {
+      const msg = String(e && e.message ? e.message : e);
+      console.error('⚠️  [Webhook] Failed to record webhookEvents transaction', msg, e && e.code ? 'code: ' + e.code : '');
+      // Continue processing best-effort; the audit log will still record the attempt
+    }
+
     if (type === 'payment_intent.succeeded' || type === 'charge.succeeded') {
       // Payment succeeded -> finalize order
       console.log('🔍 [Webhook] Payment succeeded for', orderId, 'calling finalize');
-      await performInventoryFinalize(orderId);
-      console.log('🔍 [Webhook] Finalize completed');
-      await writeAuditLog({ kind: 'stripe_webhook', event: type, orderId });
+      const finalizeRes = await performInventoryFinalize(orderId);
+      console.log('🔍 [Webhook] Finalize completed:', finalizeRes && finalizeRes.message);
+      await writeAuditLog({ kind: 'stripe_webhook', event: type, orderId, eventId, result: finalizeRes });
       await writeNotification('system', { type: 'payment_succeeded', orderId });
+
+      // Mark webhook event as processed (update)
+      try {
+        const ts = admin.firestore && admin.firestore.FieldValue ? admin.firestore.FieldValue.serverTimestamp() : new Date();
+        await webhookRef.update({ processed: true, processedAt: ts, result: finalizeRes });
+      } catch (e) {
+        console.error('⚠️  [Webhook] Failed to mark webhook event processed', e && e.message ? e.message : e);
+      }
+
       res.status(200).send('ok');
       return;
     }

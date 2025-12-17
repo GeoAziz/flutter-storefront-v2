@@ -10,6 +10,8 @@ export '/screens/home/views/home_screen.dart';
 export '/screens/kids/views/kids_screen.dart';
 export '/screens/on_sale/views/on_sale_screen.dart';
 export '/screens/product/views/product_details_screen.dart';
+export '/screens/product/views/product_detail_screen.dart';
+export '/screens/all_products/views/all_products_screen.dart';
 
 export '/screens/reviews/view/product_reviews_screen.dart';
 export '/screens/search/views/search_screen.dart';
@@ -20,6 +22,7 @@ export '/screens/notification/view/enable_notification_screen.dart';
 export '/screens/notification/view/no_notification_screen.dart';
 export '/screens/notification/view/notification_ontions_screen.dart';
 export '/screens/notification/view/notificatios_screen.dart';
+export '/screens/checkout/views/payment_method_screen.dart';
 export '/screens/order/views/orders_screen.dart';
 export '/screens/preferences/views/preferences_screen.dart';
 export '/screens/wallet/views/empty_wallet_screen.dart';
