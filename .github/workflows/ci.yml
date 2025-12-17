@@ -18,6 +18,12 @@ jobs:
         with:
           flutter-version: '3.16.0'
 
+      - name: Setup JDK 21 (for Firebase emulator)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Install dependencies
         run: flutter pub get
 
