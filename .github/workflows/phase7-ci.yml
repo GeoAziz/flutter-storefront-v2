@@ -36,44 +36,23 @@ jobs:
         working-directory: functions
         run: npm ci
       
-      - name: Start Firebase emulators in background
-        run: |
-          cd ${{ github.workspace }}
-          firebase emulators:start --only functions,firestore &
-          EMULATOR_PID=$!
-          echo "EMULATOR_PID=$EMULATOR_PID" >> $GITHUB_ENV
-          
-          # Wait for emulators to be ready (up to 30 seconds)
-          for i in {1..30}; do
-            if curl -s http://127.0.0.1:4000 > /dev/null 2>&1; then
-              echo "Emulators ready after $((i*1)) seconds"
-              break
-            fi
-            sleep 1
-          done
-      
-      - name: Run Phase 7 test (Idempotent Webhooks)
+      - name: Run Phase 7 test (Idempotent Webhooks) via Emulators
         working-directory: functions
         env:
           FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
           FUNCTIONS_EMULATOR_HOST: 127.0.0.1:5001
-        run: npm run test:phase7:all
+        run: firebase emulators:exec --only functions,firestore --project=demo -- npm run test:phase7:all
       
-      - name: Run Phase 6 test (Baseline - Payment Webhooks)
+      - name: Run Phase 6 test (Baseline - Payment Webhooks) via Emulators
         working-directory: functions
         env:
           FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
           FUNCTIONS_EMULATOR_HOST: 127.0.0.1:5001
-        run: npm run test:phase6:all
+        run: firebase emulators:exec --only functions,firestore --project=demo -- npm run test:phase6:all
       
-      - name: Run Phase 5 test (Audit Log)
+      - name: Run Phase 5 test (Audit Log) via Emulators
         working-directory: functions
         env:
           FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
-        run: npm run test:phase5:all
-      
-      - name: Cleanup emulators
-        if: always()
-        run: |
-          pkill -f "firebase emulators" || true
-          sleep 2
+        run: firebase emulators:exec --only firestore --project=demo -- npm run test:phase5:all
+
