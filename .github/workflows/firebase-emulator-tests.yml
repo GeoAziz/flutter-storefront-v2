@@ -12,10 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Test connection to Flutter releases
+        run: curl -v "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json" 2>&1 | head -50
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.24.0'
 
       - name: Setup JDK 21 (for Firebase emulator)
         uses: actions/setup-java@v4
