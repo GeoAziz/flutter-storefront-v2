@@ -343,3 +343,4 @@ If you're developing on a remote server:
 - **Debugging:** https://flutter.dev/docs/testing/debugging
 
 **Good luck! 🚀**
+# Retry emulator tests due to transient Flutter setup failure
