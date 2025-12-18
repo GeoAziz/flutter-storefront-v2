@@ -31,6 +31,7 @@ class PaginatedProductList extends ConsumerStatefulWidget {
 
   /// Number of columns for grid layout (default 2)
   final int gridColumns;
+
   /// Optional filter params (used to scope the pagination provider)
   final FilterParams filter;
 
@@ -56,8 +57,8 @@ class PaginatedProductList extends ConsumerStatefulWidget {
     super.key,
     required this.onProductTap,
     this.useGridLayout = false,
-  this.gridColumns = 2,
-  this.filter = const FilterParams(),
+    this.gridColumns = 2,
+    this.filter = const FilterParams(),
     this.customLoadingWidget,
     this.customErrorWidget,
     this.customEmptyWidget,
@@ -67,7 +68,8 @@ class PaginatedProductList extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<PaginatedProductList> createState() => _PaginatedProductListState();
+  ConsumerState<PaginatedProductList> createState() =>
+      _PaginatedProductListState();
 }
 
 class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
@@ -82,7 +84,8 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
 
     // Fetch initial products on load
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(productPaginationProvider(widget.filter).notifier);
+      final notifier =
+          ref.read(productPaginationProvider(widget.filter).notifier);
       notifier.refresh();
     });
   }
@@ -111,26 +114,27 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
     // Check if we're near the bottom of the list
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - _scrollThresholdPixels) {
-      final notifier = ref.read(productPaginationProvider(widget.filter).notifier);
+      final notifier =
+          ref.read(productPaginationProvider(widget.filter).notifier);
       notifier.fetchNextPage();
     }
   }
 
   /// Retries fetching the next page after an error
   Future<void> _retryFetchNextPage() async {
-    final notifier = ref.read(productPaginationProvider(widget.filter).notifier);
+    final notifier =
+        ref.read(productPaginationProvider(widget.filter).notifier);
     await notifier.fetchNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
-  final state = ref.watch(productPaginationProvider(widget.filter));
+    final state = ref.watch(productPaginationProvider(widget.filter));
 
     // Show loading indicator on first load
     if (state.isLoading && state.items.isEmpty) {
       return Center(
-        child: widget.customLoadingWidget ??
-            const CircularProgressIndicator(),
+        child: widget.customLoadingWidget ?? const CircularProgressIndicator(),
       );
     }
 
@@ -141,13 +145,15 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.shopping_bag_outlined, size: 64, color: Colors.grey),
+                const Icon(Icons.shopping_bag_outlined,
+                    size: 64, color: Colors.grey),
                 const SizedBox(height: defaultPadding),
                 const Text('No products found'),
                 const SizedBox(height: defaultPadding),
                 ElevatedButton(
                   onPressed: () {
-                    final notifier = ref.read(productPaginationProvider(widget.filter).notifier);
+                    final notifier = ref.read(
+                        productPaginationProvider(widget.filter).notifier);
                     notifier.refresh();
                   },
                   child: const Text('Retry'),
@@ -160,7 +166,8 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
     // Show error message if one occurred
     if (state.error != null && state.items.isEmpty) {
       return Center(
-        child: widget.customErrorWidget?.call(state.error!, _retryFetchNextPage) ??
+        child: widget.customErrorWidget
+                ?.call(state.error!, _retryFetchNextPage) ??
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -172,10 +179,10 @@ class _PaginatedProductListState extends ConsumerState<PaginatedProductList> {
                   style: const TextStyle(color: Colors.red),
                 ),
                 const SizedBox(height: defaultPadding),
-                        ElevatedButton(
-                          onPressed: _retryFetchNextPage,
-                          child: const Text('Retry'),
-                        ),
+                ElevatedButton(
+                  onPressed: _retryFetchNextPage,
+                  child: const Text('Retry'),
+                ),
               ],
             ),
       );

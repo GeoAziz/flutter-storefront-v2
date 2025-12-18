@@ -27,7 +27,7 @@ class Product {
         'price': price,
         'priceAfterDiscount': priceAfterDiscount,
         'discountPercent': discountPercent,
-  'category': category,
+        'category': category,
       };
 
   factory Product.fromJson(Map<String, dynamic> m) => Product(
@@ -39,7 +39,7 @@ class Product {
             ? null
             : (m['priceAfterDiscount'] as num).toDouble(),
         discountPercent: m['discountPercent'] as int?,
-    category: m['category'] as String?,
+        category: m['category'] as String?,
       );
 }
 
@@ -49,20 +49,23 @@ abstract class ProductRepository {
   /// Fetches products using the specified pagination request (page or cursor based).
   /// Default implementation delegates to fetchProducts() for backward compatibility.
   Future<PaginationResult<Product>> fetchProductsPaginated(
-    PaginationRequest request,
-    {String? category}) async {
+      PaginationRequest request,
+      {String? category}) async {
     if (request is PageRequest) {
-    final products = await fetchProducts();
-    final filtered = category == null
-      ? products
-      : products.where((p) => p.category == category).toList();
-    final pageSize = request.pageSize;
-    final page = request.page;
-    final startIndex = (page - 1) * pageSize;
-    final endIndex = ((startIndex + pageSize).clamp(0, filtered.length) as int);
+      final products = await fetchProducts();
+      final filtered = category == null
+          ? products
+          : products.where((p) => p.category == category).toList();
+      final pageSize = request.pageSize;
+      final page = request.page;
+      final startIndex = (page - 1) * pageSize;
+      final endIndex =
+          ((startIndex + pageSize).clamp(0, filtered.length) as int);
 
-    final items = startIndex >= filtered.length ? <Product>[] : filtered.sublist(startIndex, endIndex);
-    final hasMore = endIndex < filtered.length;
+      final items = startIndex >= filtered.length
+          ? <Product>[]
+          : filtered.sublist(startIndex, endIndex);
+      final hasMore = endIndex < filtered.length;
 
       return PaginationResult(
         items: items,
@@ -146,20 +149,23 @@ class RealProductRepository implements ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(
-    PaginationRequest request,
-    {String? category}) async {
+      PaginationRequest request,
+      {String? category}) async {
     if (request is PageRequest) {
-    final products = await fetchProducts();
-    final filtered = category == null
-      ? products
-      : products.where((p) => p.category == category).toList();
-    final pageSize = request.pageSize;
-    final page = request.page;
-    final startIndex = (page - 1) * pageSize;
-    final endIndex = ((startIndex + pageSize).clamp(0, filtered.length) as int);
+      final products = await fetchProducts();
+      final filtered = category == null
+          ? products
+          : products.where((p) => p.category == category).toList();
+      final pageSize = request.pageSize;
+      final page = request.page;
+      final startIndex = (page - 1) * pageSize;
+      final endIndex =
+          ((startIndex + pageSize).clamp(0, filtered.length) as int);
 
-    final items = startIndex >= filtered.length ? <Product>[] : filtered.sublist(startIndex, endIndex);
-    final hasMore = endIndex < filtered.length;
+      final items = startIndex >= filtered.length
+          ? <Product>[]
+          : filtered.sublist(startIndex, endIndex);
+      final hasMore = endIndex < filtered.length;
 
       return PaginationResult(
         items: items,

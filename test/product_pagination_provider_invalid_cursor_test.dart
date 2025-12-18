@@ -70,11 +70,13 @@ void main() {
       ]);
       addTearDown(container.dispose);
 
-  final notifier = container.read(productPaginationProvider(const FilterParams()).notifier);
+      final notifier = container
+          .read(productPaginationProvider(const FilterParams()).notifier);
 
       // First, refresh to populate items and obtain a nextCursor from the repo
       await notifier.refresh();
-  var state = container.read(productPaginationProvider(const FilterParams()));
+      var state =
+          container.read(productPaginationProvider(const FilterParams()));
       expect(state.items.isNotEmpty, true);
       final firstCount = state.items.length;
       expect(state.hasMore, true);
@@ -82,7 +84,7 @@ void main() {
       // Next page will attempt to use cursor; our repo will throw FormatException
       // which should be handled by clearing the cursor and retrying a page-based fetch
       await notifier.fetchNextPage();
-  state = container.read(productPaginationProvider(const FilterParams()));
+      state = container.read(productPaginationProvider(const FilterParams()));
       expect(state.items.length, greaterThan(firstCount));
       // No error should be surfaced to the state
       expect(state.error, isNull);

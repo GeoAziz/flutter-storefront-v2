@@ -19,9 +19,15 @@ class ProductListState {
     this.error,
   });
 
-  factory ProductListState.initial() => ProductListState(items: [], isLoading: false, page: 1, hasMore: true);
+  factory ProductListState.initial() =>
+      ProductListState(items: [], isLoading: false, page: 1, hasMore: true);
 
-  ProductListState copyWith({List<Product>? items, bool? isLoading, int? page, bool? hasMore, String? error}) {
+  ProductListState copyWith(
+      {List<Product>? items,
+      bool? isLoading,
+      int? page,
+      bool? hasMore,
+      String? error}) {
     return ProductListState(
       items: items ?? this.items,
       isLoading: isLoading ?? this.isLoading,
@@ -38,14 +44,22 @@ class ProductPaginationNotifier extends StateNotifier<ProductListState> {
   final FilterParams filter;
   String? _nextCursor;
 
-  ProductPaginationNotifier(this.repo, {this.pageSize = 20, required this.filter}) : super(ProductListState.initial());
+  ProductPaginationNotifier(this.repo,
+      {this.pageSize = 20, required this.filter})
+      : super(ProductListState.initial());
 
   Future<void> refresh() async {
     state = state.copyWith(isLoading: true, page: 1, error: null);
     try {
-  final result = await repo.fetchProductsPaginated(PageRequest(page: 1, pageSize: pageSize), category: filter.category);
+      final result = await repo.fetchProductsPaginated(
+          PageRequest(page: 1, pageSize: pageSize),
+          category: filter.category);
       _nextCursor = result.nextCursor;
-      state = state.copyWith(items: result.items, isLoading: false, page: result.page ?? 1, hasMore: result.hasMore);
+      state = state.copyWith(
+          items: result.items,
+          isLoading: false,
+          page: result.page ?? 1,
+          hasMore: result.hasMore);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
@@ -62,28 +76,39 @@ class ProductPaginationNotifier extends StateNotifier<ProductListState> {
         // contract). In that case we clear the cursor and retry using the
         // page-based fallback so the user can continue browsing.
         try {
-          result = await repo.fetchProductsPaginated(CursorRequest(cursor: _nextCursor, limit: pageSize), category: filter.category);
+          result = await repo.fetchProductsPaginated(
+              CursorRequest(cursor: _nextCursor, limit: pageSize),
+              category: filter.category);
         } on FormatException catch (_) {
           // Clear the invalid cursor and retry with page-based continuation.
           _nextCursor = null;
           final nextPage = state.page + 1;
-          result = await repo.fetchProductsPaginated(PageRequest(page: nextPage, pageSize: pageSize), category: filter.category);
+          result = await repo.fetchProductsPaginated(
+              PageRequest(page: nextPage, pageSize: pageSize),
+              category: filter.category);
         }
       } else {
         // Fallback to page-based continuation
         final nextPage = state.page + 1;
-        result = await repo.fetchProductsPaginated(PageRequest(page: nextPage, pageSize: pageSize), category: filter.category);
+        result = await repo.fetchProductsPaginated(
+            PageRequest(page: nextPage, pageSize: pageSize),
+            category: filter.category);
       }
       final combined = List<Product>.from(state.items)..addAll(result.items);
       _nextCursor = result.nextCursor;
-      state = state.copyWith(items: combined, isLoading: false, page: result.page ?? (state.page + 1), hasMore: result.hasMore);
+      state = state.copyWith(
+          items: combined,
+          isLoading: false,
+          page: result.page ?? (state.page + 1),
+          hasMore: result.hasMore);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 }
 
-final productPaginationProvider = StateNotifierProvider.family<ProductPaginationNotifier, ProductListState, FilterParams>(
+final productPaginationProvider = StateNotifierProvider.family<
+    ProductPaginationNotifier, ProductListState, FilterParams>(
   (ref, filter) {
     final repo = ref.read(productRepositoryProvider);
     return ProductPaginationNotifier(repo, filter: filter);

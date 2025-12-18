@@ -6,13 +6,15 @@ class FilterParams {
 
   const FilterParams({this.query = '', this.category = ''});
 
-  FilterParams copyWith({String? query, String? category}) =>
-      FilterParams(query: query ?? this.query, category: category ?? this.category);
+  FilterParams copyWith({String? query, String? category}) => FilterParams(
+      query: query ?? this.query, category: category ?? this.category);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is FilterParams && other.query == query && other.category == category;
+    return other is FilterParams &&
+        other.query == query &&
+        other.category == category;
   }
 
   @override

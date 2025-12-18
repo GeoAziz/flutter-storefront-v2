@@ -20,13 +20,13 @@ class CategoryModel {
 List<CategoryModel> demoCategories = [
   CategoryModel(name: "All Categories"),
   CategoryModel(
-    name: "On Sale",
-    svgSrc: "assets/icons/Sale.svg",
-    route: RouteNames.onSale),
+      name: "On Sale",
+      svgSrc: "assets/icons/Sale.svg",
+      route: RouteNames.onSale),
   CategoryModel(name: "Man's", svgSrc: "assets/icons/Man.svg"),
   CategoryModel(name: "Woman’s", svgSrc: "assets/icons/Woman.svg"),
   CategoryModel(
-    name: "Kids", svgSrc: "assets/icons/Child.svg", route: RouteNames.kids),
+      name: "Kids", svgSrc: "assets/icons/Child.svg", route: RouteNames.kids),
 ];
 // End For Preview
 

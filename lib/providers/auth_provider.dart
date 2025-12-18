@@ -21,7 +21,8 @@ final firebaseAuthStateProvider = StreamProvider<User?>((ref) {
     // Lightweight instrumentation — keep in debug only if desired.
     try {
       // ignore: avoid_print
-      print('[auth] idTokenChanges -> user:${user?.uid} timestamp:${DateTime.now().toIso8601String()}');
+      print(
+          '[auth] idTokenChanges -> user:${user?.uid} timestamp:${DateTime.now().toIso8601String()}');
     } catch (_) {}
     return user;
   });
