@@ -8,31 +8,39 @@ class ProductInfo extends StatelessWidget {
   const ProductInfo({
     super.key,
     required this.title,
-    required this.brand,
-    required this.description,
-    required this.rating,
-    required this.numOfReviews,
+    this.brand,
+    this.description,
+    this.rating,
+    this.numOfReviews,
     required this.isAvailable,
   });
 
-  final String title, brand, description;
-  final double rating;
-  final int numOfReviews;
+  final String title;
+  final String? brand;
+  final String? description;
+  final double? rating;
+  final int? numOfReviews;
   final bool isAvailable;
 
   @override
   Widget build(BuildContext context) {
+    final displayBrand = (brand ?? '').toUpperCase();
+    final displayRating = rating ?? 0.0;
+    final displayReviews = numOfReviews ?? 0;
+    final displayDescription = description ?? '';
+
     return SliverPadding(
       padding: const EdgeInsets.all(defaultPadding),
       sliver: SliverToBoxAdapter(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              brand.toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: defaultPadding / 2),
+            if (displayBrand.isNotEmpty)
+              Text(
+                displayBrand,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            if (displayBrand.isNotEmpty) const SizedBox(height: defaultPadding / 2),
             Text(
               title,
               maxLines: 2,
@@ -46,10 +54,10 @@ class ProductInfo extends StatelessWidget {
                 SvgPicture.asset("assets/icons/Star_filled.svg"),
                 const SizedBox(width: defaultPadding / 4),
                 Text(
-                  "$rating ",
+                  "$displayRating ",
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                Text("($numOfReviews Reviews)")
+                Text("($displayReviews Reviews)")
               ],
             ),
             const SizedBox(height: defaultPadding),
@@ -61,10 +69,11 @@ class ProductInfo extends StatelessWidget {
                   .copyWith(fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: defaultPadding / 2),
-            Text(
-              description,
-              style: const TextStyle(height: 1.4),
-            ),
+            if (displayDescription.isNotEmpty)
+              Text(
+                displayDescription,
+                style: const TextStyle(height: 1.4),
+              ),
             const SizedBox(height: defaultPadding / 2),
           ],
         ),

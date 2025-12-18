@@ -35,30 +35,40 @@ class _ProductImagesState extends State<ProductImages> {
 
   @override
   Widget build(BuildContext context) {
+    final images = widget.images.where((s) => s.isNotEmpty).toList();
+
     return SliverToBoxAdapter(
       child: AspectRatio(
         aspectRatio: 1,
         child: Stack(
           children: [
-            PageView.builder(
-              controller: _controller,
-              onPageChanged: (pageNum) {
-                setState(() {
-                  _currentPage = pageNum;
-                });
-              },
-              itemCount: widget.images.length,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(right: defaultPadding),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(defaultBorderRadious * 2),
+            if (images.isEmpty)
+              // Placeholder when no images available
+              Container(
+                color: Theme.of(context).canvasColor,
+                child: const Center(child: Icon(Icons.image, size: 48)),
+              )
+            else
+              PageView.builder(
+                controller: _controller,
+                onPageChanged: (pageNum) {
+                  setState(() {
+                    _currentPage = pageNum;
+                  });
+                },
+                itemCount: images.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.only(right: defaultPadding),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(defaultBorderRadious * 2),
+                    ),
+                    child: LazyImageWidget(images[index]),
                   ),
-                  child: LazyImageWidget(widget.images[index]),
                 ),
               ),
-            ),
-            if (widget.images.length > 1)
+
+            if (images.length > 1)
               Positioned(
                 height: 20,
                 bottom: 24,
@@ -73,10 +83,10 @@ class _ProductImagesState extends State<ProductImages> {
                   ),
                   child: Row(
                     children: List.generate(
-                      widget.images.length,
+                      images.length,
                       (index) => Padding(
                         padding: EdgeInsets.only(
-                            right: index == (widget.images.length - 1)
+                            right: index == (images.length - 1)
                                 ? 0
                                 : defaultPadding / 4),
                         child: CircleAvatar(
