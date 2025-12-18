@@ -1,9 +1,10 @@
-name: Emulator Tests
+name: Emulator Tests (DISABLED - Phase 7 Sprint)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main, feat/** ]
+  # Disabled to unblock Phase 7 Sprint
+  # push:
+  #   branches: [ main, feat/** ]
 
 jobs:
   emulator-tests:
