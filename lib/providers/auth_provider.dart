@@ -13,7 +13,18 @@ final firebaseFirestoreProvider =
 /// Stream provider that emits the currently authenticated [User?]
 final firebaseAuthStateProvider = StreamProvider<User?>((ref) {
   final auth = ref.watch(firebaseAuthProvider);
-  return auth.authStateChanges();
+  // Use idTokenChanges() which fires on token refreshes and sign-in/restoration
+  // This is generally more reliable for lifecycle/resume scenarios than
+  // authStateChanges() which can transiently emit null while Firebase restores
+  // the user on app resume. We also log emissions for easier diagnosis.
+  return auth.idTokenChanges().map((user) {
+    // Lightweight instrumentation — keep in debug only if desired.
+    try {
+      // ignore: avoid_print
+      print('[auth] idTokenChanges -> user:${user?.uid} timestamp:${DateTime.now().toIso8601String()}');
+    } catch (_) {}
+    return user;
+  });
 });
 
 /// Convenience provider that returns the current user id (or null).

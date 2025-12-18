@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/route/route_names.dart';
+import 'package:shop/config/firebase_config.dart';
 
 import '../../../../constants.dart';
 
@@ -52,9 +53,23 @@ class Categories extends StatelessWidget {
                 svgSrc: demoCategories[index].svgSrc,
                 isActive: index == 0,
                 press: () {
-                  if (demoCategories[index].route != null) {
-                    Navigator.pushNamed(context, demoCategories[index].route!);
-                  }
+                  // Always navigate to the unified AllProducts screen and pass
+                  // the category name as an argument so the target screen can
+                  // optionally filter or display it.
+                  Navigator.pushNamed(
+                    context,
+                    RouteNames.allProducts,
+                    arguments: {'category': demoCategories[index].name},
+                  );
+
+                  // Non-blocking analytics log (safe in tests / when not set up)
+                  try {
+                    // Use the app-level Firebase wrapper for consistency.
+                    firebaseConfig.analytics.logEvent(
+                      name: 'category_tap',
+                      parameters: {'category': demoCategories[index].name},
+                    );
+                  } catch (_) {}
                 },
               ),
             ),

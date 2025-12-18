@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../constants.dart';
 
-class LogInForm extends StatelessWidget {
+class LogInForm extends StatefulWidget {
   const LogInForm({
     super.key,
     required this.formKey,
@@ -12,9 +12,16 @@ class LogInForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
+  State<LogInForm> createState() => _LogInFormState();
+}
+
+class _LogInFormState extends State<LogInForm> {
+  bool _obscure = true;
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: Column(
         children: [
           TextFormField(
@@ -50,7 +57,7 @@ class LogInForm extends StatelessWidget {
               // Password
             },
             validator: passwordValidator.call,
-            obscureText: true,
+            obscureText: _obscure,
             decoration: InputDecoration(
               hintText: "Password",
               prefixIcon: Padding(
@@ -68,6 +75,10 @@ class LogInForm extends StatelessWidget {
                           .withOpacity(0.3),
                       BlendMode.srcIn),
                 ),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                onPressed: () => setState(() => _obscure = !_obscure),
               ),
             ),
           ),

@@ -14,6 +14,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _userCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
+  bool _obscurePass = true;
 
   @override
   void dispose() {
@@ -40,8 +41,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             TextField(
               key: const Key('login_pass'),
               controller: _passCtrl,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Password'),
+              obscureText: _obscurePass,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _obscurePass ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () => setState(() => _obscurePass = !_obscurePass),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

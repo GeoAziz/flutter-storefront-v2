@@ -9,7 +9,7 @@ import 'package:shop/providers/repository_providers.dart';
 
 class MockPaginationRepository extends ProductRepository {
   final List<Product> _allProducts;
-  
+
   MockPaginationRepository({List<Product>? products})
       : _allProducts = products ?? _generateMockProducts();
 
@@ -35,14 +35,16 @@ class MockPaginationRepository extends ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(
-      PaginationRequest request) async {
+      PaginationRequest request,
+      {String? category}) async {
     await Future.delayed(const Duration(milliseconds: 100));
 
     if (request is PageRequest) {
       final pageSize = request.pageSize;
       final page = request.page;
       final startIndex = (page - 1) * pageSize;
-      final endIndex = ((startIndex + pageSize).clamp(0, _allProducts.length) as int);
+      final endIndex =
+          ((startIndex + pageSize).clamp(0, _allProducts.length) as int);
 
       final items = startIndex >= _allProducts.length
           ? <Product>[]
@@ -63,7 +65,8 @@ class MockPaginationRepository extends ProductRepository {
       final pageSize = request.limit;
       final page = int.tryParse(request.cursor?.split('p').last ?? '1') ?? 1;
       final startIndex = (page - 1) * pageSize;
-      final endIndex = ((startIndex + pageSize).clamp(0, _allProducts.length) as int);
+      final endIndex =
+          ((startIndex + pageSize).clamp(0, _allProducts.length) as int);
 
       final items = startIndex >= _allProducts.length
           ? <Product>[]
@@ -231,7 +234,7 @@ void main() {
             home: Scaffold(
               body: PaginatedProductList(
                 onProductTap: (_) {},
-                customLoadingWidget: Text('Custom Loading'),
+                customLoadingWidget: const Text('Custom Loading'),
               ),
             ),
           ),
@@ -247,7 +250,7 @@ void main() {
     testWidgets('PaginationLoadingIndicator displays correctly',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
             home: Scaffold(
               body: PaginationLoadingIndicator(
@@ -356,4 +359,3 @@ void main() {
     });
   });
 }
-

@@ -9,8 +9,13 @@ class MockTelemetry implements TelemetryService {
   final List<Object> spans = [];
 
   @override
-  Future<void> captureException(Object error, StackTrace? stackTrace, {Map<String, dynamic>? context}) async {
-    events.add({'name': 'captureException', 'error': error.toString(), 'context': context});
+  Future<void> captureException(Object error, StackTrace? stackTrace,
+      {Map<String, dynamic>? context}) async {
+    events.add({
+      'name': 'captureException',
+      'error': error.toString(),
+      'context': context
+    });
   }
 
   @override
@@ -44,7 +49,8 @@ void main() {
       final mock = MockTelemetry();
       setTelemetryServiceForTest(mock);
 
-      final res = await repo.fetchProductsPaginated(PageRequest(page: 1, pageSize: 1));
+      final res =
+          await repo.fetchProductsPaginated(PageRequest(page: 1, pageSize: 1));
       expect(res.items.length, 1);
 
       // We expect at least start and success events recorded
@@ -53,7 +59,8 @@ void main() {
       expect(names, contains('pagination_success'));
     });
 
-    test('pagination error triggers captureException and pagination_error', () async {
+    test('pagination error triggers captureException and pagination_error',
+        () async {
       // Create a repository that throws inside fetchProducts
       final repo = _ThrowingRepository();
       final mock = MockTelemetry();
@@ -66,9 +73,9 @@ void main() {
 
       final names = mock.events.map((e) => e['name']).toList();
       expect(names, contains('pagination_start'));
-  expect(names, contains('pagination_error'));
-  // captureException should also have been called
-  expect(names, contains('captureException'));
+      expect(names, contains('pagination_error'));
+      // captureException should also have been called
+      expect(names, contains('captureException'));
     });
   });
 }
@@ -80,8 +87,10 @@ class _ThrowingRepository extends ProductRepository {
   }
 
   @override
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) {
+  Future<PaginationResult<Product>> fetchProductsPaginated(
+      PaginationRequest request,
+      {String? category}) {
     // Delegate to default implementation which will call fetchProducts and therefore throw.
-    return super.fetchProductsPaginated(request);
+    return super.fetchProductsPaginated(request, category: category);
   }
 }

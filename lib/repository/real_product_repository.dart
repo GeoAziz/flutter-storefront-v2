@@ -38,9 +38,9 @@ class RealProductRepository extends ProductRepository {
   }
 
   @override
-  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request) async {
+  Future<PaginationResult<Product>> fetchProductsPaginated(PaginationRequest request, {String? category}) async {
     // PageRequest: delegate to existing page-based helper (backwards compatible)
-    if (request is PageRequest) return super.fetchProductsPaginated(request);
+    if (request is PageRequest) return super.fetchProductsPaginated(request, category: category);
 
     // CursorRequest: interim client-side implementation that assumes the
     // backend returns an opaque base64-encoded JSON cursor containing an
@@ -66,9 +66,9 @@ class RealProductRepository extends ProductRepository {
 
       // Map offset + limit into the existing page/size semantics. We compute
       // the page index that contains `offset` under `limit` page size.
-      final pageSize = request.limit;
+  final pageSize = request.limit;
       final page = (offset ~/ pageSize) + 1;
-      final items = await fetchProducts(page: page, pageSize: pageSize);
+  final items = await fetchProducts(page: page, pageSize: pageSize);
       
       // Standard pagination heuristic: if we received a full page, assume there
       // might be more (hasMore = true). The backend will signal end-of-list by

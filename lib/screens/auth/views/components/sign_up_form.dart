@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../constants.dart';
 
 /// Modified SignUpForm that accepts controllers so parent can handle submission.
-class SignUpForm extends StatelessWidget {
+class SignUpForm extends StatefulWidget {
   const SignUpForm({
     super.key,
     required this.emailController,
@@ -17,13 +17,20 @@ class SignUpForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
+  bool _obscure = true;
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: Column(
         children: [
           TextFormField(
-            controller: emailController,
+            controller: widget.emailController,
             validator: emaildValidator.call,
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
@@ -50,9 +57,9 @@ class SignUpForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding),
           TextFormField(
-            controller: passwordController,
+            controller: widget.passwordController,
             validator: passwordValidator.call,
-            obscureText: true,
+            obscureText: _obscure,
             decoration: InputDecoration(
               hintText: "Password",
               prefixIcon: Padding(
@@ -71,6 +78,10 @@ class SignUpForm extends StatelessWidget {
                     BlendMode.srcIn,
                   ),
                 ),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                onPressed: () => setState(() => _obscure = !_obscure),
               ),
             ),
           ),

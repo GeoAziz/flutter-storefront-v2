@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/providers/product_pagination_provider.dart';
 
+import 'package:shop/models/filter_params.dart';
+
 /// A loading indicator widget specifically designed for pagination use-cases.
 /// Shows a centered spinner with optional message and cancel button.
 class PaginationLoadingIndicator extends ConsumerWidget {
@@ -194,7 +196,7 @@ class PaginationInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productPaginationProvider);
+    final state = ref.watch(productPaginationProvider(const FilterParams()));
 
     if (compact) {
       return Container(
@@ -227,10 +229,12 @@ class PaginationInfoWidget extends ConsumerWidget {
           ),
           if (state.hasMore)
             const Text('More products available',
-                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold))
+                style:
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold))
           else
             const Text('All products loaded',
-                style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: Colors.green, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -262,7 +266,7 @@ class PaginationRetryOverlay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productPaginationProvider);
+    final state = ref.watch(productPaginationProvider(const FilterParams()));
 
     if (state.error == null) return const SizedBox.shrink();
 
@@ -334,8 +338,8 @@ class PaginationProgressIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productPaginationProvider);
-    
+    final state = ref.watch(productPaginationProvider(const FilterParams()));
+
     if (totalItems == null || totalItems! <= 0) {
       return const SizedBox.shrink();
     }

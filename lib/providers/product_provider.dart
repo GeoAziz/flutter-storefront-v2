@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/firestore_models.dart' as models;
+import '../models/filter_params.dart';
 import '../services/firestore_service.dart';
 import 'auth_provider.dart';
 
@@ -295,16 +296,7 @@ final addReviewProvider =
 // PARAMETER CLASSES
 // ============================================================================
 
-/// Parameters for filtering products
-class FilterParams {
-  final String query;
-  final String category;
-
-  FilterParams({
-    this.query = '',
-    this.category = '',
-  });
-}
+// FilterParams is defined in lib/models/filter_params.dart
 
 /// Parameters for adding item to cart
 class AddToCartParams {

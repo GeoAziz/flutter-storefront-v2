@@ -28,7 +28,8 @@ class SimpleMockRepository extends ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(
-      PaginationRequest request) async {
+      PaginationRequest request,
+      {String? category}) async {
     await Future.delayed(const Duration(milliseconds: 50));
 
     if (request is PageRequest) {
@@ -131,7 +132,8 @@ void main() {
       expect(products.length, equals(50));
     });
 
-    test('fetchProductsPaginated with PageRequest returns first page', () async {
+    test('fetchProductsPaginated with PageRequest returns first page',
+        () async {
       final repo = SimpleMockRepository();
       final request = PageRequest(page: 1, pageSize: 20);
       final result = await repo.fetchProductsPaginated(request);

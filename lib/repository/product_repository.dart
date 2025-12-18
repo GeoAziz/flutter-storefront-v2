@@ -6,6 +6,7 @@ class Product {
   final String title;
   final String image;
   final double price;
+  final String? category;
   final double? priceAfterDiscount;
   final int? discountPercent;
 
@@ -16,6 +17,7 @@ class Product {
     required this.price,
     this.priceAfterDiscount,
     this.discountPercent,
+    this.category,
   });
 
   Map<String, dynamic> toJson() => {
@@ -25,6 +27,7 @@ class Product {
         'price': price,
         'priceAfterDiscount': priceAfterDiscount,
         'discountPercent': discountPercent,
+  'category': category,
       };
 
   factory Product.fromJson(Map<String, dynamic> m) => Product(
@@ -36,6 +39,7 @@ class Product {
             ? null
             : (m['priceAfterDiscount'] as num).toDouble(),
         discountPercent: m['discountPercent'] as int?,
+    category: m['category'] as String?,
       );
 }
 
@@ -45,19 +49,20 @@ abstract class ProductRepository {
   /// Fetches products using the specified pagination request (page or cursor based).
   /// Default implementation delegates to fetchProducts() for backward compatibility.
   Future<PaginationResult<Product>> fetchProductsPaginated(
-      PaginationRequest request) async {
+    PaginationRequest request,
+    {String? category}) async {
     if (request is PageRequest) {
-      final products = await fetchProducts();
-      final pageSize = request.pageSize;
-      final page = request.page;
-      final startIndex = (page - 1) * pageSize;
-      final endIndex =
-          ((startIndex + pageSize).clamp(0, products.length) as int);
+    final products = await fetchProducts();
+    final filtered = category == null
+      ? products
+      : products.where((p) => p.category == category).toList();
+    final pageSize = request.pageSize;
+    final page = request.page;
+    final startIndex = (page - 1) * pageSize;
+    final endIndex = ((startIndex + pageSize).clamp(0, filtered.length) as int);
 
-      final items = startIndex >= products.length
-          ? <Product>[]
-          : products.sublist(startIndex, endIndex);
-      final hasMore = endIndex < products.length;
+    final items = startIndex >= filtered.length ? <Product>[] : filtered.sublist(startIndex, endIndex);
+    final hasMore = endIndex < filtered.length;
 
       return PaginationResult(
         items: items,
@@ -83,6 +88,7 @@ class MockProductRepository implements ProductRepository {
         title: 'Mock Product 1',
         image: 'assets/images/product1.png',
         price: 99.99,
+        category: 'On Sale',
         priceAfterDiscount: 79.99,
         discountPercent: 20,
       ),
@@ -91,6 +97,7 @@ class MockProductRepository implements ProductRepository {
         title: 'Mock Product 2',
         image: 'assets/images/product2.png',
         price: 149.99,
+        category: 'Kids',
         priceAfterDiscount: null,
         discountPercent: null,
       ),
@@ -99,19 +106,23 @@ class MockProductRepository implements ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(
-      PaginationRequest request) async {
+      PaginationRequest request,
+      {String? category}) async {
     if (request is PageRequest) {
       final products = await fetchProducts();
+      final filtered = category == null
+          ? products
+          : products.where((p) => p.category == category).toList();
       final pageSize = request.pageSize;
       final page = request.page;
       final startIndex = (page - 1) * pageSize;
       final endIndex =
-          ((startIndex + pageSize).clamp(0, products.length) as int);
+          ((startIndex + pageSize).clamp(0, filtered.length) as int);
 
-      final items = startIndex >= products.length
+      final items = startIndex >= filtered.length
           ? <Product>[]
-          : products.sublist(startIndex, endIndex);
-      final hasMore = endIndex < products.length;
+          : filtered.sublist(startIndex, endIndex);
+      final hasMore = endIndex < filtered.length;
 
       return PaginationResult(
         items: items,
@@ -135,19 +146,20 @@ class RealProductRepository implements ProductRepository {
 
   @override
   Future<PaginationResult<Product>> fetchProductsPaginated(
-      PaginationRequest request) async {
+    PaginationRequest request,
+    {String? category}) async {
     if (request is PageRequest) {
-      final products = await fetchProducts();
-      final pageSize = request.pageSize;
-      final page = request.page;
-      final startIndex = (page - 1) * pageSize;
-      final endIndex =
-          ((startIndex + pageSize).clamp(0, products.length) as int);
+    final products = await fetchProducts();
+    final filtered = category == null
+      ? products
+      : products.where((p) => p.category == category).toList();
+    final pageSize = request.pageSize;
+    final page = request.page;
+    final startIndex = (page - 1) * pageSize;
+    final endIndex = ((startIndex + pageSize).clamp(0, filtered.length) as int);
 
-      final items = startIndex >= products.length
-          ? <Product>[]
-          : products.sublist(startIndex, endIndex);
-      final hasMore = endIndex < products.length;
+    final items = startIndex >= filtered.length ? <Product>[] : filtered.sublist(startIndex, endIndex);
+    final hasMore = endIndex < filtered.length;
 
       return PaginationResult(
         items: items,
