@@ -58,29 +58,36 @@ android {
             signingConfig signingConfigs.debug
             
             // App Size Optimization (Phase 7 Sprint)
-            // Enable code shrinking and resource shrinking for release builds
-            minifyEnabled true
-            shrinkResources true
+            // Note: Both minify and shrinkResources temporarily disabled due to Gradle conflicts
+            // Will re-enable after fixing ndk.abiFilters and upgrading Android Gradle Plugin
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     // ABI Splits: Reduce APK size by building separate APKs per architecture
-    // This removes the 15 MB armeabi-v7a (32-bit) native library since modern Android is 64-bit.
-    // Play Store will automatically deliver the correct APK to each device.
-    splits {
-        abi {
-            enable true
-            reset()
-            // Include only 64-bit and x86_64 (for emulator testing); drop 32-bit armeabi-v7a
-            include 'arm64-v8a', 'x86_64'
-            universalApk false  // Do not generate a universal APK; users get per-ABI APKs
-        }
-    }
+    // NOTE: Disabled for now due to Flutter plugin's default ndk.abiFilters conflict.
+    // To enable in future: first remove Flutter's ndk.abiFilters via Flutter version upgrade
+    // or custom wrapper configuration. When enabled, this will remove the 15 MB
+    // armeabi-v7a (32-bit) native library.
+    // splits {
+    //     abi {
+    //         enable true
+    //         reset()
+    //         include 'arm64-v8a', 'x86_64'
+    //         universalApk false
+    //     }
+    // }
 }
 
 flutter {
     source '../..'
+}
+
+// Clear NDK ABI filters set by Flutter plugin to allow ABI splits (Phase 7 optimization)
+afterEvaluate {
+    android.defaultConfig.ndk.abiFilters = null
 }
 
 dependencies {}
