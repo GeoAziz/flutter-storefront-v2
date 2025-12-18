@@ -11,5 +11,9 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
   // Use Firestore-backed repository in non-mock mode. This provides
   // cursor/page pagination backed by Firestore (interim offset-based
   // implementation for Sprint 1).
-  return FirestoreProductRepository();
+  // The project currently provides a `RealProductRepository` implementation.
+  // Historically this was named `FirestoreProductRepository`; use the
+  // concrete type available in `product_repository.dart` to avoid a
+  // compile-time error when building release APKs.
+  return RealProductRepository();
 });

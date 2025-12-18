@@ -56,6 +56,25 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            
+            // App Size Optimization (Phase 7 Sprint)
+            // Enable code shrinking and resource shrinking for release builds
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // ABI Splits: Reduce APK size by building separate APKs per architecture
+    // This removes the 15 MB armeabi-v7a (32-bit) native library since modern Android is 64-bit.
+    // Play Store will automatically deliver the correct APK to each device.
+    splits {
+        abi {
+            enable true
+            reset()
+            // Include only 64-bit and x86_64 (for emulator testing); drop 32-bit armeabi-v7a
+            include 'arm64-v8a', 'x86_64'
+            universalApk false  // Do not generate a universal APK; users get per-ABI APKs
         }
     }
 }

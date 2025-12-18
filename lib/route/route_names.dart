@@ -35,6 +35,8 @@ class RouteNames {
   static const String search = '/search';
   static const String searchHistory = '/search_history';
   static const String bookmark = '/bookmark';
+  static const String wishlist = '/wishlist';
+  static const String comparison = '/comparison';
   static const String entryPoint = '/entry_point';
   static const String profile = '/profile';
   static const String getHelp = '/get_help';
