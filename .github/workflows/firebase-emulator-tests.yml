@@ -30,7 +30,7 @@ jobs:
       - name: Start Firestore emulator
         run: |
           # Start emulator in background; assumes firebase.json is configured in repo.
-          firebase emulators:start --only firestore --project=demo &
+          firebase emulators:start --only firestore --project=demo-no-project &
           # wait for emulator to start
           n=0
           until nc -z localhost 8080 || [ $n -gt 30 ]; do
