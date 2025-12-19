@@ -44,7 +44,7 @@ class PopularProducts extends ConsumerWidget {
                     left: defaultPadding,
                     right: index == products.length - 1 ? defaultPadding : 0,
                   ),
-                  child: ProductCard(
+                    child: ProductCard(
                     image: products[index].image,
                     brandName: '',
                     title: products[index].title,
@@ -52,8 +52,11 @@ class PopularProducts extends ConsumerWidget {
                     priceAfetDiscount: products[index].priceAfterDiscount,
                     dicountpercent: products[index].discountPercent,
                     press: () {
-                      Navigator.pushNamed(context, RouteNames.productDetails,
-                          arguments: index.isEven);
+                      Navigator.pushNamed(
+                        context,
+                        RouteNames.productDetails,
+                        arguments: products[index].id,
+                      );
                     },
                   ),
                 ),

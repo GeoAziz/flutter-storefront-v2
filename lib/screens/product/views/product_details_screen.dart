@@ -1,66 +1,46 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:shop/repository/product_repository.dart' as repo;
-import 'package:shop/providers/product_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/models/firestore_models.dart' as models;
-import 'package:shop/components/buy_full_ui_kit.dart';
-import 'package:shop/components/cart_button.dart';
-import 'package:shop/components/custom_modal_bottom_sheet.dart';
+// 🔒 FROZEN / DEPRECATED
+// This file is kept for backward-compatibility only. The app should not navigate
+// to this screen anymore. Use `ProductDetailScreen` (singular) as the canonical
+// product detail UI. The router has been updated to redirect legacy
+// `RouteNames.productDetails` to `ProductDetailScreen`.
 
-class ProductDetailsScreen extends ConsumerWidget {
-  const ProductDetailsScreen({Key? key, this.productId, this.repoProduct})
-      : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:shop/route/route_names.dart';
+
+class ProductDetailsScreen extends StatelessWidget {
+  const ProductDetailsScreen({Key? key, this.productId, this.repoProduct}) : super(key: key);
 
   final String? productId;
-  final repo.Product? repoProduct;
+  final Object? repoProduct;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Simple, safe implementation: load product if id provided, otherwise show repo product or demo UI.
-    if (productId != null) {
-      final productAsync = ref.watch(productProvider(productId!));
-      return productAsync.when(
-        data: (models.Product? prod) {
-          if (prod == null) {
-            return Scaffold(
-              appBar: AppBar(title: const Text('Product')),
-              body: const Center(child: Text('Product not found')),
-            );
-          }
-          return Scaffold(
-            appBar: AppBar(title: Text(prod.name)),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(prod.description ?? 'No description'),
-            ),
-          );
-        },
-        loading: () => Scaffold(
-          appBar: AppBar(title: const Text('Loading...')),
-          body: const Center(child: CircularProgressIndicator()),
-        ),
-        error: (e, st) => Scaffold(
-          appBar: AppBar(title: const Text('Error')),
-          body: Center(child: Text('Error loading product: $e')),
-        ),
-      );
-    }
-
-    if (repoProduct != null) {
-      return Scaffold(
-        appBar: AppBar(title: Text(repoProduct!.title)),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text('Price: ${repoProduct!.price}'),
-        ),
-      );
-    }
-
-    // Fallback demo UI
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Product Demo')),
-      body: const Center(child: Text('Demo product content')),
+      appBar: AppBar(title: const Text('Deprecated screen')),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'DEPRECATED: ProductDetailsScreen (legacy).',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'This screen has been frozen and should no longer be used. Navigate to the canonical ProductDetailScreen instead.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pushNamed(RouteNames.productDetail, arguments: productId),
+              child: const Text('Open canonical ProductDetailScreen'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

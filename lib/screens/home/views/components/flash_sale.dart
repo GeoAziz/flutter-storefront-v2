@@ -59,7 +59,7 @@ class FlashSale extends ConsumerWidget {
                           ? defaultPadding
                           : 0,
                     ),
-                    child: ProductCard(
+                        child: ProductCard(
                       image: p.image,
                       brandName: '',
                       title: p.title,

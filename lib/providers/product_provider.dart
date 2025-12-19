@@ -5,50 +5,56 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/firestore_models.dart' as models;
 import '../models/filter_params.dart';
-import '../services/firestore_service.dart';
 import 'auth_provider.dart';
+import 'repository_providers.dart';
+import 'package:shop/repository/product_repository.dart' as repo;
+import '../models/firestore_models.dart' as models;
+import '../services/firestore_service.dart';
 
 // ============================================================================
 // PRODUCT PROVIDERS
 // ============================================================================
 
-/// Stream provider for all active products
-final allProductsProvider = StreamProvider<List<models.Product>>((ref) {
-  return firestoreService.streamProducts();
+/// Provider for all active products (via ProductRepository)
+final allProductsProvider = FutureProvider<List<repo.Product>>((ref) async {
+  final repoClient = ref.watch(productRepositoryProvider);
+  return repoClient.fetchProducts();
 });
 
 /// Family provider for products by category
 final productsByCategoryProvider =
-    StreamProvider.family<List<models.Product>, String>((ref, category) async* {
-  try {
-    final products = await firestoreService.getProductsByCategory(category);
-    yield products;
-  } catch (e) {
-    throw Exception('Failed to fetch products: $e');
-  }
+    FutureProvider.family<List<repo.Product>, String>((ref, category) async {
+  final repoClient = ref.watch(productRepositoryProvider);
+  final page = await repoClient.fetchProducts();
+  if (category.isEmpty) return page;
+  return page.where((p) => p.category == category).toList();
 });
 
 /// Family provider for single product
 final productProvider =
-    FutureProvider.family<models.Product?, String>((ref, productId) async {
-  return firestoreService.getProduct(productId);
+    FutureProvider.family<repo.Product?, String>((ref, productId) async {
+  final repoClient = ref.watch(productRepositoryProvider);
+  final all = await repoClient.fetchProducts();
+  try {
+    return all.firstWhere((p) => p.id == productId);
+  } catch (_) {
+    return null;
+  }
 });
 
 /// Search products provider
 final searchProductsProvider =
-    FutureProvider.family<List<models.Product>, String>((ref, query) async {
-  if (query.isEmpty) {
-    return [];
-  }
-  return firestoreService.searchProducts(query);
+    FutureProvider.family<List<repo.Product>, String>((ref, query) async {
+  if (query.isEmpty) return [];
+  final repoClient = ref.watch(productRepositoryProvider);
+  final all = await repoClient.fetchProducts();
+  return all.where((p) => p.title.toLowerCase().contains(query.toLowerCase())).toList();
 });
 
 /// Filtered products based on search query and category
 final filteredProductsProvider =
-    Provider.family<AsyncValue<List<models.Product>>, FilterParams>(
-        (ref, params) {
+    Provider.family<AsyncValue<List<repo.Product>>, FilterParams>((ref, params) {
   if (params.query.isEmpty && params.category.isEmpty) {
     return ref.watch(allProductsProvider);
   }

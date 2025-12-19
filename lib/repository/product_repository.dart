@@ -6,17 +6,23 @@ class Product {
   final String title;
   final String image;
   final double price;
+  final String? description;
+  final bool isAvailable;
   final String? category;
   final double? priceAfterDiscount;
   final int? discountPercent;
+  final String? currency;
 
   Product({
     required this.id,
     required this.title,
     required this.image,
     required this.price,
+    this.description,
+    this.isAvailable = true,
     this.priceAfterDiscount,
     this.discountPercent,
+    this.currency,
     this.category,
   });
 
@@ -25,8 +31,11 @@ class Product {
         'title': title,
         'image': image,
         'price': price,
+    'description': description,
+    'isAvailable': isAvailable,
         'priceAfterDiscount': priceAfterDiscount,
         'discountPercent': discountPercent,
+        'currency': currency,
         'category': category,
       };
 
@@ -35,10 +44,13 @@ class Product {
         title: m['title'] as String,
         image: m['image'] as String,
         price: (m['price'] as num).toDouble(),
+        description: m['description'] as String?,
+        isAvailable: m['isAvailable'] as bool? ?? true,
         priceAfterDiscount: m['priceAfterDiscount'] == null
             ? null
             : (m['priceAfterDiscount'] as num).toDouble(),
         discountPercent: m['discountPercent'] as int?,
+        currency: m['currency'] as String?,
         category: m['category'] as String?,
       );
 }
@@ -91,6 +103,7 @@ class MockProductRepository implements ProductRepository {
         title: 'Mock Product 1',
         image: 'assets/images/product1.png',
         price: 99.99,
+        description: 'A mock product used for local development.',
         category: 'On Sale',
         priceAfterDiscount: 79.99,
         discountPercent: 20,
@@ -100,6 +113,8 @@ class MockProductRepository implements ProductRepository {
         title: 'Mock Product 2',
         image: 'assets/images/product2.png',
         price: 149.99,
+        description: 'Another mock product. Limited stock.',
+        isAvailable: false,
         category: 'Kids',
         priceAfterDiscount: null,
         discountPercent: null,

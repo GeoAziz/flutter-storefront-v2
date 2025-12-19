@@ -46,7 +46,7 @@ class BestSellers extends ConsumerWidget {
                       left: defaultPadding,
                       right: index == products.length - 1 ? defaultPadding : 0,
                     ),
-                    child: ProductCard(
+                        child: ProductCard(
                       image: p.image,
                       brandName: '',
                       title: p.title,

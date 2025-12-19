@@ -5,6 +5,7 @@ import 'package:shop/providers/repository_providers.dart';
 import 'package:shop/repository/product_repository.dart';
 import 'package:shop/route/route_names.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/utils/currency.dart';
 import 'package:shop/providers/favorites_provider.dart';
 import 'package:shop/screens/product/widgets/reviews_section.dart';
 
@@ -112,16 +113,33 @@ class ProductDetailScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product image
+            // Product image (network or asset)
             SizedBox(
               width: double.infinity,
               height: 300,
-              child: Image.asset(
-                product.image,
-                fit: BoxFit.cover,
-                errorBuilder: (c, e, s) =>
-                    const Icon(Icons.image_not_supported),
-              ),
+              child: Builder(builder: (context) {
+                final image = product.image;
+                if (image.isEmpty) {
+                  return const Center(child: Icon(Icons.image_not_supported));
+                }
+                final isNetwork = image.startsWith('http://') || image.startsWith('https://');
+                if (isNetwork) {
+                  return Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (c, e, s) => const Icon(Icons.image_not_supported),
+                    loadingBuilder: (c, child, progress) {
+                      if (progress == null) return child;
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  );
+                }
+                return Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                  errorBuilder: (c, e, s) => const Icon(Icons.image_not_supported),
+                );
+              }),
             ),
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
@@ -139,7 +157,7 @@ class ProductDetailScreen extends ConsumerWidget {
                     children: [
                       if (product.priceAfterDiscount != null) ...[
                         Text(
-                          '\$${product.priceAfterDiscount!.toStringAsFixed(2)}',
+                          formatPrice(product.priceAfterDiscount!, currency: product.currency),
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -148,7 +166,7 @@ class ProductDetailScreen extends ConsumerWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '\$${product.price.toStringAsFixed(2)}',
+                          formatPrice(product.price, currency: product.currency),
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     decoration: TextDecoration.lineThrough,
@@ -177,7 +195,7 @@ class ProductDetailScreen extends ConsumerWidget {
                         ],
                       ] else
                         Text(
-                          '\$${product.price.toStringAsFixed(2)}',
+                          formatPrice(product.price, currency: product.currency),
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -186,14 +204,15 @@ class ProductDetailScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  // Description (placeholder if none in Product model)
+                  // Product description from repository
                   Text(
                     'Description',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'High-quality product with excellent build quality and design. Perfect for everyday use.',
+                  Text(
+                    product.description ??
+                        'No description available for this product.',
                   ),
                   const SizedBox(height: 24),
                   // Quantity selector and Add-to-Cart button

@@ -185,7 +185,10 @@ gsutil ls
 ```json
 {
   "projects": {
-    "default": "flutter-storefront-v2"
+    // Local/dev default project used by the app and emulators
+    "default": "poafix",
+    // Optional alias for demo/live deployments
+    "demo": "demo-project"
   },
   "targets": {},
   "etags": {}

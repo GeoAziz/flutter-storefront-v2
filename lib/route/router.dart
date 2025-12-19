@@ -90,8 +90,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const PasswordRecoveryScreen(),
       );
     case RouteNames.productDetails:
+      // Redirect legacy `productDetails` route to the canonical ProductDetailScreen.
+      // This prevents navigation to the frozen/legacy `ProductDetailsScreen`.
       return MaterialPageRoute(
-        builder: (context) => ProductDetailsScreen(),
+        builder: (context) => const ProductDetailScreen(),
+        settings: settings,
       );
     case RouteNames.productDetail:
       return MaterialPageRoute(

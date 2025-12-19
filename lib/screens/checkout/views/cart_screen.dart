@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/providers/cart_provider.dart';
 import 'package:shop/providers/repository_providers.dart';
 import 'package:shop/providers/auth_provider.dart';
+import 'package:shop/utils/currency.dart';
 import 'package:shop/repository/product_repository.dart';
 import 'package:shop/route/route_names.dart';
 
@@ -95,8 +96,8 @@ class CartScreen extends ConsumerWidget {
                       title: Text(product.title),
                       subtitle: Text(
                         product.priceAfterDiscount != null
-                            ? '\$${product.priceAfterDiscount!.toStringAsFixed(2)}'
-                            : '\$${product.price.toStringAsFixed(2)}',
+                            ? formatPrice(product.priceAfterDiscount!, currency: product.currency)
+                            : formatPrice(product.price, currency: product.currency),
                       ),
                       trailing: SizedBox(
                         width: 130,
@@ -152,7 +153,7 @@ class CartScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Total: \$${_calculateTotal(entries).toStringAsFixed(2)}',
+                            'Total: ${formatPrice(_calculateTotal(entries), currency: entries.isNotEmpty ? entries.first.key.currency : 'USD')}',
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],

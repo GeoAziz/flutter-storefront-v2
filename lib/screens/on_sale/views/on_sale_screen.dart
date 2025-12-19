@@ -19,7 +19,7 @@ class OnSaleScreen extends ConsumerWidget {
           Navigator.pushNamed(
             context,
             RouteNames.productDetails,
-            arguments: product,
+            arguments: product.id,
           );
         },
         useGridLayout: true,

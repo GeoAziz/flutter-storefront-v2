@@ -81,6 +81,9 @@ class FirestoreProductRepository implements ProductRepository {
     final priceRaw = data['price'];
     final price = (priceRaw is num) ? priceRaw.toDouble() : (double.tryParse('$priceRaw') ?? 0.0);
 
+  // Currency value (seeded or default)
+  final currency = data['currency'] as String? ?? 'USD';
+
     // discount/priceAfterDiscount may be stored under several names across
     // seeders or legacy data. Try known variants.
     final discountRaw = data['discountPrice'] ?? data['priceAfterDiscount'];
@@ -116,6 +119,9 @@ class FirestoreProductRepository implements ProductRepository {
       title: name,
       image: image,
       price: price,
+      // map currency through to repo.Product
+      // repo.Product has an optional `currency` field (can be null for older data)
+      currency: currency,
       priceAfterDiscount: priceAfterDiscount,
       discountPercent: discountPercent,
       category: category,

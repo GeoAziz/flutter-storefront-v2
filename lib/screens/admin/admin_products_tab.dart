@@ -7,7 +7,7 @@ class AdminProductsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productsAsync = ref.watch(allProductsProvider);
+  final productsAsync = ref.watch(allProductsProvider);
 
     return productsAsync.when(
       data: (products) {
@@ -22,8 +22,8 @@ class AdminProductsTab extends ConsumerWidget {
           itemBuilder: (context, i) {
             final p = products[i];
             return ListTile(
-              title: Text(p.name),
-              subtitle: Text(p.description),
+              title: Text(p.title),
+              subtitle: Text(p.description ?? ''),
               trailing: Text('\$${p.price.toStringAsFixed(2)}'),
             );
           },
