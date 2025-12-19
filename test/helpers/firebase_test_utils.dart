@@ -13,11 +13,12 @@
 // Minimal helper exported for convenience.
 library test_helpers.firebase;
 
-// Note: we avoid importing here to keep this file a scaffold. If you add
-// `fake_cloud_firestore` to dev_dependencies, uncomment the imports below.
-// import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+// Lightweight helper to produce an in-memory FakeFirestore instance for unit
+// tests. Ensure `fake_cloud_firestore` is present in dev_dependencies in
+// `pubspec.yaml` (it already is in this repo).
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 
-// FakeFirebaseFirestore initFakeFirestore() => FakeFirebaseFirestore();
+FakeFirebaseFirestore initFakeFirestore() => FakeFirebaseFirestore();
 
 /// If you prefer, paste this helper into your test file directly to avoid
 /// adding a dev dependency: create a small in-memory JSON-backed mock that

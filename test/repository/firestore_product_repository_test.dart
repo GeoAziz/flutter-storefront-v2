@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shop/repository/firestore_product_repository.dart';
 import 'package:shop/repository/pagination.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 
 void main() {
   setUpAll(() {
@@ -38,6 +39,23 @@ void main() {
       print('Cursor pagination result: ${result.items.length} items, hasMore: ${result.hasMore}');
       expect(result.items, isNotNull);
       expect(result, isA<PaginationResult>());
+    });
+
+    test('fetchProducts reads from injected Firestore instance', () async {
+      final fake = FakeFirebaseFirestore();
+      // Seed a product document
+      await fake.collection('products').doc('f1').set({
+        'name': 'Fake Product',
+        'price': 11.5,
+        'stock': 4,
+        'imageUrl': 'https://example.com/fake.png',
+        'description': 'Seeded fake product'
+      });
+
+      final repo = FirestoreProductRepository(injectedFirestore: fake);
+      final result = await repo.fetchProducts();
+      // Should read the seeded document from the fake firestore
+      expect(result.any((p) => p.id == 'f1' && p.title == 'Fake Product'), isTrue);
     });
   });
 }

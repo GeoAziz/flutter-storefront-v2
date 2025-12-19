@@ -17,19 +17,26 @@ class FirestoreProductRepository implements ProductRepository {
   static const String _emulatorHost = '127.0.0.1:8080';
 
   final ProductRepository fallback;
+  // Optional injected Firestore instance (used by tests). When provided
+  // the repository will use this instance instead of calling
+  // Firebase.app()/instanceFor(...) which simplifies unit testing.
+  final FirebaseFirestore? injectedFirestore;
 
-  FirestoreProductRepository({ProductRepository? fallback}) : fallback = fallback ?? real_impl.RealProductRepository();
+  FirestoreProductRepository({ProductRepository? fallback, this.injectedFirestore}) : fallback = fallback ?? real_impl.RealProductRepository();
 
   FirebaseFirestore get _firestore {
+    // If an injected Firestore instance exists (tests), use it directly.
+    if (injectedFirestore != null) return injectedFirestore!;
+
     // Use the default app and explicitly set database/project id so the
     // instance targets the hardcoded project. Caller must have initialized
     // Firebase in the app/test harness.
-  // Reference the hardcoded project id so it's obvious in the code and
-  // to avoid unused-field warnings. The Firestore Flutter API doesn't
-  // accept a `databaseId` named argument in some SDK versions, so keep
-  // the project id as a visible constant only.
-  final _ = _projectId;
-  final instance = FirebaseFirestore.instanceFor(app: Firebase.app());
+    // Reference the hardcoded project id so it's obvious in the code and
+    // to avoid unused-field warnings. The Firestore Flutter API doesn't
+    // accept a `databaseId` named argument in some SDK versions, so keep
+    // the project id as a visible constant only.
+    final _ = _projectId;
+    final instance = FirebaseFirestore.instanceFor(app: Firebase.app());
     // Ensure we point at the local emulator; setting this repeatedly is harmless.
     try {
       instance.settings = const Settings(
@@ -46,23 +53,80 @@ class FirestoreProductRepository implements ProductRepository {
   Product _mapDocumentToProduct(DocumentSnapshot doc) {
     final data = (doc.data() as Map<String, dynamic>?) ?? {};
     final id = doc.id;
-    final title = (data['title'] ?? data['name'] ?? data['titleText'] ?? '') as String;
-    final image = (data['image'] ?? data['imageUrl'] ?? data['thumbnail'] ?? '') as String;
-    final price = (data['price'] is num) ? (data['price'] as num).toDouble() : (double.tryParse('${data['price']}') ?? 0.0);
-    final priceAfterDiscount = data['priceAfterDiscount'] == null ? null : (data['priceAfterDiscount'] is num ? (data['priceAfterDiscount'] as num).toDouble() : double.tryParse('${data['priceAfterDiscount']}'));
-    final discountPercent = data['discountPercent'] is int ? data['discountPercent'] as int : (data['discountPercent'] != null ? int.tryParse('${data['discountPercent']}') : null);
-    final category = data['category'] as String? ?? data['categoryId'] as String?;
+    return _mapFromData(data, id);
+  }
+
+  /// Testable adapter: map raw Firestore document data (Map) + id -> repo.Product
+  /// This is the single place that contains field-name knowledge for Firestore.
+  Product _mapFromData(Map<String, dynamic> data, String id) {
+    // Adapter: interpret Firestore canonical model (models.Product) and map
+    // to the UI-facing repo.Product contract. All field name translation
+    // MUST happen only here.
+    final name = data['name'] as String? ?? data['title'] as String? ?? '';
+    final description = data['description'] as String? ?? '';
+
+    // imageUrls may be a List<String> or absent; prefer first image, then
+    // known fallbacks.
+    String image = '';
+    try {
+      final imgs = data['imageUrls'];
+      if (imgs is List && imgs.isNotEmpty) {
+        image = imgs.first as String? ?? '';
+      }
+    } catch (_) {}
+    image = image.isNotEmpty
+        ? image
+        : (data['imageUrl'] as String? ?? data['thumbnailUrl'] as String? ?? data['thumbnail'] as String? ?? '');
+
+    final priceRaw = data['price'];
+    final price = (priceRaw is num) ? priceRaw.toDouble() : (double.tryParse('$priceRaw') ?? 0.0);
+
+    // discount/priceAfterDiscount may be stored under several names across
+    // seeders or legacy data. Try known variants.
+    final discountRaw = data['discountPrice'] ?? data['priceAfterDiscount'];
+    double? priceAfterDiscount = (discountRaw is num)
+        ? discountRaw.toDouble()
+        : (discountRaw == null ? null : double.tryParse('$discountRaw'));
+
+    int? discountPercent;
+    // If a concrete discounted price exists, compute the percent.
+    if (priceAfterDiscount != null && price > 0) {
+      discountPercent = ((price - priceAfterDiscount) / price * 100).round();
+    } else {
+      // Some legacy/seeded docs store only a discount percent. Try those
+      // variants and compute a priceAfterDiscount when possible.
+      final dpRaw = data['discountPercent'] ?? data['discount_percent'] ?? data['discount'];
+      final dp = (dpRaw is int) ? dpRaw : (dpRaw is num ? (dpRaw as num).toInt() : (dpRaw == null ? null : int.tryParse('$dpRaw')));
+      if (dp != null && price > 0) {
+        discountPercent = dp;
+  priceAfterDiscount = double.parse((price * (1 - (discountPercent / 100))).toStringAsFixed(2));
+      }
+    }
+
+    final stockRaw = data['stock'];
+    final stock = (stockRaw is int)
+        ? stockRaw
+        : (stockRaw is num ? (stockRaw as num).toInt() : (int.tryParse('$stockRaw') ?? 0));
+    final isAvailable = stock > 0;
+
+    final category = data['category'] as String? ?? data['categoryId'] as String? ?? '';
 
     return Product(
       id: id,
-      title: title,
+      title: name,
       image: image,
       price: price,
       priceAfterDiscount: priceAfterDiscount,
       discountPercent: discountPercent,
       category: category,
+      description: description,
+      isAvailable: isAvailable,
     );
   }
+
+  /// Public helper used by tests to validate the adapter behavior without
+  /// requiring a real DocumentSnapshot or Firebase initialization.
+  Product mapFromFirestoreMap(Map<String, dynamic> data, String id) => _mapFromData(data, id);
 
   Future<List<Product>> _fetchProducts({int limit = 50, FilterParams? params, String? startAfterId}) async {
     try {
