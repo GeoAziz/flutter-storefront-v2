@@ -29,42 +29,21 @@
         "mombasa-warehouse": 15
       },
       "backorderAllowed": false,
-      "tags": [
-        "smartphone",
-        "android",
-        "tecno",
-        "dual-sim",
-        "4g",
-        "128gb",
-        "long-battery"
-      ],
+      "tags": ["smartphone", "android", "tecno", "dual-sim", "4g", "128gb", "long-battery"],
       "rating": 4.3,
       "reviewCount": 124,
       "featured": true,
       "slug": "tecno-spark-20-pro-256gb",
-      "relatedProductIds": [
-        "ITEL-VISION5",
-        "SAMSUNG-A05",
-        "INFINIX-HOT40"
-      ],
+      "relatedProductIds": ["ITEL-VISION5", "SAMSUNG-A05", "INFINIX-HOT40"],
       "metadata": {
         "warrantyMonths": 24,
         "localWarranty": true,
         "importDutyPaid": true
       },
       "attributes": {
-        "color": [
-          "Crystal Blue",
-          "Neon Gold",
-          "Starlight Black"
-        ],
-        "storage": [
-          "128GB",
-          "256GB"
-        ],
-        "ram": [
-          "8GB"
-        ]
+        "color": ["Crystal Blue", "Neon Gold", "Starlight Black"],
+        "storage": ["128GB", "256GB"],
+        "ram": ["8GB"]
       },
       "variants": [
         {
@@ -77,9 +56,7 @@
           },
           "price": 25999,
           "stock": 22,
-          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/phones/tecno-spark20-pro-blue.jpg",
-          "description": "6.78\" FHD+ 120Hz display, 256GB storage, 32MP front camera. Popular mid-range smartphone with long battery life.",
-          "currency": "KES"
+          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/phones/tecno-spark20-pro-blue.jpg"
         },
         {
           "id": "TECNO-SPARK-20-PRO-BLACK-256",
@@ -91,9 +68,7 @@
           },
           "price": 28999,
           "stock": 25,
-          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/phones/tecno-spark20-pro-black.jpg",
-          "description": "6.78\" FHD+ 120Hz display, 256GB storage, 32MP front camera. Popular mid-range smartphone with long battery life.",
-          "currency": "KES"
+          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/phones/tecno-spark20-pro-black.jpg"
         }
       ]
     },
@@ -119,14 +94,7 @@
         "width": 30,
         "height": 2
       },
-      "tags": [
-        "women",
-        "dress",
-        "kitenge",
-        "african",
-        "traditional",
-        "occasion-wear"
-      ],
+      "tags": ["women", "dress", "kitenge", "african", "traditional", "occasion-wear"],
       "rating": 4.7,
       "reviewCount": 89,
       "featured": true,
@@ -137,17 +105,8 @@
         "localArtisan": true
       },
       "attributes": {
-        "size": [
-          "S",
-          "M",
-          "L",
-          "XL"
-        ],
-        "color": [
-          "Multicolor Pattern A",
-          "Multicolor Pattern B",
-          "Blue-Gold Pattern"
-        ]
+        "size": ["S", "M", "L", "XL"],
+        "color": ["Multicolor Pattern A", "Multicolor Pattern B", "Blue-Gold Pattern"]
       },
       "variants": [
         {
@@ -159,9 +118,7 @@
           },
           "price": 3499,
           "stock": 5,
-          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/kitenge-dress-pattern-a.jpg",
-          "description": "Vibrant African print cotton dress with puff sleeves, perfect for weddings and special occasions. Made with authentic Kenyan kitenge fabric.",
-          "currency": "KES"
+          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/kitenge-dress-pattern-a.jpg"
         },
         {
           "id": "KITENGE-MAXI-DRESS-L-PAT-B",
@@ -172,9 +129,7 @@
           },
           "price": 3499,
           "stock": 7,
-          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/kitenge-dress-pattern-b.jpg",
-          "description": "Vibrant African print cotton dress with puff sleeves, perfect for weddings and special occasions. Made with authentic Kenyan kitenge fabric.",
-          "currency": "KES"
+          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/kitenge-dress-pattern-b.jpg"
         }
       ]
     },
@@ -202,13 +157,7 @@
       },
       "backorderAllowed": true,
       "restockETA": "2024-04-10",
-      "tags": [
-        "cooking",
-        "appliance",
-        "gas",
-        "stove",
-        "kitchen-essential"
-      ],
+      "tags": ["cooking", "appliance", "gas", "stove", "kitchen-essential"],
       "rating": 4.2,
       "reviewCount": 56,
       "slug": "kunyiza-2-burner-gas-cooker",
@@ -240,14 +189,7 @@
         "nakuru-warehouse": 75,
         "kisumu-warehouse": 50
       },
-      "tags": [
-        "staple",
-        "flour",
-        "ugali",
-        "food",
-        "maize",
-        "basic-food"
-      ],
+      "tags": ["staple", "flour", "ugali", "food", "maize", "basic-food"],
       "rating": 4.5,
       "reviewCount": 312,
       "slug": "dola-maize-flour-2kg",
@@ -276,13 +218,7 @@
       "weight": 1200,
       "backorderAllowed": true,
       "restockETA": "2024-04-05",
-      "tags": [
-        "farming",
-        "sprayer",
-        "agriculture",
-        "pesticide",
-        "garden"
-      ],
+      "tags": ["farming", "sprayer", "agriculture", "pesticide", "garden"],
       "rating": 4.0,
       "reviewCount": 42,
       "slug": "jerrycan-sprayer-5-liter",
@@ -314,35 +250,18 @@
         "nairobi-warehouse": 40,
         "mombasa-warehouse": 23
       },
-      "tags": [
-        "smartphone",
-        "itel",
-        "budget-phone",
-        "long-battery",
-        "4g"
-      ],
+      "tags": ["smartphone", "itel", "budget-phone", "long-battery", "4g"],
       "rating": 4.1,
       "reviewCount": 78,
       "slug": "itel-vision-5-plus-128gb",
-      "relatedProductIds": [
-        "TECNO-SPARK-20-PRO",
-        "INFINIX-HOT40",
-        "NOKIA-C3"
-      ],
+      "relatedProductIds": ["TECNO-SPARK-20-PRO", "INFINIX-HOT40", "NOKIA-C3"],
       "metadata": {
         "warrantyMonths": 18,
         "batteryCapacity": "6000mAh"
       },
       "attributes": {
-        "color": [
-          "Ocean Blue",
-          "Space Gray",
-          "Aurora Green"
-        ],
-        "storage": [
-          "64GB",
-          "128GB"
-        ]
+        "color": ["Ocean Blue", "Space Gray", "Aurora Green"],
+        "storage": ["64GB", "128GB"]
       }
     },
     {
@@ -362,31 +281,14 @@
       "vendorId": "VEND-SWAHILI-STYLE",
       "costPrice": 2800,
       "weight": 450,
-      "tags": [
-        "men",
-        "kanzu",
-        "traditional",
-        "formal",
-        "muslim-wear",
-        "occasion"
-      ],
+      "tags": ["men", "kanzu", "traditional", "formal", "muslim-wear", "occasion"],
       "rating": 4.6,
       "reviewCount": 67,
       "featured": false,
       "slug": "mens-traditional-kanzu-white",
       "attributes": {
-        "size": [
-          "S",
-          "M",
-          "L",
-          "XL",
-          "XXL"
-        ],
-        "embroidery": [
-          "Gold Thread",
-          "Silver Thread",
-          "Minimal"
-        ]
+        "size": ["S", "M", "L", "XL", "XXL"],
+        "embroidery": ["Gold Thread", "Silver Thread", "Minimal"]
       }
     },
     {
@@ -406,13 +308,7 @@
       "vendorId": "VEND-KCC-DAIRY",
       "costPrice": 520,
       "weight": 500,
-      "tags": [
-        "honey",
-        "sweetener",
-        "natural",
-        "asali",
-        "healthy"
-      ],
+      "tags": ["honey", "sweetener", "natural", "asali", "healthy"],
       "rating": 4.4,
       "reviewCount": 145,
       "slug": "kcc-pure-asali-honey-500g",
@@ -445,35 +341,18 @@
         "nairobi-warehouse": 20,
         "kisumu-warehouse": 11
       },
-      "tags": [
-        "smartphone",
-        "samsung",
-        "galaxy",
-        "4g",
-        "reliable"
-      ],
+      "tags": ["smartphone", "samsung", "galaxy", "4g", "reliable"],
       "rating": 4.2,
       "reviewCount": 92,
       "slug": "samsung-galaxy-a05-64gb",
-      "relatedProductIds": [
-        "TECNO-SPARK-20-PRO",
-        "ITEL-VISION5",
-        "INFINIX-HOT40"
-      ],
+      "relatedProductIds": ["TECNO-SPARK-20-PRO", "ITEL-VISION5", "INFINIX-HOT40"],
       "metadata": {
         "warrantyMonths": 24,
         "officialDistributor": true
       },
       "attributes": {
-        "color": [
-          "Black",
-          "Silver",
-          "Light Green"
-        ],
-        "storage": [
-          "32GB",
-          "64GB"
-        ]
+        "color": ["Black", "Silver", "Light Green"],
+        "storage": ["32GB", "64GB"]
       }
     },
     {
@@ -498,31 +377,13 @@
         "mombasa-warehouse": 46,
         "eldoret-warehouse": 30
       },
-      "tags": [
-        "men",
-        "t-shirt",
-        "basic",
-        "casual",
-        "cotton"
-      ],
+      "tags": ["men", "t-shirt", "basic", "casual", "cotton"],
       "rating": 4.0,
       "reviewCount": 210,
       "slug": "plain-black-t-shirt-cotton",
       "attributes": {
-        "size": [
-          "XS",
-          "S",
-          "M",
-          "L",
-          "XL",
-          "XXL"
-        ],
-        "color": [
-          "Black",
-          "White",
-          "Gray",
-          "Navy Blue"
-        ]
+        "size": ["XS", "S", "M", "L", "XL", "XXL"],
+        "color": ["Black", "White", "Gray", "Navy Blue"]
       },
       "variants": [
         {
@@ -534,9 +395,7 @@
           },
           "price": 899,
           "stock": 45,
-          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/black-tshirt-main.jpg",
-          "description": "100% cotton plain black t-shirt. Basic essential for everyday wear.",
-          "currency": "KES"
+          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/black-tshirt-main.jpg"
         },
         {
           "id": "BLACK-T-SHIRT-PLAIN-L-BLK",
@@ -547,9 +406,7 @@
           },
           "price": 899,
           "stock": 38,
-          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/black-tshirt-main.jpg",
-          "description": "100% cotton plain black t-shirt. Basic essential for everyday wear.",
-          "currency": "KES"
+          "imageUrl": "https://storage.googleapis.com/your-app-bucket/products/fashion/black-tshirt-main.jpg"
         }
       ]
     },
@@ -572,13 +429,7 @@
       "priceAfterDiscount": 23749,
       "discountPercent": 5,
       "weight": 188,
-      "tags": [
-        "smartphone",
-        "infinix",
-        "amoled",
-        "108mp",
-        "flagship"
-      ],
+      "tags": ["smartphone", "infinix", "amoled", "108mp", "flagship"],
       "rating": 4.4,
       "reviewCount": 156
     },
@@ -599,13 +450,7 @@
       "vendorId": "VEND-NOKIA-KE",
       "costPrice": 10500,
       "weight": 192,
-      "tags": [
-        "smartphone",
-        "nokia",
-        "reliable",
-        "classic",
-        "budget"
-      ],
+      "tags": ["smartphone", "nokia", "reliable", "classic", "budget"],
       "rating": 3.9,
       "reviewCount": 73
     },
@@ -626,28 +471,12 @@
       "vendorId": "VEND-FASHION-HUB",
       "costPrice": 1600,
       "weight": 320,
-      "tags": [
-        "women",
-        "jeans",
-        "denim",
-        "casual",
-        "blue"
-      ],
+      "tags": ["women", "jeans", "denim", "casual", "blue"],
       "rating": 4.3,
       "reviewCount": 198,
       "attributes": {
-        "size": [
-          "XS",
-          "S",
-          "M",
-          "L",
-          "XL"
-        ],
-        "fit": [
-          "Slim",
-          "Regular",
-          "Skinny"
-        ]
+        "size": ["XS", "S", "M", "L", "XL"],
+        "fit": ["Slim", "Regular", "Skinny"]
       }
     },
     {
@@ -667,30 +496,12 @@
       "vendorId": "VEND-FOOTWEAR",
       "costPrice": 2700,
       "weight": 450,
-      "tags": [
-        "men",
-        "shoes",
-        "leather",
-        "formal",
-        "casual"
-      ],
+      "tags": ["men", "shoes", "leather", "formal", "casual"],
       "rating": 4.5,
       "reviewCount": 142,
       "attributes": {
-        "size": [
-          "38",
-          "39",
-          "40",
-          "41",
-          "42",
-          "43",
-          "44"
-        ],
-        "color": [
-          "Brown",
-          "Black",
-          "Tan"
-        ]
+        "size": ["38", "39", "40", "41", "42", "43", "44"],
+        "color": ["Brown", "Black", "Tan"]
       }
     },
     {
@@ -710,13 +521,7 @@
       "vendorId": "VEND-SCHOOL-WEAR",
       "costPrice": 1900,
       "weight": 280,
-      "tags": [
-        "kids",
-        "school",
-        "uniform",
-        "children",
-        "primary"
-      ],
+      "tags": ["kids", "school", "uniform", "children", "primary"],
       "rating": 4.6,
       "reviewCount": 89
     },
@@ -742,13 +547,7 @@
         "width": 90,
         "height": 80
       },
-      "tags": [
-        "furniture",
-        "sofa",
-        "living-room",
-        "comfort",
-        "home"
-      ],
+      "tags": ["furniture", "sofa", "living-room", "comfort", "home"],
       "rating": 4.4,
       "reviewCount": 34
     },
@@ -769,13 +568,7 @@
       "vendorId": "VEND-BED-ESSENTIALS",
       "costPrice": 1200,
       "weight": 350,
-      "tags": [
-        "bedding",
-        "mosquito-net",
-        "health",
-        "sleep",
-        "protection"
-      ],
+      "tags": ["bedding", "mosquito-net", "health", "sleep", "protection"],
       "rating": 4.7,
       "reviewCount": 267
     },
@@ -801,13 +594,7 @@
         "mombasa-warehouse": 65,
         "kisumu-warehouse": 33
       },
-      "tags": [
-        "bedding",
-        "cotton",
-        "sheet",
-        "home",
-        "sleep"
-      ],
+      "tags": ["bedding", "cotton", "sheet", "home", "sleep"],
       "rating": 4.4,
       "reviewCount": 156
     },
@@ -833,13 +620,7 @@
         "mombasa-warehouse": 20,
         "nakuru-warehouse": 13
       },
-      "tags": [
-        "rice",
-        "basmati",
-        "staple",
-        "food",
-        "cooking"
-      ],
+      "tags": ["rice", "basmati", "staple", "food", "cooking"],
       "rating": 4.5,
       "reviewCount": 89
     },
@@ -865,13 +646,7 @@
         "mombasa-warehouse": 60,
         "nakuru-warehouse": 35
       },
-      "tags": [
-        "oil",
-        "cooking",
-        "food",
-        "staple",
-        "essential"
-      ],
+      "tags": ["oil", "cooking", "food", "staple", "essential"],
       "rating": 4.3,
       "reviewCount": 234
     },
@@ -897,13 +672,7 @@
         "mombasa-warehouse": 75,
         "kisumu-warehouse": 47
       },
-      "tags": [
-        "sugar",
-        "staple",
-        "food",
-        "essential",
-        "sweetener"
-      ],
+      "tags": ["sugar", "staple", "food", "essential", "sweetener"],
       "rating": 4.2,
       "reviewCount": 145
     },
@@ -924,12 +693,7 @@
       "vendorId": "VEND-BEVERAGES-PRO",
       "costPrice": 650,
       "weight": 200,
-      "tags": [
-        "coffee",
-        "beverage",
-        "instant",
-        "hot-drink"
-      ],
+      "tags": ["coffee", "beverage", "instant", "hot-drink"],
       "rating": 4.6,
       "reviewCount": 123
     },
@@ -950,12 +714,7 @@
       "vendorId": "VEND-BEVERAGES-PRO",
       "costPrice": 400,
       "weight": 300,
-      "tags": [
-        "tea",
-        "beverage",
-        "tea-bags",
-        "hot-drink"
-      ],
+      "tags": ["tea", "beverage", "tea-bags", "hot-drink"],
       "rating": 4.4,
       "reviewCount": 98
     },
@@ -976,13 +735,7 @@
       "vendorId": "VEND-FARMERS-CHOICE",
       "costPrice": 650,
       "weight": 1500,
-      "tags": [
-        "farming",
-        "hoe",
-        "agriculture",
-        "tool",
-        "tilling"
-      ],
+      "tags": ["farming", "hoe", "agriculture", "tool", "tilling"],
       "rating": 4.1,
       "reviewCount": 67
     },
@@ -1003,13 +756,7 @@
       "vendorId": "VEND-AGRI-SEEDS",
       "costPrice": 1200,
       "weight": 2000,
-      "tags": [
-        "seeds",
-        "maize",
-        "farming",
-        "planting",
-        "agriculture"
-      ],
+      "tags": ["seeds", "maize", "farming", "planting", "agriculture"],
       "rating": 4.2,
       "reviewCount": 52
     },
@@ -1034,13 +781,7 @@
         "nairobi-warehouse": 20,
         "nakuru-warehouse": 14
       },
-      "tags": [
-        "feed",
-        "livestock",
-        "chicken",
-        "poultry",
-        "agriculture"
-      ],
+      "tags": ["feed", "livestock", "chicken", "poultry", "agriculture"],
       "rating": 4.3,
       "reviewCount": 73
     },
@@ -1066,13 +807,7 @@
         "mombasa-warehouse": 40,
         "kisumu-warehouse": 22
       },
-      "tags": [
-        "baby",
-        "diaper",
-        "care",
-        "infant",
-        "newborn"
-      ],
+      "tags": ["baby", "diaper", "care", "infant", "newborn"],
       "rating": 4.5,
       "reviewCount": 189
     },
@@ -1098,13 +833,7 @@
         "mombasa-warehouse": 20,
         "nakuru-warehouse": 8
       },
-      "tags": [
-        "baby",
-        "formula",
-        "milk",
-        "nutrition",
-        "infant"
-      ],
+      "tags": ["baby", "formula", "milk", "nutrition", "infant"],
       "rating": 4.6,
       "reviewCount": 145
     },
@@ -1125,13 +854,7 @@
       "vendorId": "VEND-SPORTS-GEAR",
       "costPrice": 3800,
       "weight": 320,
-      "tags": [
-        "sports",
-        "shoes",
-        "running",
-        "fitness",
-        "athletic"
-      ],
+      "tags": ["sports", "shoes", "running", "fitness", "athletic"],
       "rating": 4.5,
       "reviewCount": 112
     },
@@ -1152,13 +875,7 @@
       "vendorId": "VEND-SPORTS-GEAR",
       "costPrice": 2400,
       "weight": 600,
-      "tags": [
-        "sports",
-        "basketball",
-        "ball",
-        "outdoor",
-        "game"
-      ],
+      "tags": ["sports", "basketball", "ball", "outdoor", "game"],
       "rating": 4.3,
       "reviewCount": 78
     },
@@ -1184,13 +901,7 @@
         "mombasa-warehouse": 40,
         "kisumu-warehouse": 16
       },
-      "tags": [
-        "shampoo",
-        "hair",
-        "beauty",
-        "care",
-        "health"
-      ],
+      "tags": ["shampoo", "hair", "beauty", "care", "health"],
       "rating": 4.4,
       "reviewCount": 234
     },
@@ -1211,13 +922,7 @@
       "vendorId": "VEND-HEALTHCARE",
       "costPrice": 1600,
       "weight": 150,
-      "tags": [
-        "health",
-        "vitamin",
-        "supplement",
-        "wellness",
-        "nutrition"
-      ],
+      "tags": ["health", "vitamin", "supplement", "wellness", "nutrition"],
       "rating": 4.5,
       "reviewCount": 167
     },
@@ -1243,13 +948,7 @@
         "mombasa-warehouse": 80,
         "nakuru-warehouse": 37
       },
-      "tags": [
-        "automotive",
-        "car",
-        "freshener",
-        "scent",
-        "accessory"
-      ],
+      "tags": ["automotive", "car", "freshener", "scent", "accessory"],
       "rating": 4.2,
       "reviewCount": 143
     },
@@ -1270,13 +969,7 @@
       "vendorId": "VEND-AUTOMOTIVE",
       "costPrice": 1400,
       "weight": 1800,
-      "tags": [
-        "automotive",
-        "car",
-        "mat",
-        "floor",
-        "accessory"
-      ],
+      "tags": ["automotive", "car", "mat", "floor", "accessory"],
       "rating": 4.3,
       "reviewCount": 96
     },
@@ -1302,13 +995,7 @@
         "mombasa-warehouse": 100,
         "kisumu-warehouse": 62
       },
-      "tags": [
-        "notebook",
-        "stationery",
-        "writing",
-        "paper",
-        "school"
-      ],
+      "tags": ["notebook", "stationery", "writing", "paper", "school"],
       "rating": 4.3,
       "reviewCount": 178
     },
@@ -1329,13 +1016,7 @@
       "vendorId": "VEND-STATIONERY",
       "costPrice": 550,
       "weight": 400,
-      "tags": [
-        "pen",
-        "stationery",
-        "writing",
-        "school",
-        "office"
-      ],
+      "tags": ["pen", "stationery", "writing", "school", "office"],
       "rating": 4.4,
       "reviewCount": 112
     },
@@ -1356,13 +1037,7 @@
       "vendorId": "VEND-TECH-ACCESSORIES",
       "costPrice": 2200,
       "weight": 800,
-      "tags": [
-        "laptop",
-        "stand",
-        "computer",
-        "accessory",
-        "ergonomic"
-      ],
+      "tags": ["laptop", "stand", "computer", "accessory", "ergonomic"],
       "rating": 4.5,
       "reviewCount": 89
     },
@@ -1388,13 +1063,7 @@
         "mombasa-warehouse": 60,
         "nakuru-warehouse": 24
       },
-      "tags": [
-        "cable",
-        "usb",
-        "charging",
-        "accessory",
-        "electronics"
-      ],
+      "tags": ["cable", "usb", "charging", "accessory", "electronics"],
       "rating": 4.3,
       "reviewCount": 267
     },
@@ -1415,13 +1084,7 @@
       "vendorId": "VEND-TECH-ACCESSORIES",
       "costPrice": 1300,
       "weight": 250,
-      "tags": [
-        "charger",
-        "fast-charge",
-        "electronics",
-        "power",
-        "phone"
-      ],
+      "tags": ["charger", "fast-charge", "electronics", "power", "phone"],
       "rating": 4.6,
       "reviewCount": 178
     },
@@ -1442,13 +1105,7 @@
       "vendorId": "VEND-TECH-ACCESSORIES",
       "costPrice": 1800,
       "weight": 450,
-      "tags": [
-        "power-bank",
-        "battery",
-        "charging",
-        "electronics",
-        "mobile"
-      ],
+      "tags": ["power-bank", "battery", "charging", "electronics", "mobile"],
       "rating": 4.4,
       "reviewCount": 143
     },
@@ -1469,13 +1126,7 @@
       "vendorId": "VEND-TECH-ACCESSORIES",
       "costPrice": 300,
       "weight": 50,
-      "tags": [
-        "screen-protector",
-        "glass",
-        "phone",
-        "protection",
-        "accessory"
-      ],
+      "tags": ["screen-protector", "glass", "phone", "protection", "accessory"],
       "rating": 4.5,
       "reviewCount": 212
     },
@@ -1496,13 +1147,7 @@
       "vendorId": "VEND-AUDIO-TECH",
       "costPrice": 2800,
       "weight": 100,
-      "tags": [
-        "earbuds",
-        "wireless",
-        "bluetooth",
-        "audio",
-        "noise-cancel"
-      ],
+      "tags": ["earbuds", "wireless", "bluetooth", "audio", "noise-cancel"],
       "rating": 4.6,
       "reviewCount": 156
     },
@@ -1523,13 +1168,7 @@
       "vendorId": "VEND-AUDIO-TECH",
       "costPrice": 2000,
       "weight": 500,
-      "tags": [
-        "speaker",
-        "bluetooth",
-        "audio",
-        "waterproof",
-        "portable"
-      ],
+      "tags": ["speaker", "bluetooth", "audio", "waterproof", "portable"],
       "rating": 4.5,
       "reviewCount": 128
     },
@@ -1555,13 +1194,7 @@
         "width": 60,
         "height": 580
       },
-      "tags": [
-        "tv",
-        "smart-tv",
-        "43inch",
-        "hd",
-        "streaming"
-      ],
+      "tags": ["tv", "smart-tv", "43inch", "hd", "streaming"],
       "rating": 4.4,
       "reviewCount": 45
     },
@@ -1582,13 +1215,7 @@
       "vendorId": "VEND-HOME-APPLIANCES",
       "costPrice": 7500,
       "weight": 12000,
-      "tags": [
-        "microwave",
-        "oven",
-        "kitchen",
-        "cooking",
-        "appliance"
-      ],
+      "tags": ["microwave", "oven", "kitchen", "cooking", "appliance"],
       "rating": 4.3,
       "reviewCount": 67
     },
@@ -1609,13 +1236,7 @@
       "vendorId": "VEND-HOME-APPLIANCES",
       "costPrice": 3200,
       "weight": 1800,
-      "tags": [
-        "blender",
-        "mixer",
-        "kitchen",
-        "food-prep",
-        "appliance"
-      ],
+      "tags": ["blender", "mixer", "kitchen", "food-prep", "appliance"],
       "rating": 4.5,
       "reviewCount": 93
     },
@@ -1636,13 +1257,7 @@
       "vendorId": "VEND-HOME-APPLIANCES",
       "costPrice": 1400,
       "weight": 900,
-      "tags": [
-        "kettle",
-        "electric",
-        "kitchen",
-        "boiling",
-        "appliance"
-      ],
+      "tags": ["kettle", "electric", "kitchen", "boiling", "appliance"],
       "rating": 4.4,
       "reviewCount": 134
     },
@@ -1668,13 +1283,7 @@
         "mombasa-warehouse": 35,
         "kisumu-warehouse": 25
       },
-      "tags": [
-        "flour",
-        "wheat",
-        "baking",
-        "staple",
-        "food"
-      ],
+      "tags": ["flour", "wheat", "baking", "staple", "food"],
       "rating": 4.3,
       "reviewCount": 112
     },
@@ -1695,13 +1304,7 @@
       "vendorId": "VEND-FARM-FRESH",
       "costPrice": 520,
       "weight": 1500,
-      "tags": [
-        "eggs",
-        "farm-fresh",
-        "protein",
-        "food",
-        "staple"
-      ],
+      "tags": ["eggs", "farm-fresh", "protein", "food", "staple"],
       "rating": 4.6,
       "reviewCount": 203
     },
@@ -1727,13 +1330,7 @@
         "mombasa-warehouse": 20,
         "kisumu-warehouse": 11
       },
-      "tags": [
-        "butter",
-        "dairy",
-        "cooking",
-        "baking",
-        "food"
-      ],
+      "tags": ["butter", "dairy", "cooking", "baking", "food"],
       "rating": 4.4,
       "reviewCount": 145
     },
@@ -1759,13 +1356,7 @@
         "mombasa-warehouse": 65,
         "nakuru-warehouse": 29
       },
-      "tags": [
-        "tomato",
-        "paste",
-        "cooking",
-        "sauce",
-        "food"
-      ],
+      "tags": ["tomato", "paste", "cooking", "sauce", "food"],
       "rating": 4.2,
       "reviewCount": 189
     },
@@ -1791,13 +1382,7 @@
         "mombasa-warehouse": 45,
         "kisumu-warehouse": 22
       },
-      "tags": [
-        "beans",
-        "dried",
-        "protein",
-        "food",
-        "staple"
-      ],
+      "tags": ["beans", "dried", "protein", "food", "staple"],
       "rating": 4.3,
       "reviewCount": 167
     },
@@ -1823,13 +1408,7 @@
         "mombasa-warehouse": 50,
         "nakuru-warehouse": 28
       },
-      "tags": [
-        "flour",
-        "chapati",
-        "bread",
-        "staple",
-        "food"
-      ],
+      "tags": ["flour", "chapati", "bread", "staple", "food"],
       "rating": 4.4,
       "reviewCount": 134
     },
@@ -1855,13 +1434,7 @@
         "mombasa-warehouse": 30,
         "kisumu-warehouse": 12
       },
-      "tags": [
-        "milk",
-        "powder",
-        "dairy",
-        "food",
-        "nutrition"
-      ],
+      "tags": ["milk", "powder", "dairy", "food", "nutrition"],
       "rating": 4.5,
       "reviewCount": 156
     }
