@@ -43,3 +43,40 @@ Notes:
 
 - The seeder posts documents with the fields defined in `data/seed_products.json`.
 - If you prefer to seed using the SDK, let me scaffold a `scripts/seed_products_sdk.dart` that initializes Firebase using service account credentials and writes documents via the Admin SDK.
+
+## Admin seeding (recommended for local emulator)
+
+If your security rules prevent client-side creation of `products/` (recommended), use the Admin SDK to seed the emulator. This bypasses rules and is the recommended local workflow.
+
+1. Install Node dependencies (once):
+
+```bash
+npm install
+```
+
+2. Set the emulator host environment variable and run the admin seeder (example creates 10 products):
+
+```bash
+export FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
+npm run seed-admin
+```
+
+Note: The project includes a `serviceAccountKey.json` at the repository root which the admin seeder will use automatically if present. You can also set `GOOGLE_APPLICATION_CREDENTIALS` to point to your service account file instead.
+
+
+3. Alternatively, use the provided wrapper which will detect USE_ADMIN_SEEDER:
+
+```bash
+# Use the admin seeder
+USE_ADMIN_SEEDER=true bash scripts/run_seed_products.sh demo-project 10
+
+# Or run the Dart seeder (may be blocked by rules)
+bash scripts/run_seed_products.sh demo-project 10
+```
+
+4. Verify documents with the REST endpoint:
+
+```bash
+curl -s "http://127.0.0.1:8080/v1/projects/demo-project/databases/(default)/documents/products?pageSize=5" | jq '.documents | length'
+```
+

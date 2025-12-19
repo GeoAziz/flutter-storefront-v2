@@ -5,6 +5,19 @@ set -euo pipefail
 PROJECT=${1:-}
 COUNT=${2:-30}
 
+# If USE_ADMIN_SEEDER is set to 'true', use the Node Admin seeder which
+# writes directly to the emulator via the Admin SDK (bypasses security rules).
+if [ "${USE_ADMIN_SEEDER:-false}" = "true" ]; then
+  if command -v node >/dev/null 2>&1; then
+    # Ensure firebase-admin is installed locally (user-managed)
+    node scripts/seed_products_admin.js --count=${COUNT} --project=${PROJECT:-demo-project}
+    exit $?
+  else
+    echo "Node not found: cannot run admin seeder. Install Node/npm or unset USE_ADMIN_SEEDER." >&2
+    exit 2
+  fi
+fi
+
 if command -v dart >/dev/null 2>&1; then
   dart scripts/seed_products.dart --project ${PROJECT:-demo-project} --count ${COUNT}
 else

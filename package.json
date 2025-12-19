@@ -1,0 +1,12 @@
+{
+  "name": "flutter-storefront-v2-scripts",
+  "version": "1.0.0",
+  "description": "Helper npm scripts for local dev seeding",
+  "scripts": {
+    "seed-admin": "node scripts/seed_products_admin.js --count=10",
+    "seed-admin:count": "node scripts/seed_products_admin.js --count=$npm_config_count"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.10.0"
+  }
+}

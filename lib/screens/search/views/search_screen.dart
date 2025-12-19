@@ -26,7 +26,7 @@ class SearchScreen extends ConsumerWidget {
         customLoadingWidget: const PaginationLoadingIndicator(
           message: 'Loading products...',
         ),
-        customEmptyWidget: PaginationEmptyWidget(
+        customEmptyWidget: const PaginationEmptyWidget(
           title: 'No search results',
           subtitle: 'Try different search terms or filters',
         ),

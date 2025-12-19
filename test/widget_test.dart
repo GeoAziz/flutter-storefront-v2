@@ -7,11 +7,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:shop/main.dart';
 
 void main() {
+  // Initialize Firebase with test options before widget tests run so
+  // widgets that reference Firebase can find a default app.
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'test-api-key',
+        appId: 'test-app-id',
+        messagingSenderId: 'test-sender-id',
+        projectId: 'test-project',
+      ),
+    );
+  });
   testWidgets('App builds and stabilizes', (WidgetTester tester) async {
     // Wrap the app with ProviderScope so providers are available.
     await tester.pumpWidget(const ProviderScope(child: MyApp()));

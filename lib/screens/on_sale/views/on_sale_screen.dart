@@ -27,7 +27,7 @@ class OnSaleScreen extends ConsumerWidget {
         customLoadingWidget: const PaginationLoadingIndicator(
           message: 'Loading sale items...',
         ),
-        customEmptyWidget: PaginationEmptyWidget(
+        customEmptyWidget: const PaginationEmptyWidget(
           title: 'No sale items',
           subtitle: 'Check back later for great deals',
         ),
