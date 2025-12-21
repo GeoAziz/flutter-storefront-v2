@@ -203,6 +203,142 @@
         "showInMenu": true,
         "showInHome": false
       }
+    },
+    {
+      "id": "electronics-tvs",
+      "name": "TVs & Audio",
+      "slug": "electronics-tvs",
+      "description": "Smart TVs, home theater systems, and audio equipment",
+      "icon": "tv",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/tvs.jpg",
+      "active": true,
+      "featured": false,
+      "order": 13,
+      "productCount": 2,
+      "metadata": {
+        "color": "#9C27B0",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "electronics-audio",
+      "name": "Audio Accessories",
+      "slug": "electronics-audio",
+      "description": "Headphones, speakers, and audio accessories",
+      "icon": "headphones",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/audio.jpg",
+      "active": true,
+      "featured": false,
+      "order": 14,
+      "productCount": 1,
+      "metadata": {
+        "color": "#E91E63",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "fashion-kids",
+      "name": "Kids Fashion",
+      "slug": "fashion-kids",
+      "description": "Children's clothing and school uniforms",
+      "icon": "child_friendly",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/kids-fashion.jpg",
+      "active": true,
+      "featured": false,
+      "order": 15,
+      "productCount": 1,
+      "metadata": {
+        "color": "#FF5722",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "home-furniture",
+      "name": "Furniture",
+      "slug": "home-furniture",
+      "description": "Sofas, chairs, tables, and home furniture",
+      "icon": "weekend",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/furniture.jpg",
+      "active": true,
+      "featured": false,
+      "order": 16,
+      "productCount": 1,
+      "metadata": {
+        "color": "#795548",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "home-bedding",
+      "name": "Bedding & Linens",
+      "slug": "home-bedding",
+      "description": "Bedsheets, mosquito nets, pillows, and bedding accessories",
+      "icon": "hotel",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/bedding.jpg",
+      "active": true,
+      "featured": false,
+      "order": 17,
+      "productCount": 2,
+      "metadata": {
+        "color": "#00BCD4",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "groceries-beverages",
+      "name": "Beverages",
+      "slug": "groceries-beverages",
+      "description": "Soft drinks, juices, water, and beverages",
+      "icon": "local_drink",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/beverages.jpg",
+      "active": true,
+      "featured": false,
+      "order": 18,
+      "productCount": 1,
+      "metadata": {
+        "color": "#4CAF50",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "agriculture-seeds",
+      "name": "Seeds & Fertilizers",
+      "slug": "agriculture-seeds",
+      "description": "Crop seeds, fertilizers, and farming inputs",
+      "icon": "grass",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/seeds.jpg",
+      "active": true,
+      "featured": false,
+      "order": 19,
+      "productCount": 1,
+      "metadata": {
+        "color": "#8BC34A",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "agriculture-livestock",
+      "name": "Livestock & Poultry",
+      "slug": "agriculture-livestock",
+      "description": "Animal feed, livestock equipment, and poultry supplies",
+      "icon": "pets",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/livestock.jpg",
+      "active": true,
+      "featured": false,
+      "order": 20,
+      "productCount": 1,
+      "metadata": {
+        "color": "#CDDC39",
+        "showInMenu": true,
+        "showInHome": false
+      }
     }
   ]
 }

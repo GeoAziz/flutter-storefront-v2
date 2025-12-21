@@ -66,12 +66,12 @@ All seed data is stored in JSON files in the `data/` directory:
 
 ### `data/seed_categories.json`
 
-Contains 12 product categories:
-- Electronics (phones, computers)
+Contains 20 product categories covering all products:
+- Electronics (phones, computers, TVs, audio)
 - Fashion (women, men, kids)
-- Home & Kitchen
-- Groceries & Staples
-- Agriculture & Tools
+- Home (kitchen, furniture, bedding)
+- Groceries (staples, beverages)
+- Agriculture (tools, seeds, livestock)
 - Baby & Kids
 - Sports & Outdoors
 - Beauty & Health

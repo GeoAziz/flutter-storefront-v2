@@ -31,7 +31,7 @@ Flutter Storefront V2 has evolved from static product data to a **fully dynamic,
 
 | Collection | Documents | Purpose |
 |------------|-----------|---------|
-| `categories` | 12 | Product categories with icons and metadata |
+| `categories` | 20 | Product categories with icons and metadata |
 | `products` | 54 | Complete catalog with variants and pricing |
 | `inventory` | 5 | Stock tracking for key products |
 | `users` | 2 | Test accounts (customer + admin) |
