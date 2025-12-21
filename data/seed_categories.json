@@ -1,0 +1,208 @@
+{
+  "categories": [
+    {
+      "id": "electronics-phones",
+      "name": "Phones & Tablets",
+      "slug": "electronics-phones",
+      "description": "Smartphones, feature phones, and tablets from top brands like Tecno, Samsung, Nokia, and Infinix",
+      "icon": "phone_android",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/phones.jpg",
+      "active": true,
+      "featured": true,
+      "order": 1,
+      "productCount": 8,
+      "metadata": {
+        "color": "#2196F3",
+        "showInMenu": true,
+        "showInHome": true
+      }
+    },
+    {
+      "id": "fashion-women",
+      "name": "Women's Fashion",
+      "slug": "fashion-women",
+      "description": "Dresses, kitenge outfits, jeans, tops, and traditional African fashion for women",
+      "icon": "checkroom",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/women-fashion.jpg",
+      "active": true,
+      "featured": true,
+      "order": 2,
+      "productCount": 6,
+      "metadata": {
+        "color": "#E91E63",
+        "showInMenu": true,
+        "showInHome": true
+      }
+    },
+    {
+      "id": "fashion-men",
+      "name": "Men's Fashion",
+      "slug": "fashion-men",
+      "description": "Shirts, trousers, kanzu, traditional wear, and casual clothing for men",
+      "icon": "person",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/men-fashion.jpg",
+      "active": true,
+      "featured": true,
+      "order": 3,
+      "productCount": 5,
+      "metadata": {
+        "color": "#3F51B5",
+        "showInMenu": true,
+        "showInHome": true
+      }
+    },
+    {
+      "id": "home-kitchen",
+      "name": "Home & Kitchen",
+      "slug": "home-kitchen",
+      "description": "Gas cookers, utensils, cookware, and essential kitchen appliances",
+      "icon": "kitchen",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/kitchen.jpg",
+      "active": true,
+      "featured": true,
+      "order": 4,
+      "productCount": 7,
+      "metadata": {
+        "color": "#FF9800",
+        "showInMenu": true,
+        "showInHome": true
+      }
+    },
+    {
+      "id": "groceries-staples",
+      "name": "Groceries & Staples",
+      "slug": "groceries-staples",
+      "description": "Maize flour, rice, cooking oil, honey, and everyday food essentials",
+      "icon": "shopping_basket",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/groceries.jpg",
+      "active": true,
+      "featured": true,
+      "order": 5,
+      "productCount": 9,
+      "metadata": {
+        "color": "#4CAF50",
+        "showInMenu": true,
+        "showInHome": true
+      }
+    },
+    {
+      "id": "agriculture-tools",
+      "name": "Agriculture & Tools",
+      "slug": "agriculture-tools",
+      "description": "Sprayers, irrigation equipment, seeds, fertilizers, and farming tools",
+      "icon": "agriculture",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/agriculture.jpg",
+      "active": true,
+      "featured": true,
+      "order": 6,
+      "productCount": 6,
+      "metadata": {
+        "color": "#795548",
+        "showInMenu": true,
+        "showInHome": true
+      }
+    },
+    {
+      "id": "baby-kids",
+      "name": "Baby & Kids",
+      "slug": "baby-kids",
+      "description": "Children's clothing, school uniforms, toys, and baby care products",
+      "icon": "child_care",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/baby-kids.jpg",
+      "active": true,
+      "featured": false,
+      "order": 7,
+      "productCount": 4,
+      "metadata": {
+        "color": "#FF5722",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "sports-outdoors",
+      "name": "Sports & Outdoors",
+      "slug": "sports-outdoors",
+      "description": "Sports equipment, outdoor gear, fitness accessories, and activewear",
+      "icon": "sports_soccer",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/sports.jpg",
+      "active": true,
+      "featured": false,
+      "order": 8,
+      "productCount": 3,
+      "metadata": {
+        "color": "#009688",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "beauty-health",
+      "name": "Beauty & Health",
+      "slug": "beauty-health",
+      "description": "Cosmetics, skincare, healthcare products, and wellness items",
+      "icon": "spa",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/beauty.jpg",
+      "active": true,
+      "featured": false,
+      "order": 9,
+      "productCount": 2,
+      "metadata": {
+        "color": "#9C27B0",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "automotive",
+      "name": "Automotive",
+      "slug": "automotive",
+      "description": "Car accessories, motor oils, spare parts, and vehicle maintenance products",
+      "icon": "directions_car",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/automotive.jpg",
+      "active": true,
+      "featured": false,
+      "order": 10,
+      "productCount": 2,
+      "metadata": {
+        "color": "#607D8B",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "books-stationery",
+      "name": "Books & Stationery",
+      "slug": "books-stationery",
+      "description": "Educational books, notebooks, pens, and office supplies",
+      "icon": "menu_book",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/books.jpg",
+      "active": true,
+      "featured": false,
+      "order": 11,
+      "productCount": 2,
+      "metadata": {
+        "color": "#00BCD4",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    },
+    {
+      "id": "electronics-computers",
+      "name": "Computers & Accessories",
+      "slug": "electronics-computers",
+      "description": "Laptops, desktops, keyboards, mice, and computer accessories",
+      "icon": "computer",
+      "imageUrl": "https://storage.googleapis.com/your-app-bucket/categories/computers.jpg",
+      "active": true,
+      "featured": false,
+      "order": 12,
+      "productCount": 1,
+      "metadata": {
+        "color": "#673AB7",
+        "showInMenu": true,
+        "showInHome": false
+      }
+    }
+  ]
+}

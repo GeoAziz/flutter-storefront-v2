@@ -1,0 +1,188 @@
+{
+  "homeScreen": {
+    "sections": [
+      {
+        "id": "hero-banner",
+        "type": "carousel",
+        "title": "",
+        "subtitle": "",
+        "enabled": true,
+        "order": 1,
+        "data": {
+          "banners": [
+            {
+              "id": "banner-1",
+              "imageUrl": "https://storage.googleapis.com/your-app-bucket/banners/electronics-sale.jpg",
+              "title": "Electronics Mega Sale",
+              "subtitle": "Up to 30% off on smartphones",
+              "actionType": "category",
+              "actionTarget": "electronics-phones",
+              "backgroundColor": "#2196F3"
+            },
+            {
+              "id": "banner-2",
+              "imageUrl": "https://storage.googleapis.com/your-app-bucket/banners/fashion-week.jpg",
+              "title": "Fashion Week Deals",
+              "subtitle": "New arrivals in women's fashion",
+              "actionType": "category",
+              "actionTarget": "fashion-women",
+              "backgroundColor": "#E91E63"
+            },
+            {
+              "id": "banner-3",
+              "imageUrl": "https://storage.googleapis.com/your-app-bucket/banners/groceries-fresh.jpg",
+              "title": "Fresh Groceries Daily",
+              "subtitle": "Farm fresh produce at your doorstep",
+              "actionType": "category",
+              "actionTarget": "groceries-staples",
+              "backgroundColor": "#4CAF50"
+            }
+          ],
+          "autoplay": true,
+          "autoplayInterval": 5000,
+          "showIndicators": true
+        }
+      },
+      {
+        "id": "featured-categories",
+        "type": "category_grid",
+        "title": "Shop by Category",
+        "subtitle": "Explore our wide range of products",
+        "enabled": true,
+        "order": 2,
+        "data": {
+          "categoryIds": [
+            "electronics-phones",
+            "fashion-women",
+            "fashion-men",
+            "home-kitchen",
+            "groceries-staples",
+            "agriculture-tools"
+          ],
+          "columns": 3,
+          "showProductCount": true
+        }
+      },
+      {
+        "id": "flash-deals",
+        "type": "product_list_horizontal",
+        "title": "⚡ Flash Deals",
+        "subtitle": "Limited time offers - Grab them now!",
+        "enabled": true,
+        "order": 3,
+        "data": {
+          "productIds": [
+            "TECNO-SPARK-20-PRO",
+            "KITENGE-MAXI-DRESS",
+            "SAMSUNG-GALAXY-A05",
+            "DOLA-MAIZE-FLOUR-2KG"
+          ],
+          "showTimer": true,
+          "timerEndDate": "2024-12-31T23:59:59Z",
+          "backgroundColor": "#FFF3E0"
+        }
+      },
+      {
+        "id": "trending-products",
+        "type": "product_grid",
+        "title": "Trending Now",
+        "subtitle": "Most popular items this week",
+        "enabled": true,
+        "order": 4,
+        "data": {
+          "productIds": [
+            "TECNO-SPARK-20-PRO",
+            "INFINIX-HOT40-PRO",
+            "KITENGE-MAXI-DRESS",
+            "MEN-KANZU-TRADITIONAL",
+            "KUNYIZA-GAS-COOKER",
+            "RICE-BASMATI-5KG"
+          ],
+          "columns": 2,
+          "showRating": true
+        }
+      },
+      {
+        "id": "electronics-section",
+        "type": "category_section",
+        "title": "Electronics & Gadgets",
+        "subtitle": "Latest tech at unbeatable prices",
+        "enabled": true,
+        "order": 5,
+        "data": {
+          "categoryId": "electronics-phones",
+          "productIds": [
+            "TECNO-SPARK-20-PRO",
+            "SAMSUNG-GALAXY-A05",
+            "INFINIX-HOT40-PRO",
+            "ITEL-VISION5-PLUS"
+          ],
+          "layout": "horizontal_scroll",
+          "showViewAllButton": true,
+          "backgroundColor": "#E3F2FD"
+        }
+      },
+      {
+        "id": "fashion-section",
+        "type": "category_section",
+        "title": "Fashion & Style",
+        "subtitle": "Dress to impress with our latest collection",
+        "enabled": true,
+        "order": 6,
+        "data": {
+          "categoryId": "fashion-women",
+          "productIds": [
+            "KITENGE-MAXI-DRESS",
+            "WOMEN-JEANS-BLUE",
+            "MEN-KANZU-TRADITIONAL",
+            "BLACK-T-SHIRT-PLAIN"
+          ],
+          "layout": "horizontal_scroll",
+          "showViewAllButton": true,
+          "backgroundColor": "#FCE4EC"
+        }
+      },
+      {
+        "id": "groceries-section",
+        "type": "category_section",
+        "title": "Daily Essentials",
+        "subtitle": "Stock up on your grocery needs",
+        "enabled": true,
+        "order": 7,
+        "data": {
+          "categoryId": "groceries-staples",
+          "productIds": [
+            "DOLA-MAIZE-FLOUR-2KG",
+            "RICE-BASMATI-5KG",
+            "COOKING-OIL-1L",
+            "KCC-ASALI-HONEY-500G"
+          ],
+          "layout": "horizontal_scroll",
+          "showViewAllButton": true,
+          "backgroundColor": "#E8F5E9"
+        }
+      },
+      {
+        "id": "best-sellers",
+        "type": "product_grid",
+        "title": "🏆 Best Sellers",
+        "subtitle": "Customer favorites - Top rated products",
+        "enabled": true,
+        "order": 8,
+        "data": {
+          "productIds": [
+            "TECNO-SPARK-20-PRO",
+            "KITENGE-MAXI-DRESS",
+            "DOLA-MAIZE-FLOUR-2KG",
+            "KUNYIZA-GAS-COOKER",
+            "SAMSUNG-GALAXY-A05",
+            "RICE-BASMATI-5KG"
+          ],
+          "columns": 2,
+          "showRating": true,
+          "showReviewCount": true
+        }
+      }
+    ]
+  }
+}

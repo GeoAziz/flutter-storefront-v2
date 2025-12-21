@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "uid": "test-user-001",
+      "email": "testuser@example.com",
+      "displayName": "John Mwangi",
+      "phoneNumber": "+254712345678",
+      "role": "customer",
+      "emailVerified": true,
+      "active": true,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "preferences": {
+        "language": "en",
+        "currency": "KES",
+        "notifications": {
+          "email": true,
+          "push": true,
+          "sms": false
+        }
+      },
+      "addresses": [
+        {
+          "id": "addr-001",
+          "type": "home",
+          "name": "Home",
+          "street": "123 Kimathi Street",
+          "city": "Nairobi",
+          "state": "Nairobi County",
+          "postalCode": "00100",
+          "country": "Kenya",
+          "phone": "+254712345678",
+          "isDefault": true
+        },
+        {
+          "id": "addr-002",
+          "type": "work",
+          "name": "Office",
+          "street": "45 Moi Avenue",
+          "city": "Nairobi",
+          "state": "Nairobi County",
+          "postalCode": "00200",
+          "country": "Kenya",
+          "phone": "+254712345678",
+          "isDefault": false
+        }
+      ]
+    },
+    {
+      "uid": "test-admin-001",
+      "email": "admin@example.com",
+      "displayName": "Admin User",
+      "phoneNumber": "+254798765432",
+      "role": "admin",
+      "emailVerified": true,
+      "active": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "preferences": {
+        "language": "en",
+        "currency": "KES",
+        "notifications": {
+          "email": true,
+          "push": true,
+          "sms": true
+        }
+      },
+      "addresses": [
+        {
+          "id": "addr-admin-001",
+          "type": "work",
+          "name": "Head Office",
+          "street": "789 Kenyatta Avenue",
+          "city": "Nairobi",
+          "state": "Nairobi County",
+          "postalCode": "00300",
+          "country": "Kenya",
+          "phone": "+254798765432",
+          "isDefault": true
+        }
+      ]
+    }
+  ]
+}

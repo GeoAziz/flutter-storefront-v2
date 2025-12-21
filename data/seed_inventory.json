@@ -1,0 +1,134 @@
+{
+  "inventory": [
+    {
+      "productId": "TECNO-SPARK-20-PRO",
+      "sku": "TPRO20-256-BLK",
+      "stock": 47,
+      "reserved": 5,
+      "lowStockThreshold": 10,
+      "reorderLevel": 20,
+      "supplierLeadTimeDays": 14,
+      "lastRestocked": "2024-03-18T10:00:00Z",
+      "cost": 24500,
+      "locations": {
+        "nairobi-warehouse": {
+          "stock": 32,
+          "reserved": 3,
+          "aisle": "A2",
+          "shelf": "12"
+        },
+        "mombasa-warehouse": {
+          "stock": 15,
+          "reserved": 2,
+          "aisle": "B1",
+          "shelf": "08"
+        }
+      },
+      "status": "in_stock",
+      "trackInventory": true
+    },
+    {
+      "productId": "KITENGE-MAXI-DRESS",
+      "sku": "FASH-KMD-REG-L",
+      "stock": 18,
+      "reserved": 2,
+      "lowStockThreshold": 5,
+      "reorderLevel": 10,
+      "supplierLeadTimeDays": 7,
+      "lastRestocked": "2024-03-15T14:30:00Z",
+      "cost": 2200,
+      "locations": {
+        "nairobi-warehouse": {
+          "stock": 18,
+          "reserved": 2,
+          "aisle": "C3",
+          "shelf": "05"
+        }
+      },
+      "status": "in_stock",
+      "trackInventory": true
+    },
+    {
+      "productId": "KUNYIZA-GAS-COOKER",
+      "sku": "KCH-KC2B-13",
+      "stock": 12,
+      "reserved": 1,
+      "lowStockThreshold": 3,
+      "reorderLevel": 8,
+      "supplierLeadTimeDays": 10,
+      "lastRestocked": "2024-03-10T09:00:00Z",
+      "cost": 4500,
+      "locations": {
+        "nairobi-warehouse": {
+          "stock": 8,
+          "reserved": 1,
+          "aisle": "D1",
+          "shelf": "03"
+        },
+        "mombasa-warehouse": {
+          "stock": 4,
+          "reserved": 0,
+          "aisle": "D2",
+          "shelf": "02"
+        }
+      },
+      "status": "in_stock",
+      "trackInventory": true
+    },
+    {
+      "productId": "DOLA-MAIZE-FLOUR-2KG",
+      "sku": "GROC-DOLA-2KG",
+      "stock": 156,
+      "reserved": 12,
+      "lowStockThreshold": 50,
+      "reorderLevel": 100,
+      "supplierLeadTimeDays": 3,
+      "lastRestocked": "2024-03-20T07:00:00Z",
+      "cost": 95,
+      "locations": {
+        "nairobi-warehouse": {
+          "stock": 100,
+          "reserved": 8,
+          "aisle": "F2",
+          "shelf": "20"
+        },
+        "mombasa-warehouse": {
+          "stock": 56,
+          "reserved": 4,
+          "aisle": "F1",
+          "shelf": "15"
+        }
+      },
+      "status": "in_stock",
+      "trackInventory": true
+    },
+    {
+      "productId": "JERRYCAN-SPRAYER-5L",
+      "sku": "AGR-SPRAY-5L",
+      "stock": 8,
+      "reserved": 0,
+      "lowStockThreshold": 5,
+      "reorderLevel": 10,
+      "supplierLeadTimeDays": 21,
+      "lastRestocked": "2024-02-28T11:00:00Z",
+      "cost": 1600,
+      "locations": {
+        "nairobi-warehouse": {
+          "stock": 5,
+          "reserved": 0,
+          "aisle": "E4",
+          "shelf": "07"
+        },
+        "mombasa-warehouse": {
+          "stock": 3,
+          "reserved": 0,
+          "aisle": "E2",
+          "shelf": "06"
+        }
+      },
+      "status": "low_stock",
+      "trackInventory": true,
+      "restockETA": "2024-03-25T00:00:00Z"
+    }
+  ]
+}
