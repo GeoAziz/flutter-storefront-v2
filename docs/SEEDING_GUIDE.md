@@ -40,17 +40,36 @@ Using the shell wrapper (recommended):
 ./scripts/run_complete_seed.sh
 ```
 
+**Note:** The seeder automatically reads your project ID from `.firebaserc`. If you need to override it, you can:
+
+```bash
+# Override with command line argument
+./scripts/run_complete_seed.sh my-project-id
+
+# Or set environment variable
+FIREBASE_PROJECT=my-project-id ./scripts/run_complete_seed.sh
+```
+
 Or run directly with Dart:
 
 ```bash
-dart scripts/seed_firestore_complete.dart --project=demo-project
+dart scripts/seed_firestore_complete.dart
 ```
 
 ## Configuration
 
+### Project ID Priority
+
+The seeder determines the Firebase project ID in this order:
+
+1. **Command line argument** - `./scripts/run_complete_seed.sh my-project`
+2. **Environment variable** - `FIREBASE_PROJECT=my-project`
+3. **`.firebaserc` file** - Reads `projects.default` value
+4. **Fallback** - `demo-project`
+
 ### Environment Variables
 
-- `FIREBASE_PROJECT` - Firebase project ID (default: `demo-project`)
+- `FIREBASE_PROJECT` - Firebase project ID (reads from `.firebaserc` by default)
 - `EMULATOR_HOST` - Emulator host (default: `127.0.0.1`)
 - `EMULATOR_PORT` - Emulator port (default: `8080`)
 

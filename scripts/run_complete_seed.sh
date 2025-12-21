@@ -42,8 +42,16 @@ else
     exit 1
 fi
 
-# Get project ID
+# Get project ID from .firebaserc if available
+FIREBASE_PROJECT="${FIREBASE_PROJECT:-}"
+if [ -z "$FIREBASE_PROJECT" ] && [ -f ".firebaserc" ]; then
+    # Extract project ID from .firebaserc using grep and sed
+    FIREBASE_PROJECT=$(grep -A 1 '"default"' .firebaserc | grep -o '"[^"]*"' | tail -1 | tr -d '"')
+fi
+# Fallback to demo-project if nothing found
 FIREBASE_PROJECT="${FIREBASE_PROJECT:-demo-project}"
+
+# Allow command line argument to override
 if [ ! -z "$1" ]; then
     FIREBASE_PROJECT="$1"
 fi

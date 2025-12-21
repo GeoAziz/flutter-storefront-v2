@@ -4,9 +4,13 @@ import 'dart:io';
 /// Comprehensive Firestore seeder that populates ALL collections
 ///
 /// Usage:
-///   dart scripts/seed_firestore_complete.dart --project=my-project
+///   dart scripts/seed_firestore_complete.dart
+///   
+/// The script automatically reads the project ID from .firebaserc
+/// You can override with --project flag or FIREBASE_PROJECT env variable
+///
 /// Environment:
-///   FIREBASE_PROJECT can be used instead of --project
+///   FIREBASE_PROJECT - Override project ID (reads from .firebaserc by default)
 ///   EMULATOR_HOST (defaults to 127.0.0.1)
 ///   EMULATOR_PORT (defaults to 8080)
 ///
@@ -32,8 +36,22 @@ Future<void> main(List<String> args) async {
     }
   }
 
+  // Try to read project ID from .firebaserc
+  String? projectIdFromFirebaseRc;
+  try {
+    final firebaseRcFile = File('.firebaserc');
+    if (await firebaseRcFile.exists()) {
+      final firebaseRcContent = await firebaseRcFile.readAsString();
+      final firebaseRcJson = jsonDecode(firebaseRcContent);
+      projectIdFromFirebaseRc = firebaseRcJson['projects']?['default'];
+    }
+  } catch (e) {
+    // Ignore errors reading .firebaserc
+  }
+
   final projectId = argMap['project'] ??
       Platform.environment['FIREBASE_PROJECT'] ??
+      projectIdFromFirebaseRc ??
       'demo-project';
   final host =
       Platform.environment['EMULATOR_HOST'] ?? argMap['host'] ?? '127.0.0.1';
