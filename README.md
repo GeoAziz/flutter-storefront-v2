@@ -12,6 +12,98 @@
 
 This shop app template comes with 100+ screens. Some of these pages are Splash, Login, Signup, Home, Product, Search, Cart, Profile, Payment, Wallet, Order Tracking, and Order History. Additionally, all pages support both light and dark themes.You just need to connect the UI to your preferred backend, such as Firebase, WordPress, or your custom API. You can do anything you want with it.
 
+---
+
+## 🚀 V1 Architecture - Dynamic Data-Driven Platform
+
+Flutter Storefront V2 has evolved from static product data to a **fully dynamic, data-driven architecture** powered by Firebase Firestore. The V1 release features:
+
+### Key Features
+
+✅ **Dynamic Product Catalog** - 54 products across 12 categories loaded from Firestore  
+✅ **Real-time Inventory Tracking** - Warehouse-level stock management  
+✅ **Configurable Home Screen** - 8 dynamic sections without code changes  
+✅ **Comprehensive Seeding System** - Single script to populate all data  
+✅ **Role-based Users** - Customer and admin accounts with preferences  
+✅ **Auto-generated Search Terms** - Smart product search from titles, tags, and descriptions
+
+### Data Collections
+
+| Collection | Documents | Purpose |
+|------------|-----------|---------|
+| `categories` | 12 | Product categories with icons and metadata |
+| `products` | 54 | Complete catalog with variants and pricing |
+| `inventory` | 5 | Stock tracking for key products |
+| `users` | 2 | Test accounts (customer + admin) |
+| `appConfig` | 1 | Home screen configuration |
+
+### Quick Start - Seeding Data
+
+1. **Start Firebase Emulator:**
+```bash
+firebase emulators:start --only firestore
+```
+
+2. **Seed All Collections:**
+```bash
+./scripts/run_complete_seed.sh
+```
+
+3. **Run the App:**
+```bash
+flutter run
+```
+
+### Documentation
+
+- **[Seeding Guide](docs/SEEDING_GUIDE.md)** - How to populate and manage data
+- **[Data Models](docs/DATA_MODELS.md)** - Complete Firestore schema documentation
+- **[Firebase Setup](FIREBASE_SETUP_QUICK_REFERENCE.md)** - Firebase configuration guide
+- **[Run Locally](RUN_APP_LOCALLY.md)** - Local development setup
+
+### Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────┐
+│                  Flutter App                        │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────┐  │
+│  │   Products   │  │   Search     │  │   Home   │  │
+│  │   Screen     │  │   Filter     │  │   Screen │  │
+│  └──────────────┘  └──────────────┘  └──────────┘  │
+│         ↓                  ↓                ↓        │
+│  ┌──────────────────────────────────────────────┐  │
+│  │         Riverpod State Management            │  │
+│  └──────────────────────────────────────────────┘  │
+│         ↓                  ↓                ↓        │
+│  ┌──────────────────────────────────────────────┐  │
+│  │         Firestore Repositories               │  │
+│  └──────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────┘
+                       ↓
+┌─────────────────────────────────────────────────────┐
+│              Firebase Firestore                     │
+│  ┌────────────┐  ┌──────────┐  ┌────────────────┐  │
+│  │ Categories │  │ Products │  │ Inventory      │  │
+│  │ Users      │  │AppConfig │  │ (+ Orders etc) │  │
+│  └────────────┘  └──────────┘  └────────────────┘  │
+└─────────────────────────────────────────────────────┘
+```
+
+### Migration from Static to Dynamic
+
+The app has been **fully migrated** from hardcoded data to Firestore:
+
+- ❌ **Before:** Static product lists in code
+- ✅ **Now:** Dynamic loading from Firestore with real-time updates
+
+- ❌ **Before:** Manual search term generation
+- ✅ **Now:** Automatic search indexing on product seed
+
+- ❌ **Before:** Hardcoded home sections
+- ✅ **Now:** Configurable sections via `appConfig/homeScreen`
+
+---
+
 ## Phase 5: Search & Filtering System
 
 The search and filtering system (Phase 5) provides a production-ready implementation with:
@@ -54,10 +146,9 @@ This captures:
 
 ### Documentation
 
-- **[Phase 5 Completion Summary](docs/PHASE_5_COMPLETION_SUMMARY.md)** — Full architecture, implementation details, and test results
-- **[Performance Profiling Guide](docs/PERF_PROFILING_GUIDE.md)** — Manual profiling with Flutter DevTools
-- **[Automated Profiling Automation](tools/PROFILING_AUTOMATION.md)** — How to run and interpret automated profiling results
-- **[Quick Reference](docs/PHASE_5_QUICK_REF.md)** — Commands, testing checklist, and troubleshooting
+- **[Seeding Guide](docs/SEEDING_GUIDE.md)** - How to populate and manage data
+- **[Data Models](docs/DATA_MODELS.md)** - Complete Firestore schema documentation
+- **[Quick Reference](QUICK_REFERENCE.md)** - Commands, testing checklist, and troubleshooting
 
 ---
 
@@ -120,20 +211,13 @@ Phase 6 transforms the app into a production-grade e-commerce platform with adva
 ### Quick Links
 
 #### 🚀 Getting Started
-- **[Sprint 1 Quick Start](docs/SPRINT_1_QUICK_START.md)** — Pre-kickoff checklist and day-by-day overview
-- **[Sprint 1 Setup Guide](docs/SPRINT_1_SETUP_GUIDE.md)** — Firebase initialization and environment setup (10-part guide)
-- **[Sprint 1 Completion Summary](docs/SPRINT_1_COMPLETION_SUMMARY.md)** — Full delivery report with architecture, tests, and usage guide
+- **[Seeding Guide](docs/SEEDING_GUIDE.md)** - How to populate Firestore with seed data
+- **[Data Models](docs/DATA_MODELS.md)** - Complete Firestore schema documentation
+- **[Firebase Setup](FIREBASE_SETUP_QUICK_REFERENCE.md)** - Firebase configuration guide
+- **[Run Locally](RUN_APP_LOCALLY.md)** - Local development setup
 
-#### 📖 Implementation Guides
-- **[Sprint 1 Day-by-Day](docs/SPRINT_1_DAY_BY_DAY.md)** — Detailed 10-day roadmap with complete code examples
-- **[Phase 6 Technical Architecture](docs/PHASE_6_ADVANCED_FEATURES_FIREBASE.md)** — Deep dive into all 6 features with Firestore schema and Cloud Functions
-
-#### 💼 Leadership & Planning
-- **[Phase 6 Executive Summary](docs/PHASE_6_EXECUTIVE_SUMMARY.md)** — Leadership overview with budget, timeline, and success criteria
-- **[Firebase Spark Plan Budget](docs/PHASE_6_FIREBASE_SPARK_BUDGET.md)** — Detailed cost analysis and daily monitoring templates
-
-#### 🗺️ Navigation
-- **[Documentation Index](docs/PHASE_6_SPRINT_1_DOCUMENTATION_INDEX.md)** — Complete guide to all Phase 6 documentation with role-based navigation
+#### 📖 Quick Reference
+- **[Quick Reference](QUICK_REFERENCE.md)** - Commands, testing checklist, and troubleshooting
 
 ### Success Criteria
 
